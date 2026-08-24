@@ -993,7 +993,10 @@ function getAllBlogs() {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        // Collect any custom user blogs not in default list
+        const defaultSlugs = new Set(DEFAULT_BLOGS_DATA.map(b => b.slug || b.id));
+        const customBlogs = parsed.filter(b => !defaultSlugs.has(b.slug || b.id));
+        return [...DEFAULT_BLOGS_DATA, ...customBlogs];
       }
     }
   } catch (e) {

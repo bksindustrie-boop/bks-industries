@@ -719,15 +719,6 @@ const projectsData = [
     desc: 'Heavy rectangular stainless steel tilting braising pan with precision worm gear mechanism for safe bulk pouring.'
   },
   {
-    id: 'proj-19',
-    src: 'images/main page/tilting pan2.jpg',
-    category: 'fabrication',
-    badge: 'Tilting Kettle',
-    title: 'Commercial Tilting Bratt Pan & Heavy Boiling Vessel',
-    location: 'Hospital & Canteen Facility',
-    desc: 'Industrial 200L tilting cooking kettle for gravies, sambar, rice, and bulk food processing.'
-  },
-  {
     id: 'proj-20',
     src: 'images/main page/200 ltr water tank.jpg',
     category: 'fabrication',

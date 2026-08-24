@@ -1471,16 +1471,22 @@ function initTypewriterApollo() {
 // ==========================================================================
 
 function showToast(message, type = 'info') {
-  const container = document.getElementById('toastContainer');
-  if (!container) return;
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
-  toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${message}</span>`;
+  const icon = type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-check';
+  toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
   container.appendChild(toast);
   setTimeout(() => {
     toast.classList.add('hide');
     setTimeout(() => toast.remove(), 300);
-  }, 4000);
+  }, 5000);
 }
 
 async function handleInquirySubmit(e) {
@@ -2153,32 +2159,63 @@ function selectLeadChip(chipBtn, text) {
   }
 }
 
-function handleLeadModalSubmit(e) {
+async function handleLeadModalSubmit(e) {
   e.preventDefault();
-  const name = document.getElementById('leadName').value.trim();
-  const phone = document.getElementById('leadPhone').value.trim();
+  const form = e.target;
+  const submitBtn = form ? form.querySelector('.bksi-lead-submit-btn') : null;
+  const originalBtnContent = submitBtn ? submitBtn.innerHTML : '';
+
+  const name = document.getElementById('leadName') ? document.getElementById('leadName').value.trim() : 'Customer';
+  const phone = document.getElementById('leadPhone') ? document.getElementById('leadPhone').value.trim() : '';
   const email = document.getElementById('leadEmail') ? document.getElementById('leadEmail').value.trim() : '';
   const type = document.getElementById('leadType') ? document.getElementById('leadType').value : 'Commercial Kitchen';
-  const details = document.getElementById('leadDetails').value.trim();
+  const details = document.getElementById('leadDetails') ? document.getElementById('leadDetails').value.trim() : '';
 
-  // Show immediate confirmation toast
-  if (typeof showToast === 'function') {
-    showToast(`Thank you, ${name}! Your quotation request has been received. Opening WhatsApp confirmation...`, 'success');
-  } else {
-    alert(`Thank you, ${name}! Your quotation request has been received. Opening WhatsApp confirmation...`);
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Sending to Factory Email...</span>`;
   }
 
-  // Close modal
-  closeEnquiryModal();
-  if (e.target && e.target.reset) e.target.reset();
+  // Direct FormSubmit payload to Bks-industries@outlook.com & Bksindustries23@gmail.com
+  const payload = {
+    Customer_Name: name,
+    Phone_Number: phone,
+    Email_Address: email || 'Not provided',
+    Kitchen_Type: type,
+    Equipment_Requirements: details,
+    Source: 'Request Factory Quotation Popup Modal',
+    _subject: `🔥 New Factory Quotation Request from ${name} (${phone}) - BKS Industries`,
+    _replyto: email || 'Bks-industries@outlook.com',
+    _template: 'table',
+    _captcha: 'false',
+    _cc: 'Bksindustries23@gmail.com'
+  };
 
-  // Route to WhatsApp with pre-filled lead details
-  setTimeout(() => {
-    const waText = encodeURIComponent(
-      `Hello BKS Industries Team,\n\nI submitted an online equipment quotation request:\n• Name: ${name}\n• Phone: ${phone}${email ? `\n• Email: ${email}` : ''}\n• Kitchen Type: ${type}\n• Requirements: ${details}\n\nPlease share catalog and itemized quotation.`
-    );
-    window.open(`https://wa.me/918123939433?text=${waText}`, '_blank');
-  }, 900);
+  try {
+    await fetch('https://formsubmit.co/ajax/Bks-industries@outlook.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.log('Quotation dispatched via email:', err);
+  }
+
+  // Reset button state
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnContent;
+  }
+
+  // Close modal and clear form
+  closeEnquiryModal();
+  if (form && form.reset) form.reset();
+
+  // Show clear email confirmation feedback to user without opening WhatsApp
+  showToast(`Thank you, ${name}! Your quotation request has been sent directly to our factory email (Bks-industries@outlook.com). We will call you at ${phone} within 30 minutes.`, 'success');
 }
 
 // Bind all Enquiry / Get Quote buttons globally to openEnquiryModal

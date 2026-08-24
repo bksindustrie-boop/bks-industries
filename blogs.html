@@ -55,7 +55,7 @@
   <link rel="icon" type="image/png" href="images/bksi_official_logo.png">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=20260824_v6">
+  <link rel="stylesheet" href="style.css?v=20260824_v7">
 </head>
 <body>
   <!-- Scroll Progress Indicator -->
@@ -813,20 +813,17 @@
       if (!phone) return;
 
       const targetOwnerPhone = "8123939433";
-      const messageText = `Hello BKS Industries, I am requesting a Free Commercial Kitchen CAD Layout & Quote. My Contact Number is: ${phone}. Please contact me.`;
       
-      showToast(`Thank you! Sending your CAD request (${phone}) to +91 81239 39433...`, 'success');
-      if (phoneInput) phoneInput.value = '';
-
-      // 1. Dispatch lead notification directly to owner emails
+      // Dispatch lead notification directly to owner emails
       try {
         fetch('https://formsubmit.co/ajax/Bks-industries@outlook.com', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
-            lead_type: 'Free Commercial Kitchen CAD Layout Request',
-            customer_phone: phone,
-            destination_phone: targetOwnerPhone,
+            Lead_Type: 'Free Commercial Kitchen CAD Layout Request',
+            Customer_Phone: phone,
+            Destination_Phone: targetOwnerPhone,
+            Source: 'Blogs Footer CAD Layout Banner',
             _subject: `🔥 NEW Commercial Kitchen CAD Lead from ${phone} - BKS Industries`,
             _cc: 'Bksindustries23@gmail.com',
             _template: 'table'
@@ -834,16 +831,8 @@
         }).catch(err => console.log('Lead sync:', err));
       } catch (err) {}
 
-      // 2. Format native SMS link directly to owner phone 8123939433
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      const separator = isIOS ? '&' : '?';
-      const encodedMsg = encodeURIComponent(messageText);
-      const smsUri = `sms:+91${targetOwnerPhone}${separator}body=${encodedMsg}`;
-
-      // 3. Automatically open phone SMS to 8123939433
-      setTimeout(() => {
-        window.location.href = smsUri;
-      }, 400);
+      if (phoneInput) phoneInput.value = '';
+      showToast(`Thank you! Your CAD layout request for phone (${phone}) has been sent directly to our factory engineering email (Bks-industries@outlook.com). We will call you shortly.`, 'success');
     }
 
     // Toast notification
@@ -919,6 +908,6 @@
     }
   </script>
   <!-- Global App Script -->
-  <script src="app.js?v=20260824_v6"></script>
+  <script src="app.js?v=20260824_v7"></script>
 </body>
 </html>

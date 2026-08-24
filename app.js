@@ -586,15 +586,6 @@ const projectsData = [
     desc: 'Fully commissioned commercial kitchen featuring heavy SS 304 gas ranges, flat griddle plates, multi-station prep tables, overhead utility racks, and continuous stainless baffle exhaust hood.'
   },
   {
-    id: 'proj-real-04',
-    src: 'images/real-gallery/real_qsr_pantry_service_kitchen.jpg',
-    category: 'setups',
-    badge: 'QSR Setup',
-    title: 'Commercial QSR Kitchen & Food Prep Facility',
-    location: 'Quick Service Restaurant, Bengaluru',
-    desc: 'Space-optimized commercial kitchen layout featuring heavy SS prep counters, commercial refrigeration, and ceiling-integrated ventilation ducting.'
-  },
-  {
     id: 'proj-real-05',
     src: 'images/real-gallery/real_bain_marie_live_counter_station.jpg',
     category: 'counters',

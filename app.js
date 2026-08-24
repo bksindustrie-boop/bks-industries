@@ -2035,11 +2035,195 @@ function toggleMobileAccordion(contentId, btn) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     closeMobileMenu();
+    closeEnquiryModal();
   }
 });
 
+// ==========================================================================
+// 18. GLOBAL LEAD CAPTURE POPUP MODAL CONTROLLER
+// ==========================================================================
+
+function initLeadModal() {
+  if (document.getElementById('bksiLeadModalBackdrop')) return;
+
+  const modalHtml = `
+    <div class="bksi-lead-modal-backdrop" id="bksiLeadModalBackdrop" onclick="handleLeadModalBackdropClick(event)" aria-hidden="true" role="dialog">
+      <div class="bksi-lead-modal-window" onclick="event.stopPropagation()">
+        <!-- Modal Header -->
+        <div class="bksi-lead-modal-header">
+          <div class="bksi-lead-modal-header-info">
+            <img src="images/bksi_official_logo.png" alt="BKSI Logo" class="bksi-lead-modal-logo">
+            <div>
+              <h3 class="bksi-lead-modal-title">Request Factory Quotation</h3>
+              <div class="bksi-lead-modal-sub">
+                <i class="fa-solid fa-bolt"></i> Direct Factory Pricing &bull; 30-Min Response
+              </div>
+            </div>
+          </div>
+          <button type="button" class="bksi-lead-modal-close" onclick="closeEnquiryModal()" aria-label="Close Modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="bksi-lead-modal-body">
+          <span class="bksi-lead-chips-label">Quick Select Your Requirement:</span>
+          <div class="bksi-lead-chips">
+            <button type="button" class="bksi-lead-chip" onclick="selectLeadChip(this, 'Complete Commercial Kitchen Setup')">🍽️ Full Kitchen Setup</button>
+            <button type="button" class="bksi-lead-chip" onclick="selectLeadChip(this, 'Commercial Cooking Ranges & Burners')">🔥 Cooking Ranges</button>
+            <button type="button" class="bksi-lead-chip" onclick="selectLeadChip(this, 'SS Exhaust Hoods & Ducting System')">💨 Exhaust & Ducting</button>
+            <button type="button" class="bksi-lead-chip" onclick="selectLeadChip(this, 'Custom Food Truck Fabrication')">🚚 Food Truck</button>
+            <button type="button" class="bksi-lead-chip" onclick="selectLeadChip(this, 'SS Prep Tables & Sinks')">🧼 Prep Tables & Sinks</button>
+            <button type="button" class="bksi-lead-chip" onclick="selectLeadChip(this, 'Commercial Refrigeration')">❄️ Chillers & Freezers</button>
+          </div>
+
+          <form id="bksiLeadModalForm" onsubmit="handleLeadModalSubmit(event)">
+            <div class="bksi-lead-grid-2">
+              <div class="bksi-lead-form-group">
+                <label class="bksi-lead-label" for="leadName">Your Name <span>*</span></label>
+                <input type="text" id="leadName" class="bksi-lead-input" required placeholder="e.g. Ramesh Kumar">
+              </div>
+              <div class="bksi-lead-form-group">
+                <label class="bksi-lead-label" for="leadPhone">Phone Number <span>*</span></label>
+                <input type="tel" id="leadPhone" class="bksi-lead-input" required placeholder="e.g. 98765 43210">
+              </div>
+            </div>
+
+            <div class="bksi-lead-grid-2">
+              <div class="bksi-lead-form-group">
+                <label class="bksi-lead-label" for="leadEmail">Email Address (Optional)</label>
+                <input type="email" id="leadEmail" class="bksi-lead-input" placeholder="e.g. name@kitchen.com">
+              </div>
+              <div class="bksi-lead-form-group">
+                <label class="bksi-lead-label" for="leadType">Kitchen Type <span>*</span></label>
+                <select id="leadType" class="bksi-lead-select" required>
+                  <option value="Restaurant / Cafe">Restaurant / Cafe</option>
+                  <option value="Hotel / Resort">Hotel / Resort</option>
+                  <option value="Cloud Kitchen / Delivery">Cloud Kitchen / Delivery</option>
+                  <option value="Food Truck / Mobile Kitchen">Food Truck / Mobile Kitchen</option>
+                  <option value="Industrial / Hospital Canteen">Industrial / Hospital Canteen</option>
+                  <option value="Bakery / Sweet Shop">Bakery / Sweet Shop</option>
+                  <option value="Single Equipment Purchase">Single Equipment Purchase</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="bksi-lead-form-group">
+              <label class="bksi-lead-label" for="leadDetails">Equipment / Requirement Details <span>*</span></label>
+              <textarea id="leadDetails" class="bksi-lead-textarea" rows="3" required placeholder="Describe your kitchen dimensions or required equipment (e.g. 2-burner range, work table, upright chiller)..."></textarea>
+            </div>
+
+            <button type="submit" class="bksi-lead-submit-btn">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Send Quotation Request to Factory</span>
+            </button>
+
+            <div class="bksi-lead-guarantee">
+              <i class="fa-solid fa-shield-halved" style="color: #10B981;"></i>
+              <span>100% Confidential &bull; Direct Factory Price &bull; No Obligation</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+function openEnquiryModal(prefillContext = '') {
+  initLeadModal();
+  const backdrop = document.getElementById('bksiLeadModalBackdrop');
+  if (!backdrop) return;
+
+  if (prefillContext) {
+    const detailsInput = document.getElementById('leadDetails');
+    if (detailsInput) {
+      detailsInput.value = `Interested in: ${prefillContext}`;
+    }
+  }
+
+  backdrop.classList.add('active');
+  backdrop.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  setTimeout(() => {
+    const nameInput = document.getElementById('leadName');
+    if (nameInput) nameInput.focus();
+  }, 100);
+}
+
+function closeEnquiryModal() {
+  const backdrop = document.getElementById('bksiLeadModalBackdrop');
+  if (!backdrop) return;
+
+  backdrop.classList.remove('active');
+  backdrop.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function handleLeadModalBackdropClick(e) {
+  if (e.target === document.getElementById('bksiLeadModalBackdrop')) {
+    closeEnquiryModal();
+  }
+}
+
+function selectLeadChip(chipBtn, text) {
+  const allChips = document.querySelectorAll('.bksi-lead-chip');
+  allChips.forEach(c => c.classList.remove('active'));
+  chipBtn.classList.add('active');
+
+  const detailsInput = document.getElementById('leadDetails');
+  if (detailsInput) {
+    detailsInput.value = text;
+    detailsInput.focus();
+  }
+}
+
+function handleLeadModalSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('leadName').value.trim();
+  const phone = document.getElementById('leadPhone').value.trim();
+  const email = document.getElementById('leadEmail') ? document.getElementById('leadEmail').value.trim() : '';
+  const type = document.getElementById('leadType') ? document.getElementById('leadType').value : 'Commercial Kitchen';
+  const details = document.getElementById('leadDetails').value.trim();
+
+  // Show immediate confirmation toast
+  if (typeof showToast === 'function') {
+    showToast(`Thank you, ${name}! Your quotation request has been received. Opening WhatsApp confirmation...`, 'success');
+  } else {
+    alert(`Thank you, ${name}! Your quotation request has been received. Opening WhatsApp confirmation...`);
+  }
+
+  // Close modal
+  closeEnquiryModal();
+  if (e.target && e.target.reset) e.target.reset();
+
+  // Route to WhatsApp with pre-filled lead details
+  setTimeout(() => {
+    const waText = encodeURIComponent(
+      `Hello BKS Industries Team,\n\nI submitted an online equipment quotation request:\n• Name: ${name}\n• Phone: ${phone}${email ? `\n• Email: ${email}` : ''}\n• Kitchen Type: ${type}\n• Requirements: ${details}\n\nPlease share catalog and itemized quotation.`
+    );
+    window.open(`https://wa.me/918123939433?text=${waText}`, '_blank');
+  }, 900);
+}
+
+// Bind all Enquiry / Get Quote buttons globally to openEnquiryModal
+function bindEnquiryButtons() {
+  const enquiryBtns = document.querySelectorAll('.apollo-btn-enquiry, .open-lead-modal-btn');
+  enquiryBtns.forEach(btn => {
+    btn.onclick = function(e) {
+      e.preventDefault();
+      openEnquiryModal();
+    };
+  });
+}
+
 // Auto-initialize components on DOM Ready across all pages
 document.addEventListener('DOMContentLoaded', function() {
+  initLeadModal();
+  bindEnquiryButtons();
+
   if (document.getElementById('projectsGrid')) {
     renderProjectsGallery('all');
   }

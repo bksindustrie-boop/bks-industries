@@ -117,9 +117,9 @@
       </nav>
 
       <div style="display: flex; align-items: center; gap: 0.65rem;">
-        <a href="contact.html" class="apollo-btn-enquiry">
-          <span>Get Quote</span>
-        </a>
+        <button type="button" class="apollo-btn-enquiry" onclick="openEnquiryModal()" style="cursor: pointer; border: none;">
+          <span>Enquiry</span>
+        </button>
         <button class="apollo-hamburger" id="apolloHamburger" aria-label="Toggle Navigation Menu" onclick="toggleMobileMenu()">
           <span></span>
           <span></span>
@@ -167,10 +167,10 @@
     </ul>
 
     <div class="apollo-mobile-drawer-foot">
-      <a href="contact.html" class="apollo-mobile-cta-btn" onclick="closeMobileMenu()">
+      <button type="button" class="apollo-mobile-cta-btn" onclick="closeMobileMenu(); openEnquiryModal();" style="border: none; cursor: pointer; width: 100%;">
         <i class="fa-solid fa-paper-plane"></i>
         <span>Request Instant Quote</span>
-      </a>
+      </button>
       <div style="font-size: 0.72rem; color: var(--text-slate-500); text-align: center;">
         <p>BKS Industries &bull; Bengaluru, India</p>
         <p style="margin-top: 2px;">Direct SS 304 Equipment Manufacturer</p>

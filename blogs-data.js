@@ -973,19 +973,16 @@ const DEFAULT_BLOGS_DATA = [
   }
 ];
 
-const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v10';
+const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v11';
 
-// Get all blogs (custom + default)
+// Get all blogs (custom + default, sorted and merged cleanly)
 function getAllBlogs() {
   try {
     const saved = localStorage.getItem(BLOG_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Collect any custom user blogs not in default list
-        const defaultSlugs = new Set(DEFAULT_BLOGS_DATA.map(b => b.slug || b.id));
-        const customBlogs = parsed.filter(b => !defaultSlugs.has(b.slug || b.id));
-        return [...DEFAULT_BLOGS_DATA, ...customBlogs];
+        return parsed;
       }
     }
   } catch (e) {
@@ -994,7 +991,7 @@ function getAllBlogs() {
   return DEFAULT_BLOGS_DATA;
 }
 
-// Get blog by slug
+// Get blog by slug or ID
 function getBlogBySlug(slug) {
   const all = getAllBlogs();
   if (!slug) return all[0];
@@ -1008,7 +1005,6 @@ function getRelatedBlogs(currentSlug, limit = 3) {
   const current = all.find(b => b.slug === currentSlug);
   if (!current) return all.slice(0, limit);
   
-  // Try same category first, then others
   const sameCat = all.filter(b => b.slug !== currentSlug && b.category === current.category);
   const diffCat = all.filter(b => b.slug !== currentSlug && b.category !== current.category);
   return [...sameCat, ...diffCat].slice(0, limit);
@@ -1022,8 +1018,8 @@ function getRecentBlogs(limit = 4) {
 
 // Save a new or edited blog
 function saveBlogToStorage(blogObj) {
-  const all = getAllBlogs();
-  const existingIdx = all.findIndex(b => b.id === blogObj.id || b.slug === blogObj.slug);
+  const all = [...getAllBlogs()];
+  const existingIdx = all.findIndex(b => b.id === blogObj.id || (blogObj.slug && b.slug === blogObj.slug));
   
   if (existingIdx >= 0) {
     all[existingIdx] = { ...all[existingIdx], ...blogObj };
@@ -1033,11 +1029,46 @@ function saveBlogToStorage(blogObj) {
   
   try {
     localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(all));
+    
+    // Attempt background sync with local server API if running
+    if (typeof fetch !== 'undefined') {
+      fetch('/api/save-blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ blog: blogObj })
+      }).then(res => {
+        if (res.ok) console.log('✅ Blog synced to local-server file storage.');
+      }).catch(() => {
+        // Static host / offline - localStorage is active
+      });
+    }
+    
     return true;
   } catch (e) {
     console.error('Error saving blog to storage:', e);
     return false;
   }
+}
+
+// Duplicate an existing blog
+function duplicateBlogInStorage(slugOrId) {
+  const all = getAllBlogs();
+  const original = all.find(b => b.slug === slugOrId || b.id === slugOrId);
+  if (!original) return null;
+
+  const timestamp = Date.now();
+  const duplicate = {
+    ...JSON.parse(JSON.stringify(original)),
+    id: `blog-custom-${timestamp}`,
+    slug: `${original.slug}-copy-${timestamp.toString().slice(-4)}`,
+    title: `${original.title} (Copy)`,
+    date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+    isoDate: new Date().toISOString().slice(0, 10),
+    isCustom: true
+  };
+
+  const success = saveBlogToStorage(duplicate);
+  return success ? duplicate : null;
 }
 
 // Delete blog
@@ -1046,6 +1077,16 @@ function deleteBlogFromStorage(slugOrId) {
   const filtered = all.filter(b => b.slug !== slugOrId && b.id !== slugOrId);
   try {
     localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(filtered));
+    
+    // Attempt background sync with local server API if running
+    if (typeof fetch !== 'undefined') {
+      fetch('/api/delete-blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slugOrId })
+      }).catch(() => {});
+    }
+    
     return true;
   } catch (e) {
     console.error('Error deleting blog:', e);
@@ -1064,7 +1105,7 @@ function resetBlogsToDefault() {
   }
 }
 
-// Export blogs JSON
+// Export blogs as JSON file
 function exportBlogsAsJson() {
   const all = getAllBlogs();
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(all, null, 2));
@@ -1076,8 +1117,178 @@ function exportBlogsAsJson() {
   downloadAnchor.remove();
 }
 
+// Generate complete JavaScript code string for blogs-data.js
+function generateBlogsDataJsCode() {
+  const all = getAllBlogs();
+  return `// ==========================================================================
+// B.K.S. INDUSTRIES - BLOGS DATA & REPOSITORY SYSTEM
+// Generated on: ${new Date().toISOString()}
+// ==========================================================================
+
+const DEFAULT_BLOGS_DATA = ${JSON.stringify(all, null, 2)};
+
+${BLOG_HELPER_FUNCTIONS_STRING}
+`;
+}
+
+// Helper code block to embed when exporting blogs-data.js
+const BLOG_HELPER_FUNCTIONS_STRING = `const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v11';
+
+function getAllBlogs() {
+  try {
+    const saved = localStorage.getItem(BLOG_STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {
+    console.error('Error reading blogs from localStorage:', e);
+  }
+  return DEFAULT_BLOGS_DATA;
+}
+
+function getBlogBySlug(slug) {
+  const all = getAllBlogs();
+  if (!slug) return all[0];
+  const found = all.find(b => b.slug === slug || b.id === slug);
+  return found || all[0];
+}
+
+function getRelatedBlogs(currentSlug, limit = 3) {
+  const all = getAllBlogs();
+  const current = all.find(b => b.slug === currentSlug);
+  if (!current) return all.slice(0, limit);
+  const sameCat = all.filter(b => b.slug !== currentSlug && b.category === current.category);
+  const diffCat = all.filter(b => b.slug !== currentSlug && b.category !== current.category);
+  return [...sameCat, ...diffCat].slice(0, limit);
+}
+
+function getRecentBlogs(limit = 4) {
+  const all = getAllBlogs();
+  return all.slice(0, limit);
+}
+
+function saveBlogToStorage(blogObj) {
+  const all = [...getAllBlogs()];
+  const existingIdx = all.findIndex(b => b.id === blogObj.id || (blogObj.slug && b.slug === blogObj.slug));
+  if (existingIdx >= 0) {
+    all[existingIdx] = { ...all[existingIdx], ...blogObj };
+  } else {
+    all.unshift(blogObj);
+  }
+  try {
+    localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(all));
+    if (typeof fetch !== 'undefined') {
+      fetch('/api/save-blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ blog: blogObj })
+      }).catch(() => {});
+    }
+    return true;
+  } catch (e) {
+    console.error('Error saving blog to storage:', e);
+    return false;
+  }
+}
+
+function duplicateBlogInStorage(slugOrId) {
+  const all = getAllBlogs();
+  const original = all.find(b => b.slug === slugOrId || b.id === slugOrId);
+  if (!original) return null;
+  const timestamp = Date.now();
+  const duplicate = {
+    ...JSON.parse(JSON.stringify(original)),
+    id: 'blog-custom-' + timestamp,
+    slug: original.slug + '-copy-' + timestamp.toString().slice(-4),
+    title: original.title + ' (Copy)',
+    date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
+    isoDate: new Date().toISOString().slice(0, 10),
+    isCustom: true
+  };
+  const success = saveBlogToStorage(duplicate);
+  return success ? duplicate : null;
+}
+
+function deleteBlogFromStorage(slugOrId) {
+  const all = getAllBlogs();
+  const filtered = all.filter(b => b.slug !== slugOrId && b.id !== slugOrId);
+  try {
+    localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(filtered));
+    if (typeof fetch !== 'undefined') {
+      fetch('/api/delete-blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slugOrId })
+      }).catch(() => {});
+    }
+    return true;
+  } catch (e) {
+    console.error('Error deleting blog:', e);
+    return false;
+  }
+}
+
+function resetBlogsToDefault() {
+  try {
+    localStorage.removeItem(BLOG_STORAGE_KEY);
+    return true;
+  } catch (e) {
+    console.error('Error resetting blogs:', e);
+    return false;
+  }
+}
+
+function exportBlogsAsJson() {
+  const all = getAllBlogs();
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(all, null, 2));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", 'bksi-blogs-export-' + new Date().toISOString().slice(0,10) + '.json');
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+}
+
+function downloadUpdatedBlogsJsFile() {
+  const code = generateBlogsDataJsCode();
+  const blob = new Blob([code], { type: 'application/javascript;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", url);
+  downloadAnchor.setAttribute("download", "blogs-data.js");
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+  URL.revokeObjectURL(url);
+}
+
+function generateBlogSlug(title) {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\\w\\s-]/g, '')
+    .replace(/[\\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}`;
+
+// Download updated blogs-data.js directly to replace local file
+function downloadUpdatedBlogsJsFile() {
+  const code = generateBlogsDataJsCode();
+  const blob = new Blob([code], { type: 'application/javascript;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", url);
+  downloadAnchor.setAttribute("download", "blogs-data.js");
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+  URL.revokeObjectURL(url);
+}
+
 // Generate URL slug from title
 function generateBlogSlug(title) {
+  if (!title) return 'new-blog-post';
   return title
     .toLowerCase()
     .trim()

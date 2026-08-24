@@ -13,15 +13,189 @@ const MIME_TYPES = {
   '.txt': 'text/plain; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
   '.webp': 'image/webp'
 };
 
-const handleRequest = (req, res) => {
+// Helper: read request body as JSON
+function parseRequestBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+      // Cap at 25MB for image uploads
+      if (body.length > 25 * 1024 * 1024) {
+        req.destroy();
+        reject(new Error('Body too large'));
+      }
+    });
+    req.on('end', () => {
+      try {
+        const json = body ? JSON.parse(body) : {};
+        resolve(json);
+      } catch (err) {
+        resolve({});
+      }
+    });
+    req.on('error', reject);
+  });
+}
+
+// Helper: save or update blog in blogs-data.js on disk
+function saveBlogToDisk(newBlog) {
+  try {
+    const blogsFilePath = path.join(PUBLIC_DIR, 'blogs-data.js');
+    if (!fs.existsSync(blogsFilePath)) return false;
+    
+    let content = fs.readFileSync(blogsFilePath, 'utf-8');
+    
+    // Match DEFAULT_BLOGS_DATA array
+    const marker = 'const DEFAULT_BLOGS_DATA = ';
+    const startIdx = content.indexOf(marker);
+    if (startIdx === -1) return false;
+
+    // Use safe extraction or evaluate structure
+    // Find the end of array by looking for semicolon before helper functions or end
+    const helperIdx = content.indexOf('const BLOG_STORAGE_KEY');
+    if (helperIdx === -1) return false;
+
+    const arrayStr = content.substring(startIdx + marker.length, helperIdx).trim().replace(/;$/, '');
+    let blogsArray = [];
+    try {
+      blogsArray = eval('(' + arrayStr + ')');
+    } catch (e) {
+      console.error('Failed to parse existing blogs array:', e);
+      return false;
+    }
+
+    if (!Array.isArray(blogsArray)) blogsArray = [];
+
+    const existingIdx = blogsArray.findIndex(b => b.id === newBlog.id || (newBlog.slug && b.slug === newBlog.slug));
+    if (existingIdx >= 0) {
+      blogsArray[existingIdx] = { ...blogsArray[existingIdx], ...newBlog };
+    } else {
+      blogsArray.unshift(newBlog);
+    }
+
+    const updatedArrayStr = JSON.stringify(blogsArray, null, 2);
+    const updatedContent = content.substring(0, startIdx + marker.length) + updatedArrayStr + ';\n\n' + content.substring(helperIdx);
+    
+    fs.writeFileSync(blogsFilePath, updatedContent, 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error saving blog to disk:', err);
+    return false;
+  }
+}
+
+// Helper: delete blog from blogs-data.js on disk
+function deleteBlogFromDisk(slugOrId) {
+  try {
+    const blogsFilePath = path.join(PUBLIC_DIR, 'blogs-data.js');
+    if (!fs.existsSync(blogsFilePath)) return false;
+    
+    let content = fs.readFileSync(blogsFilePath, 'utf-8');
+    const marker = 'const DEFAULT_BLOGS_DATA = ';
+    const startIdx = content.indexOf(marker);
+    const helperIdx = content.indexOf('const BLOG_STORAGE_KEY');
+    if (startIdx === -1 || helperIdx === -1) return false;
+
+    const arrayStr = content.substring(startIdx + marker.length, helperIdx).trim().replace(/;$/, '');
+    let blogsArray = eval('(' + arrayStr + ')');
+    if (!Array.isArray(blogsArray)) return false;
+
+    blogsArray = blogsArray.filter(b => b.slug !== slugOrId && b.id !== slugOrId);
+
+    const updatedArrayStr = JSON.stringify(blogsArray, null, 2);
+    const updatedContent = content.substring(0, startIdx + marker.length) + updatedArrayStr + ';\n\n' + content.substring(helperIdx);
+    
+    fs.writeFileSync(blogsFilePath, updatedContent, 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error deleting blog from disk:', err);
+    return false;
+  }
+}
+
+const handleRequest = async (req, res) => {
   try {
     const rawUrl = (req && req.url) ? req.url : '/';
     let urlPath = rawUrl.split('?')[0];
+
+    // Handle CORS preflight
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
+    // --- API Endpoints ---
+    if (urlPath === '/api/save-blog' && req.method === 'POST') {
+      const data = await parseRequestBody(req);
+      if (data && data.blog) {
+        const saved = saveBlogToDisk(data.blog);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: saved, message: saved ? 'Blog saved to blogs-data.js on disk' : 'Error writing to file' }));
+        return;
+      }
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, error: 'Missing blog payload' }));
+      return;
+    }
+
+    if (urlPath === '/api/delete-blog' && req.method === 'POST') {
+      const data = await parseRequestBody(req);
+      if (data && data.slugOrId) {
+        const deleted = deleteBlogFromDisk(data.slugOrId);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: deleted }));
+        return;
+      }
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, error: 'Missing slugOrId' }));
+      return;
+    }
+
+    if (urlPath === '/api/upload-image' && req.method === 'POST') {
+      const data = await parseRequestBody(req);
+      if (data && data.base64Data) {
+        try {
+          const uploadsDir = path.join(PUBLIC_DIR, 'images', 'uploads');
+          if (!fs.existsSync(uploadsDir)) {
+            fs.mkdirSync(uploadsDir, { recursive: true });
+          }
+
+          const filename = data.filename || `blog-img-${Date.now()}.png`;
+          const cleanFilename = filename.replace(/[^a-zA-Z0-9_.-]/g, '_');
+          const filePath = path.join(uploadsDir, cleanFilename);
+
+          const base64Clean = data.base64Data.replace(/^data:image\/\w+;base64,/, '');
+          const buffer = Buffer.from(base64Clean, 'base64');
+          fs.writeFileSync(filePath, buffer);
+
+          const relativePath = `images/uploads/${cleanFilename}`;
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, imagePath: relativePath }));
+          return;
+        } catch (uploadErr) {
+          console.error('Image upload save error:', uploadErr);
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: 'Failed to write image file' }));
+          return;
+        }
+      }
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, error: 'Missing base64Data' }));
+      return;
+    }
+
+    // --- Static File Serving ---
     if (urlPath === '/' || urlPath === '') {
       urlPath = '/index.html';
     }
@@ -82,6 +256,7 @@ if (require.main === module) {
   const http = require('http');
   const server = http.createServer(handleRequest);
   server.listen(PORT, () => {
-    console.log(`BKS Industries server running at http://localhost:${PORT}/`);
+    console.log(`🚀 BKS Industries server running at http://localhost:${PORT}/`);
+    console.log(`✍️ Blog Creator Studio ready with disk auto-sync and image upload!`);
   });
 }

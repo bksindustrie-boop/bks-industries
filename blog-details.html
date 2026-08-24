@@ -29,7 +29,7 @@
   <link rel="icon" type="image/png" href="images/bksi_official_logo.png">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=20260824_v11">
+  <link rel="stylesheet" href="style.css?v=20260824_v12">
 </head>
 <body>
   <!-- Scroll Progress Indicator -->
@@ -66,6 +66,11 @@
           <a href="#" class="apollo-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
           <a href="#" class="apollo-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
+        <div class="apollo-v-divider"></div>
+        <a href="blogs.html?admin=login" class="apollo-topbar-pill" style="color: #F59E0B; font-weight: 700; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.25rem 0.65rem; border-radius: 9999px;" title="BKS Owner Portal Login">
+          <i class="fa-solid fa-lock"></i>
+          <span>Owner Login</span>
+        </a>
         <div class="apollo-v-divider"></div>
         <a href="tel:+918123939433" class="apollo-help-btn">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -240,11 +245,18 @@
       <article class="blog-article-container" id="articleMainContent">
         <!-- Header Info -->
         <header class="blog-article-header">
-          <div class="blog-meta-row">
-            <span class="blog-cat-tag" id="articleCategoryTag">Category</span>
-            <span id="articleDate"><i class="fa-regular fa-calendar me-1"></i> Date</span>
-            <span>&bull;</span>
-            <span id="articleReadTime"><i class="fa-regular fa-clock me-1"></i> 5 min read</span>
+          <div class="blog-meta-row" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="blog-cat-tag" id="articleCategoryTag">Category</span>
+              <span id="articleDate"><i class="fa-regular fa-calendar me-1"></i> Date</span>
+              <span>&bull;</span>
+              <span id="articleReadTime"><i class="fa-regular fa-clock me-1"></i> 5 min read</span>
+            </div>
+            <div id="articleAdminActions" style="display: none;">
+              <a href="blogs.html?upload=true" id="btnEditThisArticle" class="blog-btn-secondary" style="padding: 0.35rem 0.85rem; font-size: 0.8rem; text-decoration: none;">
+                <i class="fa-solid fa-pencil text-apollo-blue"></i> Edit in Studio
+              </a>
+            </div>
           </div>
           <h1 class="blog-article-title" id="articleHeadingTitle">Article Title</h1>
           
@@ -485,9 +497,14 @@
         </div>
       </div>
 
-      <div class="apollo-footer-bottom">
+      <div class="apollo-footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
         <p>&copy; 2026 B.K.S. Industries (Bengaluru). All Rights Reserved.</p>
-        <p>Commercial Kitchen Equipment Manufacturer &bull; Direct Factory Bengaluru</p>
+        <p style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <span>Commercial Kitchen Equipment Manufacturer &bull; Direct Factory Bengaluru</span>
+          <a href="blogs.html?admin=login" class="footer-admin-lock-link" title="BKS Owner Portal">
+            <i class="fa-solid fa-lock"></i> <span>Owner Access</span>
+          </a>
+        </p>
       </div>
     </div>
   </footer>
@@ -499,8 +516,14 @@
 
   <div class="toast-container" id="toastContainer"></div>
 
+  <!-- Floating Quick Creator Studio Button (Admin Only) -->
+  <a href="blogs.html?upload=true" id="floatingCreatorBtn" class="blog-floating-creator-btn" title="Open Blog Creator Studio" style="display: none;">
+    <i class="fa-solid fa-feather-pointed"></i>
+    <span>Write Blog</span>
+  </a>
+
   <!-- JavaScript Modules -->
-  <script src="blogs-data.js?v=20260824_v10"></script>
+  <script src="blogs-data.js?v=20260824_v11"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Get slug from URL parameter
@@ -548,14 +571,34 @@
       document.getElementById('breadcrumbArticleTitle').textContent = article.title;
       document.getElementById('articleCategoryTag').textContent = article.category;
       document.getElementById('articleDate').innerHTML = `<i class="fa-regular fa-calendar me-1"></i> ${article.date}`;
-      document.getElementById('articleReadTime').innerHTML = `<i class="fa-regular fa-clock me-1"></i> ${article.readTime}`;
+      document.getElementById('articleReadTime').innerHTML = `<i class="fa-regular fa-clock me-1"></i> ${article.readTime || '5 min read'}`;
       document.getElementById('articleHeadingTitle').textContent = article.title;
 
       // Author Info
-      document.getElementById('articleAuthorName').textContent = article.author || 'BKS Engineering Team';
+      document.getElementById('articleAuthorName').textContent = article.author || 'BKS Engineering Advisory';
       document.getElementById('articleAuthorRole').textContent = article.authorRole || 'Commercial Kitchen Consultant';
       if (article.authorAvatar) {
         document.getElementById('articleAuthorAvatar').src = article.authorAvatar;
+      }
+
+      // Check admin status for private controls
+      const isAuth = localStorage.getItem('bksi_admin_authenticated_v1') === 'true';
+      const isCustom = article.isCustom || (article.id && article.id.startsWith('blog-custom-'));
+      const adminActions = document.getElementById('articleAdminActions');
+      const editBtn = document.getElementById('btnEditThisArticle');
+      const floatingBtn = document.getElementById('floatingCreatorBtn');
+
+      if (floatingBtn) {
+        floatingBtn.style.display = isAuth ? 'flex' : 'none';
+      }
+
+      if (adminActions && editBtn) {
+        if (isAuth) {
+          adminActions.style.display = 'block';
+          editBtn.href = `blogs.html?admin=true&edit=${encodeURIComponent(article.slug)}`;
+        } else {
+          adminActions.style.display = 'none';
+        }
       }
 
       // Hero Image

@@ -30,7 +30,7 @@
   <link rel="icon" type="image/png" href="images/bksi_official_logo.png">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=20260824_v11">
+  <link rel="stylesheet" href="style.css?v=20260824_v12">
 </head>
 <body>
   <!-- Scroll Progress Indicator -->
@@ -67,6 +67,11 @@
           <a href="#" class="apollo-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
           <a href="#" class="apollo-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
+        <div class="apollo-v-divider"></div>
+        <a href="javascript:void(0)" onclick="handleAdminEntryClick()" class="apollo-topbar-pill" style="color: #F59E0B; font-weight: 700; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.25rem 0.65rem; border-radius: 9999px;" title="BKS Owner Portal Login">
+          <i class="fa-solid fa-lock"></i>
+          <span id="topbarAdminLockText">Owner Login</span>
+        </a>
         <div class="apollo-v-divider"></div>
         <a href="tel:+918123939433" class="apollo-help-btn">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -230,10 +235,43 @@
         </ol>
       </nav>
 
-      <h1 class="blog-page-title">Commercial Kitchen Insights &amp; Guides</h1>
-      <p class="blog-page-subtitle">
-        Industry best practices, equipment buying guides, SS 304 engineering, exhaust CFM formulas, and commercial kitchen planning from Bengaluru's leading manufacturer.
-      </p>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem;">
+        <div>
+          <h1 class="blog-page-title">Commercial Kitchen Insights &amp; Guides</h1>
+          <p class="blog-page-subtitle">
+            Industry best practices, equipment buying guides, SS 304 engineering, exhaust CFM formulas, and commercial kitchen planning from Bengaluru's leading manufacturer.
+          </p>
+        </div>
+
+        <!-- Public / Logged Out Quick Owner Login Trigger Button -->
+        <div id="headerOwnerLoginWrap" style="display: flex; align-items: center; gap: 0.75rem;">
+          <button type="button" id="headerOwnerLoginBtn" class="blog-btn-secondary" onclick="handleAdminEntryClick()" style="padding: 0.5rem 1rem; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; background: #FFFFFF; border: 1px solid #CBD5E1; color: var(--apollo-navy); font-weight: 700; border-radius: var(--radius-full); box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer;" title="BKS Owner Portal Login">
+            <i class="fa-solid fa-lock" style="color: #F59E0B;"></i>
+            <span>Owner Portal</span>
+          </button>
+        </div>
+
+        <!-- Header Action Controls for Blog Upload & Management (Admin Only) -->
+        <div class="blog-header-actions" id="blogHeaderAdminActions" style="display: none;">
+          <div class="admin-status-pill">
+            <i class="fa-solid fa-crown" style="color: #F59E0B;"></i>
+            <span>Owner Portal</span>
+            <button type="button" class="admin-logout-btn" onclick="handleAdminLogout()" title="Log out of Admin Mode">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </div>
+          <button type="button" class="blog-btn-upload-trigger" onclick="openBlogStudio('create')">
+            <i class="fa-solid fa-plus-circle"></i> Upload / Write Blog
+          </button>
+          <button type="button" class="blog-btn-manage-trigger" onclick="openBlogStudio('manage')">
+            <i class="fa-solid fa-list-check"></i> Manage Articles
+            <span id="customBlogCountBadge" class="blog-badge-custom" style="display: inline-block; margin-left: 0.35rem;">0</span>
+          </button>
+          <button type="button" class="blog-btn-manage-trigger" onclick="openBlogStudio('export')">
+            <i class="fa-solid fa-code"></i> Export Code
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- Controls & Filter Toolbar (Pristine White Card with Zero Scrollbars) -->
@@ -314,109 +352,411 @@
   </main>
 
   <!-- =========================================================================
-       7. ADD / MANAGE BLOG ADMIN MODAL
+       6.5 ADMIN AUTHENTICATION LOGIN MODAL (OWNER ACCESS)
+       ========================================================================= -->
+  <div class="admin-login-modal" id="adminLoginModal" onclick="handleLoginBackdropClick(event)">
+    <div class="admin-login-card">
+      <div class="admin-login-head">
+        <div class="admin-login-head-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3>BKS Owner Portal</h3>
+        <p>Private upload &amp; article management access</p>
+      </div>
+
+      <div class="admin-login-body">
+        <form id="adminLoginForm" onsubmit="handleAdminLoginSubmit(event)">
+          <div id="adminLoginError" style="display: none; background: #FEE2E2; border: 1px solid #FCA5A5; color: #DC2626; padding: 0.65rem 0.85rem; border-radius: 0.5rem; font-size: 0.825rem; margin-bottom: 1rem; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="adminLoginErrorText">Invalid User ID or Password.</span>
+          </div>
+
+          <div class="blog-form-group">
+            <label class="blog-form-label" for="loginUserId">Owner User ID</label>
+            <input type="text" id="loginUserId" class="blog-form-input" placeholder="e.g. bksadmin" required autocomplete="username">
+          </div>
+
+          <div class="blog-form-group">
+            <label class="blog-form-label" for="loginPassword" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>Password / Security Key</span>
+              <button type="button" onclick="togglePasswordVisibility()" style="background: none; border: none; color: var(--apollo-blue); font-size: 0.75rem; font-weight: 700; cursor: pointer;">
+                <span id="pwdToggleLabel">Show</span>
+              </button>
+            </label>
+            <input type="password" id="loginPassword" class="blog-form-input" placeholder="Enter Password" required autocomplete="current-password">
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #475569; cursor: pointer;">
+              <input type="checkbox" id="rememberMeCheckbox" checked style="cursor: pointer;">
+              <span>Remember this browser</span>
+            </label>
+            <span style="font-size: 0.75rem; color: #94A3B8;"><i class="fa-solid fa-lock"></i> Protected</span>
+          </div>
+
+          <button type="submit" class="bksi-lead-submit-btn" style="border-radius: 0.65rem; width: 100%; justify-content: center;">
+            <i class="fa-solid fa-lock-open me-2"></i> Unlock Creator Studio
+          </button>
+        </form>
+      </div>
+
+      <div class="admin-login-foot">
+        <span style="font-size: 0.75rem; color: #64748B;"><i class="fa-solid fa-shield"></i> Factory Admin Portal</span>
+        <button type="button" class="blog-btn-secondary" onclick="closeAdminLoginModal()" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       7. BLOG CREATOR & MANAGEMENT STUDIO MODAL
        ========================================================================= -->
   <div class="blog-modal-backdrop" id="blogModalBackdrop" onclick="handleBackdropClick(event)">
     <div class="blog-modal-window">
+      <!-- Modal Header -->
       <div class="blog-modal-header">
         <div class="blog-modal-title">
-          <i class="fa-solid fa-pen-to-square"></i>
-          <span id="blogModalHeading">Add New Blog Article</span>
+          <i class="fa-solid fa-pen-nib"></i>
+          <span id="blogModalHeading">BKS Blog Creator &amp; Management Studio</span>
         </div>
-        <button class="blog-modal-close" onclick="closeAddBlogModal()" aria-label="Close modal">
+        <button class="blog-modal-close" onclick="closeBlogStudio()" aria-label="Close modal">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <div class="blog-modal-body">
-        <form id="addBlogForm" onsubmit="handleSaveBlogForm(event)">
-          <input type="hidden" id="blogEditId" value="">
-          
-          <div class="blog-form-group">
-            <label class="blog-form-label" for="formBlogTitle">Article Title *</label>
-            <input type="text" id="formBlogTitle" class="blog-form-input" placeholder="e.g., Commercial Kitchen Equipment Checklist 2026" required oninput="autoGenerateSlug(this.value)">
-          </div>
-
-          <div class="blog-form-grid blog-form-grid-2">
-            <div class="blog-form-group">
-              <label class="blog-form-label" for="formBlogCategory">Category *</label>
-              <select id="formBlogCategory" class="blog-form-select" required>
-                <option value="Kitchen Planning">Kitchen Planning</option>
-                <option value="SS Fabrication">SS Fabrication</option>
-                <option value="Buying Guides">Buying Guides</option>
-                <option value="Cloud Kitchens">Cloud Kitchens</option>
-                <option value="Case Studies">Case Studies &amp; Costs</option>
-                <option value="Maintenance">Maintenance &amp; Care</option>
-              </select>
-            </div>
-            <div class="blog-form-group">
-              <label class="blog-form-label" for="formBlogReadTime">Estimated Read Time</label>
-              <input type="text" id="formBlogReadTime" class="blog-form-input" placeholder="e.g., 5 min read" value="5 min read">
-            </div>
-          </div>
-
-          <div class="blog-form-grid blog-form-grid-2">
-            <div class="blog-form-group">
-              <label class="blog-form-label" for="formBlogAuthor">Author Name</label>
-              <input type="text" id="formBlogAuthor" class="blog-form-input" placeholder="BKS Engineering Team" value="BKS Engineering Team">
-            </div>
-            <div class="blog-form-group">
-              <label class="blog-form-label" for="formBlogRole">Author Title/Role</label>
-              <input type="text" id="formBlogRole" class="blog-form-input" placeholder="Commercial Kitchen Consultant" value="Commercial Kitchen Consultant">
-            </div>
-          </div>
-
-          <div class="blog-form-group">
-            <label class="blog-form-label" for="formBlogImage">Featured Image URL or Preset *</label>
-            <select id="formBlogImagePreset" class="blog-form-select" style="margin-bottom: 0.5rem;" onchange="applyImagePreset(this.value)">
-              <option value="">-- Choose from BKS Factory Photos --</option>
-              <option value="images/hero-slides/slide1_luxury_hotel_kitchen.jpg">Luxury 5-Star Hotel Kitchen Setup</option>
-              <option value="images/hero-slides/slide2_commercial_restaurant.jpg">Restaurant Cooking Line Setup</option>
-              <option value="images/hero-slides/slide3_industrial_fabrication.jpg">SS 304 Heavy Industrial Fabrication</option>
-              <option value="images/hero-slides/slide4_custom_food_truck.jpg">Custom Mobile Food Truck SS Unit</option>
-              <option value="images/hero-slides/slide5_exhaust_ventilation.jpg">Commercial Kitchen Exhaust Hood &amp; Ducting</option>
-              <option value="images/WEB/Four Burner.png">Commercial 4-Burner Gas Cooking Range</option>
-              <option value="images/WEB/2 door fridge.png">Vertical Commercial Chiller &amp; Freezer</option>
-              <option value="images/WEB/Hot-Bain-Marie-Counter.png">Bain Marie Buffet Warmers</option>
-            </select>
-            <input type="text" id="formBlogImage" class="blog-form-input" placeholder="Or enter image path (e.g. images/hero-slides/slide2_commercial_restaurant.jpg)" required>
-          </div>
-
-          <div class="blog-form-group">
-            <label class="blog-form-label" for="formBlogExcerpt">Short Excerpt (Summary for Cards) *</label>
-            <textarea id="formBlogExcerpt" class="blog-form-textarea" style="min-height: 4rem;" placeholder="Brief summary of what the article covers..." required></textarea>
-          </div>
-
-          <div class="blog-form-group">
-            <label class="blog-form-label" for="formBlogQuickAnswer">Quick Answer / Key Takeaway Box</label>
-            <textarea id="formBlogQuickAnswer" class="blog-form-textarea" style="min-height: 4rem;" placeholder="Executive summary or quick answer for Google snippet optimization..."></textarea>
-          </div>
-
-          <div class="blog-form-group">
-            <label class="blog-form-label" for="formBlogContent">Full Article HTML / Body Content *</label>
-            <textarea id="formBlogContent" class="blog-form-textarea" style="min-height: 12rem;" placeholder="Write your article sections using <h2>, <h3>, <p>, <ul>, <li>, <strong>, and <table> tags..." required></textarea>
-          </div>
-        </form>
+      <!-- Studio Navigation Tabs -->
+      <div class="blog-modal-tabs">
+        <button type="button" class="blog-modal-tab-btn active" id="tabBtnWrite" onclick="switchStudioTab('create')">
+          <i class="fa-solid fa-feather-pointed"></i> <span>Write &amp; Edit Article</span>
+        </button>
+        <button type="button" class="blog-modal-tab-btn" id="tabBtnManage" onclick="switchStudioTab('manage')">
+          <i class="fa-solid fa-table-list"></i> <span>Manage Articles</span>
+        </button>
+        <button type="button" class="blog-modal-tab-btn" id="tabBtnExport" onclick="switchStudioTab('export')">
+          <i class="fa-solid fa-code"></i> <span>Export &amp; Deploy Code</span>
+        </button>
       </div>
 
+      <!-- Modal Body -->
+      <div class="blog-modal-body">
+        
+        <!-- TAB 1: WRITE & EDIT ARTICLE -->
+        <div class="blog-tab-pane active" id="paneCreate">
+          <form id="addBlogForm" onsubmit="handleSaveBlogForm(event)">
+            <input type="hidden" id="blogEditId" value="">
+            <input type="hidden" id="formBlogImageFinal" value="">
+
+            <!-- Article Title -->
+            <div class="blog-form-group">
+              <label class="blog-form-label" for="formBlogTitle">
+                <span>Article Title *</span>
+                <span class="blog-form-hint" id="titleCharCounter">0 characters</span>
+              </label>
+              <input type="text" id="formBlogTitle" class="blog-form-input" placeholder="e.g., Best Commercial Kitchen Equipment Checklist 2026 for Restaurants" required oninput="handleTitleInput(this.value)">
+            </div>
+
+            <!-- URL Slug -->
+            <div class="blog-form-group">
+              <label class="blog-form-label" for="formBlogSlug">
+                <span>URL Slug (SEO Link)</span>
+                <span class="blog-form-hint">Used in: blog-details.html?slug=...</span>
+              </label>
+              <input type="text" id="formBlogSlug" class="blog-form-input" placeholder="best-commercial-kitchen-equipment-checklist-2026" required>
+            </div>
+
+            <!-- Category & Read Time Grid -->
+            <div class="blog-form-grid blog-form-grid-3">
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogCategory">Category *</label>
+                <select id="formBlogCategory" class="blog-form-select" required onchange="handleCategoryChange(this.value)">
+                  <option value="Buying Guides">Buying Guides</option>
+                  <option value="Kitchen Planning">Kitchen Planning</option>
+                  <option value="SS Fabrication">SS Fabrication</option>
+                  <option value="Cloud Kitchens">Cloud Kitchens</option>
+                  <option value="Case Studies">Case Studies &amp; Costs</option>
+                  <option value="Maintenance">Maintenance &amp; Care</option>
+                  <option value="Commercial Refrigeration">Commercial Refrigeration</option>
+                  <option value="Bakery Equipment">Bakery Equipment</option>
+                  <option value="__custom__">+ Add Custom Category...</option>
+                </select>
+                <input type="text" id="formBlogCategoryCustom" class="blog-form-input" placeholder="Enter custom category name" style="display: none; margin-top: 0.4rem;">
+              </div>
+
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogReadTime">
+                  <span>Read Time</span>
+                  <button type="button" style="background: none; border: none; color: var(--apollo-blue); font-size: 0.75rem; font-weight: 700; cursor: pointer;" onclick="autoCalculateReadTime()">Auto-Calc</button>
+                </label>
+                <input type="text" id="formBlogReadTime" class="blog-form-input" placeholder="e.g., 6 min read" value="6 min read">
+              </div>
+
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogDate">Publish Date</label>
+                <input type="date" id="formBlogDate" class="blog-form-input">
+              </div>
+            </div>
+
+            <!-- Author Info -->
+            <div class="blog-form-grid blog-form-grid-2">
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogAuthor">Author Name</label>
+                <input type="text" id="formBlogAuthor" class="blog-form-input" placeholder="BKS Engineering Advisory" value="BKS Engineering Advisory">
+              </div>
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogRole">Author Title / Role</label>
+                <input type="text" id="formBlogRole" class="blog-form-input" placeholder="Chief Commercial Kitchen Equipment Engineer" value="Chief Commercial Kitchen Equipment Engineer">
+              </div>
+            </div>
+
+            <!-- Featured Cover Image Upload Section -->
+            <div class="blog-form-group">
+              <label class="blog-form-label">
+                <span>Featured Cover Image *</span>
+                <span class="blog-form-hint">Upload photo from PC, select factory preset, or paste URL</span>
+              </label>
+
+              <div class="blog-image-upload-wrapper" id="imageUploadWrapper">
+                <!-- Image Mode Tabs -->
+                <div class="blog-upload-mode-tabs">
+                  <button type="button" class="blog-upload-mode-btn active" id="btnModeUpload" onclick="switchImageMode('upload')">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Upload from PC
+                  </button>
+                  <button type="button" class="blog-upload-mode-btn" id="btnModePreset" onclick="switchImageMode('preset')">
+                    <i class="fa-solid fa-images"></i> Factory Library
+                  </button>
+                  <button type="button" class="blog-upload-mode-btn" id="btnModeUrl" onclick="switchImageMode('url')">
+                    <i class="fa-solid fa-link"></i> Custom URL / Path
+                  </button>
+                </div>
+
+                <!-- Mode 1: Local File Upload / Dropzone -->
+                <div id="imageModeUpload">
+                  <div class="blog-dropzone-inner" onclick="document.getElementById('formBlogImageFile').click()" id="dropzoneBox">
+                    <i class="fa-solid fa-file-image"></i>
+                    <p><strong>Click to choose image</strong> or drag and drop here</p>
+                    <span style="font-size: 0.75rem; color: #64748B;">Supports PNG, JPG, JPEG, WebP, SVG</span>
+                  </div>
+                  <input type="file" id="formBlogImageFile" accept="image/*" style="display: none;" onchange="handleImageFileSelect(event)">
+                </div>
+
+                <!-- Mode 2: Preset Dropdown -->
+                <div id="imageModePreset" style="display: none;">
+                  <select id="formBlogImagePresetSelect" class="blog-form-select" onchange="applyPresetImage(this.value)">
+                    <option value="">-- Choose from BKS Factory Setup Gallery --</option>
+                    <option value="images/hero-slides/slide1_luxury_hotel_kitchen.jpg">Luxury 5-Star Hotel Kitchen Setup</option>
+                    <option value="images/hero-slides/slide2_commercial_restaurant.jpg">Live Commercial Restaurant Cooking Line</option>
+                    <option value="images/hero-slides/slide3_industrial_fabrication.jpg">SS 304 Heavy Industrial Fabrication Line</option>
+                    <option value="images/hero-slides/slide4_custom_food_truck.jpg">Custom Mobile Food Truck SS Unit</option>
+                    <option value="images/hero-slides/slide5_exhaust_ventilation.jpg">Commercial Kitchen Exhaust Hood &amp; Ducting</option>
+                    <option value="images/ai-renders/hero_luxury_hotel_kitchen.jpg">AI Render - Ultra Luxury Modern Hotel Kitchen</option>
+                    <option value="images/WEB/Four Burner.png">Heavy Duty Commercial 4-Burner Gas Range</option>
+                    <option value="images/WEB/2 door fridge.png">Vertical Commercial SS 304 Chiller &amp; Freezer</option>
+                    <option value="images/WEB/Hot-Bain-Marie-Counter.png">Electric SS Bain Marie Hot Food Buffet Counter</option>
+                  </select>
+                </div>
+
+                <!-- Mode 3: Direct URL -->
+                <div id="imageModeUrl" style="display: none;">
+                  <input type="text" id="formBlogImageUrlInput" class="blog-form-input" placeholder="Paste image URL or local path (e.g. images/hero-slides/slide2_commercial_restaurant.jpg)" oninput="applyUrlImage(this.value)">
+                </div>
+
+                <!-- Live Image Preview Box -->
+                <div class="blog-image-preview-box" id="imagePreviewBox" style="display: none;">
+                  <img id="imagePreviewImg" src="" alt="Image Preview">
+                  <button type="button" class="blog-image-preview-remove" onclick="removeUploadedImage()" title="Remove Image">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Short Excerpt -->
+            <div class="blog-form-group">
+              <label class="blog-form-label" for="formBlogExcerpt">
+                <span>Short Excerpt (Summary for Cards &amp; SEO) *</span>
+                <span class="blog-form-hint" id="excerptCharCounter">0/200 chars</span>
+              </label>
+              <textarea id="formBlogExcerpt" class="blog-form-textarea" style="min-height: 4.5rem;" placeholder="A concise 2-to-3 sentence summary of what this article covers for visitors and Google search snippets..." required oninput="handleExcerptInput(this.value)"></textarea>
+            </div>
+
+            <!-- Quick Answer / Key Takeaways Box -->
+            <div class="blog-form-group">
+              <label class="blog-form-label" for="formBlogQuickAnswer">
+                <span>🎯 Quick Answer / Key Takeaway Callout (Featured Top Box)</span>
+                <span class="blog-form-hint">Displayed in a prominent highlight box at the top of the article</span>
+              </label>
+              <textarea id="formBlogQuickAnswer" class="blog-form-textarea" style="min-height: 4rem;" placeholder="Key takeaways: 1) Certified AISI 304 food-grade stainless steel, 2) Direct factory manufacturing eliminating 20-30% trader markups, 3) 24h local maintenance across Bengaluru..."></textarea>
+            </div>
+
+            <!-- Tags -->
+            <div class="blog-form-group">
+              <label class="blog-form-label" for="formBlogTags">
+                <span>Article Tags / Topics</span>
+                <span class="blog-form-hint">Comma separated (e.g. SS 304, Commercial Kitchen, Burner Range)</span>
+              </label>
+              <input type="text" id="formBlogTags" class="blog-form-input" placeholder="SS 304, Commercial Kitchen, Bangalore Equipment, Restaurant Setup" value="SS 304, Commercial Kitchen, BKS Industries">
+            </div>
+
+            <!-- Featured Post Checkbox -->
+            <div class="blog-form-group" style="flex-direction: row; align-items: center; gap: 0.75rem; background: #F8FAFC; padding: 0.75rem 1rem; border-radius: 0.5rem; border: 1px solid #E2E8F0;">
+              <input type="checkbox" id="formBlogFeatured" style="width: 1.2rem; height: 1.2rem; cursor: pointer;">
+              <label for="formBlogFeatured" style="cursor: pointer; font-size: 0.9rem; font-weight: 700; color: var(--apollo-navy); margin-bottom: 0;">
+                ⭐ Mark as Featured Article (Highlights with special badge)
+              </label>
+            </div>
+
+            <!-- Rich Body Content Builder with Toolbar & Live Preview -->
+            <div class="blog-form-group" style="margin-top: 1.5rem;">
+              <label class="blog-form-label">
+                <span>Full Article Body Content *</span>
+                <span class="blog-form-hint">Use rich formatting buttons below to build your article</span>
+              </label>
+
+              <!-- Rich Formatting Toolbar -->
+              <div class="blog-editor-toolbar">
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('h2')" title="Add Section Heading">
+                  <i class="fa-solid fa-heading"></i> <span>H2 Section</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('h3')" title="Add Subsection Heading">
+                  <i class="fa-solid fa-heading" style="font-size: 0.7rem;"></i> <span>H3 Subsection</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('p')" title="Add Paragraph">
+                  <i class="fa-solid fa-paragraph"></i> <span>Paragraph</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('bold')" title="Bold Text">
+                  <i class="fa-solid fa-bold"></i> <span>Bold</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('italic')" title="Italic Text">
+                  <i class="fa-solid fa-italic"></i> <span>Italic</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('ul')" title="Bullet Points">
+                  <i class="fa-solid fa-list-ul"></i> <span>Bullet List</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('ol')" title="Numbered Steps">
+                  <i class="fa-solid fa-list-ol"></i> <span>Numbered List</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('highlight')" title="Add SS 304 Highlight Alert Box">
+                  <i class="fa-solid fa-bullhorn"></i> <span>Highlight Box</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('compare-table')" title="Add SS 304 Comparison Table">
+                  <i class="fa-solid fa-table-columns"></i> <span>Compare Table</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('price-table')" title="Add Equipment Price Table">
+                  <i class="fa-solid fa-indian-rupee-sign"></i> <span>Price Table</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('image-card')" title="Add In-Content Image with Caption">
+                  <i class="fa-solid fa-image"></i> <span>Image Card</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('quote')" title="Add Expert Quote Callout">
+                  <i class="fa-solid fa-quote-left"></i> <span>Quote Box</span>
+                </button>
+              </div>
+
+              <!-- Editor / Preview Sub-Tabs -->
+              <div class="blog-editor-subtabs">
+                <button type="button" class="blog-editor-subtab-btn active" id="subtabEdit" onclick="switchEditorSubtab('edit')">
+                  <i class="fa-solid fa-code"></i> HTML / Content Editor
+                </button>
+                <button type="button" class="blog-editor-subtab-btn" id="subtabPreview" onclick="switchEditorSubtab('preview')">
+                  <i class="fa-solid fa-eye"></i> Live Article Preview
+                </button>
+              </div>
+
+              <!-- Editor Textarea Pane -->
+              <div id="editorPaneEdit">
+                <textarea id="formBlogContent" class="blog-form-textarea blog-editor-body-textarea" style="min-height: 16rem;" placeholder="Compose your article content here. Click any of the formatting buttons above to insert headings, tables, bullet points, and highlight callouts..." required oninput="updateLivePreview()"></textarea>
+              </div>
+
+              <!-- Live Preview Pane -->
+              <div id="editorPanePreview" style="display: none;">
+                <div class="blog-live-preview-box" id="articleLivePreviewContainer">
+                  <!-- Live preview injected here -->
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB 2: MANAGE ARTICLES -->
+        <div class="blog-tab-pane" id="paneManage">
+          <div class="blog-manage-search-bar">
+            <div class="blog-search-wrapper" style="flex: 1;">
+              <i class="fa-solid fa-magnifying-glass blog-search-icon"></i>
+              <input type="text" id="manageSearchInput" class="blog-search-input" placeholder="Filter articles by title or keyword..." oninput="renderManageBlogsList(this.value)">
+            </div>
+            <button type="button" class="blog-btn-upload-trigger" onclick="switchStudioTab('create')">
+              <i class="fa-solid fa-plus"></i> New Blog
+            </button>
+          </div>
+
+          <div class="blog-manage-list" id="manageBlogsList">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- TAB 3: EXPORT & DEPLOY CODE -->
+        <div class="blog-tab-pane" id="paneExport">
+          <div style="margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--apollo-navy); margin-bottom: 0.25rem;">
+                <i class="fa-solid fa-download text-apollo-blue me-1"></i> Permanent Repository Export
+              </h3>
+              <p style="font-size: 0.85rem; color: #64748B;">
+                Download or copy your updated blog database to bake custom articles into git and live hosting.
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" class="blog-btn-primary-action" onclick="downloadUpdatedBlogsJsFile()">
+                <i class="fa-solid fa-file-arrow-down"></i> Download blogs-data.js
+              </button>
+              <button type="button" class="blog-btn-secondary" onclick="copyExportCode()">
+                <i class="fa-regular fa-copy"></i> Copy Code
+              </button>
+              <button type="button" class="blog-btn-secondary" onclick="exportBlogsAsJson()">
+                <i class="fa-solid fa-file-code"></i> Export JSON
+              </button>
+            </div>
+          </div>
+
+          <div class="blog-code-export-box" id="exportCodeContainer">
+            // Loading code...
+          </div>
+
+          <div class="blog-export-instructions">
+            <h4><i class="fa-solid fa-circle-info text-apollo-blue me-1"></i> How to Publish to Production (Vercel / GitHub):</h4>
+            <ol>
+              <li>Click <strong>"Download blogs-data.js"</strong> above.</li>
+              <li>Replace the existing <code style="background: #E2E8F0; padding: 2px 6px; border-radius: 4px; font-weight: 700;">blogs-data.js</code> file in your website root folder with the downloaded file.</li>
+              <li>Commit &amp; push to GitHub or redeploy on Vercel — all visitors worldwide will instantly see your new articles!</li>
+              <li><em>Note:</em> When running locally with <code style="background: #E2E8F0; padding: 2px 6px; border-radius: 4px;">node local-server.js</code>, articles and images are automatically saved to disk without extra steps!</li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
       <div class="blog-modal-footer">
         <div class="blog-studio-extra-btns">
-          <button type="button" class="blog-btn-secondary" onclick="exportBlogsAsJson()" title="Export All Blogs to JSON">
-            <i class="fa-solid fa-download"></i> Export JSON
-          </button>
           <button type="button" class="blog-btn-secondary" onclick="triggerResetBlogs()" title="Restore Factory Default Blogs">
             <i class="fa-solid fa-rotate-left"></i> Restore Defaults
           </button>
         </div>
-        <div>
-          <button type="button" class="blog-btn-secondary" onclick="closeAddBlogModal()" style="margin-right: 0.5rem;">Cancel</button>
-          <button type="submit" form="addBlogForm" class="blog-btn-primary-action">
-            <i class="fa-solid fa-floppy-disk"></i> Publish Article
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="blog-btn-secondary" onclick="closeBlogStudio()">Close</button>
+          <button type="submit" form="addBlogForm" class="blog-btn-primary-action" id="btnSubmitBlog">
+            <i class="fa-solid fa-floppy-disk"></i> Publish Article Now
           </button>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Floating Quick Creator Studio Button (Admin Only) -->
+  <button type="button" id="floatingCreatorBtn" class="blog-floating-creator-btn" onclick="openBlogStudio('create')" title="Open Blog Creator Studio" style="display: none;">
+    <i class="fa-solid fa-feather-pointed"></i>
+    <span>Write Blog</span>
+  </button>
 
   <!-- =========================================================================
        8. APOLLO FOOTER
@@ -493,9 +833,14 @@
         </div>
       </div>
 
-      <div class="apollo-footer-bottom">
+      <div class="apollo-footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
         <p>&copy; 2026 B.K.S. Industries (Bengaluru). All Rights Reserved.</p>
-        <p>Commercial Kitchen Equipment Manufacturer &bull; Direct Factory Bengaluru</p>
+        <p style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <span>Commercial Kitchen Equipment Manufacturer &bull; Direct Factory Bengaluru</span>
+          <a href="javascript:void(0)" onclick="handleAdminEntryClick()" class="footer-admin-lock-link" id="footerAdminLockBtn" title="BKS Owner Portal">
+            <i class="fa-solid fa-lock"></i> <span id="footerAdminLockText">Owner Access</span>
+          </a>
+        </p>
       </div>
     </div>
   </footer>
@@ -508,15 +853,139 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- JavaScript Modules -->
-  <script src="blogs-data.js?v=20260824_v10"></script>
+  <script src="blogs-data.js?v=20260824_v11"></script>
   <script>
+    // =========================================================================
+    // PRIVATE OWNER AUTHENTICATION SYSTEM
+    // =========================================================================
+    const DEFAULT_ADMIN_USER = 'bksadmin';
+    const DEFAULT_ADMIN_PASS = 'bks@2026';
+    const ADMIN_AUTH_STORAGE_KEY = 'bksi_admin_authenticated_v1';
+    let pendingStudioTab = 'create';
+
+    function isAdminLoggedIn() {
+      return localStorage.getItem(ADMIN_AUTH_STORAGE_KEY) === 'true';
+    }
+
+    function updateAdminVisibilityUI() {
+      const isAuth = isAdminLoggedIn();
+      const headerLoginWrap = document.getElementById('headerOwnerLoginWrap');
+      const headerActions = document.getElementById('blogHeaderAdminActions');
+      const floatingBtn = document.getElementById('floatingCreatorBtn');
+      const topbarLockText = document.getElementById('topbarAdminLockText');
+      const footerLockText = document.getElementById('footerAdminLockText');
+
+      if (headerLoginWrap) {
+        headerLoginWrap.style.display = isAuth ? 'none' : 'flex';
+      }
+      if (headerActions) {
+        headerActions.style.display = isAuth ? 'flex' : 'none';
+      }
+      if (floatingBtn) {
+        floatingBtn.style.display = isAuth ? 'flex' : 'none';
+      }
+      if (topbarLockText) {
+        topbarLockText.textContent = isAuth ? '👑 Admin Active' : 'Owner Login';
+      }
+      if (footerLockText) {
+        footerLockText.textContent = isAuth ? '👑 Admin Active' : 'Owner Access';
+      }
+
+      // Re-render blog cards to show/hide edit pencil buttons
+      renderBlogsView();
+    }
+
+    function openAdminLoginModal(targetTab = 'create') {
+      pendingStudioTab = targetTab;
+      const modal = document.getElementById('adminLoginModal');
+      const errorBox = document.getElementById('adminLoginError');
+      if (errorBox) errorBox.style.display = 'none';
+      if (modal) modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('loginUserId')?.focus(), 200);
+    }
+
+    function closeAdminLoginModal() {
+      const modal = document.getElementById('adminLoginModal');
+      if (modal) modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleLoginBackdropClick(e) {
+      if (e.target === document.getElementById('adminLoginModal')) {
+        closeAdminLoginModal();
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const passInput = document.getElementById('loginPassword');
+      const label = document.getElementById('pwdToggleLabel');
+      if (!passInput) return;
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        if (label) label.textContent = 'Hide';
+      } else {
+        passInput.type = 'password';
+        if (label) label.textContent = 'Show';
+      }
+    }
+
+    function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUserId').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPassword').value;
+      const errorBox = document.getElementById('adminLoginError');
+      const errorText = document.getElementById('adminLoginErrorText');
+
+      // Valid User IDs: 'bksadmin', 'admin', 'bksindustries'
+      const validUsers = [DEFAULT_ADMIN_USER, 'admin', 'bksindustries', 'bks-industries'];
+      const validPass = localStorage.getItem('bksi_custom_admin_pass') || DEFAULT_ADMIN_PASS;
+
+      if (validUsers.includes(user) && pass === validPass) {
+        localStorage.setItem(ADMIN_AUTH_STORAGE_KEY, 'true');
+        closeAdminLoginModal();
+        updateAdminVisibilityUI();
+        showToast('👑 Welcome back, BKS Admin! Creator Studio unlocked.', 'success');
+        openBlogStudio(pendingStudioTab);
+      } else {
+        if (errorBox && errorText) {
+          errorBox.style.display = 'flex';
+          errorText.textContent = 'Incorrect User ID or Password. Please try again.';
+        }
+      }
+    }
+
+    function handleAdminLogout() {
+      localStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
+      closeBlogStudio();
+      updateAdminVisibilityUI();
+      showToast('Logged out of Admin mode. Blog controls are now hidden.', 'info');
+    }
+
+    function handleAdminEntryClick() {
+      if (isAdminLoggedIn()) {
+        openBlogStudio('manage');
+      } else {
+        openAdminLoginModal('create');
+      }
+    }
+
     // State management
     let currentCategory = 'all';
     let currentSearchTerm = '';
     let currentSort = 'newest';
+    let currentImageMode = 'upload';
+    let uploadedImageDataUrl = '';
 
     document.addEventListener('DOMContentLoaded', () => {
-      renderBlogsView();
+      // Set default date to today
+      const dateInput = document.getElementById('formBlogDate');
+      if (dateInput) {
+        dateInput.value = new Date().toISOString().slice(0, 10);
+      }
+
+      updateAdminVisibilityUI();
+      updateCustomBlogCountBadge();
 
       // Back to top scroll listener
       window.addEventListener('scroll', () => {
@@ -536,35 +1005,52 @@
         }
       });
 
-      // Discreet Owner Shortcut: Ctrl + Shift + B or URL param ?admin=true
+      // Keyboard Shortcut: Ctrl + Shift + B opens Creator Studio (prompts login if not authenticated)
       window.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.shiftKey && (e.key === 'B' || e.key === 'b')) {
           e.preventDefault();
-          openAddBlogModal();
+          if (isAdminLoggedIn()) {
+            openBlogStudio('create');
+          } else {
+            openAdminLoginModal('create');
+          }
         }
       });
 
+      // Drag and drop listeners for image dropzone
+      setupImageDragAndDrop();
+
+      // Check URL params (?admin=login or ?admin=true or ?upload=true or ?manage=true or ?edit=slug)
       const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('admin') === 'true') {
-        setTimeout(() => openAddBlogModal(), 300);
+      if (urlParams.get('admin') === 'login' || urlParams.get('login') === 'true') {
+        setTimeout(() => openAdminLoginModal('create'), 300);
+      } else if (urlParams.get('edit')) {
+        setTimeout(() => handleEditBlog(urlParams.get('edit')), 300);
+      } else if (urlParams.get('admin') === 'true' || urlParams.get('upload') === 'true') {
+        setTimeout(() => openBlogStudio('create'), 300);
+      } else if (urlParams.get('manage') === 'true') {
+        setTimeout(() => openBlogStudio('manage'), 300);
       }
     });
 
+    // =========================================================================
+    // BLOG FILTERING, SORTING & RENDERING
+    // =========================================================================
     function getFilteredAndSortedBlogs() {
       let blogs = getAllBlogs();
 
       // 1. Filter by category
       if (currentCategory !== 'all') {
-        blogs = blogs.filter(b => b.category.toLowerCase() === currentCategory.toLowerCase() || b.categorySlug === currentCategory);
+        blogs = blogs.filter(b => (b.category && b.category.toLowerCase() === currentCategory.toLowerCase()) || b.categorySlug === currentCategory);
       }
 
       // 2. Filter by search term
       if (currentSearchTerm.trim()) {
         const q = currentSearchTerm.toLowerCase();
         blogs = blogs.filter(b => 
-          b.title.toLowerCase().includes(q) || 
-          b.excerpt.toLowerCase().includes(q) ||
-          b.category.toLowerCase().includes(q) ||
+          (b.title && b.title.toLowerCase().includes(q)) || 
+          (b.excerpt && b.excerpt.toLowerCase().includes(q)) ||
+          (b.category && b.category.toLowerCase().includes(q)) ||
           (b.tags && b.tags.some(t => t.toLowerCase().includes(q)))
         );
       }
@@ -573,9 +1059,9 @@
       if (currentSort === 'newest') {
         blogs.sort((a, b) => new Date(b.isoDate || b.date) - new Date(a.isoDate || a.date));
       } else if (currentSort === 'oldest') {
-        blogs.sort((a, b) => new Date(a.isoDate || b.date) - new Date(b.isoDate || a.date));
+        blogs.sort((a, b) => new Date(a.isoDate || a.date) - new Date(b.isoDate || b.date));
       } else if (currentSort === 'readtime') {
-        blogs.sort((a, b) => parseInt(a.readTime) - parseInt(b.readTime));
+        blogs.sort((a, b) => parseInt(a.readTime || '5') - parseInt(b.readTime || '5'));
       }
 
       return blogs;
@@ -583,13 +1069,8 @@
 
     function renderBlogsView() {
       const blogs = getFilteredAndSortedBlogs();
-      const featuredContainer = document.getElementById('featuredBlogContainer');
       const gridContainer = document.getElementById('blogGridContainer');
-      const countBadge = document.getElementById('blogCountBadge');
-
-      if (countBadge) {
-        countBadge.textContent = `${blogs.length} ${blogs.length === 1 ? 'Article' : 'Articles'}`;
-      }
+      const isAuth = isAdminLoggedIn();
 
       if (blogs.length === 0) {
         if (gridContainer) {
@@ -597,71 +1078,73 @@
             <div class="blog-empty-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: #ffffff; border-radius: 1rem; border: 1px solid #e2e8f0;">
               <i class="fa-solid fa-newspaper" style="font-size: 3rem; color: #94a3b8; margin-bottom: 1rem;"></i>
               <h3 style="font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">No Articles Found</h3>
-              <p style="color: #64748b; margin-bottom: 1.5rem;">No blogs match your filter or search query. Try clearing filters or searching for different keywords.</p>
-              <button class="blog-pill-btn active" onclick="resetAllFilters()">Reset All Filters</button>
+              <p style="color: #64748b; margin-bottom: 1.5rem;">No blogs match your filter or search query. Try clearing filters or creating a new post.</p>
+              <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+                <button class="blog-pill-btn active" onclick="resetAllFilters()">Reset All Filters</button>
+                ${isAuth ? '<button class="blog-btn-upload-trigger" onclick="openBlogStudio(\'create\')"><i class="fa-solid fa-plus"></i> Upload New Blog</button>' : ''}
+              </div>
             </div>
           `;
         }
         return;
       }
 
-      // Render All Articles in Clean 3-Column Grid (SLN Equipments Layout)
+      // Render All Articles in Clean 3-Column Grid
       if (gridContainer) {
-        gridContainer.innerHTML = blogs.map(b => `
-          <a href="blog-details.html?slug=${b.slug}" class="blog-card">
-            <div class="blog-card-img-box">
-              <img src="${b.image}" alt="${b.title}" class="blog-card-img" loading="lazy">
-              <span class="blog-card-cat-badge">${b.category}</span>
-              <span class="blog-card-read-badge"><i class="fa-regular fa-clock"></i> ${b.readTime}</span>
-              ${b.featured ? '<span class="blog-featured-corner-badge"><i class="fa-solid fa-star"></i> Featured</span>' : ''}
-            </div>
-            <div class="blog-card-body">
-              <div class="blog-meta-row">
-                <span><i class="fa-regular fa-calendar me-1" style="color: var(--apollo-blue);"></i> ${b.date}</span>
-                <span>&bull;</span>
-                <span><i class="fa-solid fa-industry me-1" style="color: var(--apollo-blue);"></i> BKS Factory</span>
-              </div>
-              <h3 class="blog-card-title">${b.title}</h3>
-              <p class="blog-card-excerpt">${b.excerpt}</p>
-              <div class="blog-card-footer">
-                <div class="blog-author-meta">
-                  <img src="${b.authorAvatar || 'images/bksi_official_logo.png'}" alt="${b.author}" class="blog-author-avatar-sm">
-                  <div>
-                    <div class="blog-author-name">${b.author}</div>
-                    <div class="blog-author-role-sub">${b.authorRole || 'Commercial Kitchen Specialist'}</div>
+        gridContainer.innerHTML = blogs.map(b => {
+          const isCustom = b.isCustom || (b.id && b.id.startsWith('blog-custom-'));
+          return `
+            <div class="blog-card" style="position: relative;">
+              <a href="blog-details.html?slug=${b.slug}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                <div class="blog-card-img-box">
+                  <img src="${b.image}" alt="${b.title}" class="blog-card-img" loading="lazy">
+                  <span class="blog-card-cat-badge">${b.category}</span>
+                  <span class="blog-card-read-badge"><i class="fa-regular fa-clock"></i> ${b.readTime || '5 min read'}</span>
+                  ${b.featured ? '<span class="blog-featured-corner-badge"><i class="fa-solid fa-star"></i> Featured</span>' : ''}
+                  ${(isCustom && isAuth) ? '<span style="position: absolute; bottom: 1rem; right: 1rem; background: #10B981; color: #FFFFFF; font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 9999px; z-index: 2;"><i class="fa-solid fa-feather"></i> Custom</span>' : ''}
+                </div>
+                <div class="blog-card-body">
+                  <div class="blog-meta-row">
+                    <span><i class="fa-regular fa-calendar me-1" style="color: var(--apollo-blue);"></i> ${b.date}</span>
+                    <span>&bull;</span>
+                    <span><i class="fa-solid fa-industry me-1" style="color: var(--apollo-blue);"></i> BKS Factory</span>
+                  </div>
+                  <h3 class="blog-card-title">${b.title}</h3>
+                  <p class="blog-card-excerpt">${b.excerpt}</p>
+                  <div class="blog-card-footer">
+                    <div class="blog-author-meta">
+                      <img src="${b.authorAvatar || 'images/bksi_official_logo.png'}" alt="${b.author}" class="blog-author-avatar-sm">
+                      <div>
+                        <div class="blog-author-name">${b.author || 'BKS Engineering Team'}</div>
+                        <div class="blog-author-role-sub">${b.authorRole || 'Commercial Kitchen Specialist'}</div>
+                      </div>
+                    </div>
+                    <span class="blog-btn-read">Read Guide <i class="fa-solid fa-arrow-right"></i></span>
                   </div>
                 </div>
-                <span class="blog-btn-read">Read Guide <i class="fa-solid fa-arrow-right"></i></span>
-              </div>
+              </a>
+              ${(isAuth && isCustom) ? `
+                <div style="position: absolute; top: 0.6rem; right: 0.6rem; z-index: 5; display: flex; gap: 0.35rem;">
+                  <button type="button" class="blog-action-btn" title="Edit Article" onclick="event.stopPropagation(); handleEditBlog('${b.slug}')" style="background: rgba(255,255,255,0.92); box-shadow: 0 2px 6px rgba(0,0,0,0.2);">
+                    <i class="fa-solid fa-pencil text-apollo-blue"></i>
+                  </button>
+                </div>
+              ` : ''}
             </div>
-          </a>
-        `).join('');
+          `;
+        }).join('');
       }
     }
 
-    // Quick Keyword Search from Hero Trending Chips
-    function quickFilterByKeyword(keyword) {
-      const searchInput = document.getElementById('blogSearchInput');
-      if (searchInput) {
-        searchInput.value = keyword;
-        searchInput.focus();
-      }
-      currentSearchTerm = keyword;
-      currentCategory = 'all';
-      document.querySelectorAll('.blog-pill-btn').forEach((btn, idx) => {
-        if (idx === 0) btn.classList.add('active');
-        else btn.classList.remove('active');
-      });
-      renderBlogsView();
-
-      // Smooth scroll down to toolbar
-      const toolbar = document.querySelector('.blog-toolbar');
-      if (toolbar) {
-        toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    function updateCustomBlogCountBadge() {
+      const all = getAllBlogs();
+      const customCount = all.filter(b => b.isCustom || (b.id && b.id.startsWith('blog-custom-'))).length;
+      const badge = document.getElementById('customBlogCountBadge');
+      if (badge) {
+        badge.textContent = `${customCount} Custom`;
       }
     }
 
-    // Filter by Category
     function filterByCategory(cat, btnElem) {
       currentCategory = cat;
       document.querySelectorAll('.blog-pill-btn').forEach(btn => btn.classList.remove('active'));
@@ -669,19 +1152,16 @@
       renderBlogsView();
     }
 
-    // Search Handler
     function handleBlogSearch(val) {
       currentSearchTerm = val;
       renderBlogsView();
     }
 
-    // Sort Handler
     function handleBlogSort(val) {
       currentSort = val;
       renderBlogsView();
     }
 
-    // Reset Filters
     function resetAllFilters() {
       currentCategory = 'all';
       currentSearchTerm = '';
@@ -694,56 +1174,353 @@
       renderBlogsView();
     }
 
-    // Modal Operations
-    function openAddBlogModal() {
+    // =========================================================================
+    // STUDIO MODAL OPERATIONS & TAB SWITCHING
+    // =========================================================================
+    function openBlogStudio(tab = 'create') {
+      if (!isAdminLoggedIn()) {
+        openAdminLoginModal(tab);
+        return;
+      }
       const modal = document.getElementById('blogModalBackdrop');
-      const form = document.getElementById('addBlogForm');
-      if (form) form.reset();
-      document.getElementById('blogEditId').value = '';
-      document.getElementById('blogModalHeading').textContent = 'Add New Blog Article';
       if (modal) modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      switchStudioTab(tab);
     }
 
-    function closeAddBlogModal() {
+    function closeBlogStudio() {
       const modal = document.getElementById('blogModalBackdrop');
       if (modal) modal.classList.remove('active');
+      document.body.style.overflow = '';
     }
 
     function handleBackdropClick(e) {
       if (e.target === document.getElementById('blogModalBackdrop')) {
-        closeAddBlogModal();
+        closeBlogStudio();
       }
     }
 
-    function applyImagePreset(val) {
+    function switchStudioTab(tabName) {
+      // Tab Buttons
+      const tabBtns = {
+        create: document.getElementById('tabBtnWrite'),
+        manage: document.getElementById('tabBtnManage'),
+        export: document.getElementById('tabBtnExport')
+      };
+      // Panes
+      const panes = {
+        create: document.getElementById('paneCreate'),
+        manage: document.getElementById('paneManage'),
+        export: document.getElementById('paneExport')
+      };
+
+      Object.keys(tabBtns).forEach(k => {
+        if (tabBtns[k]) tabBtns[k].classList.toggle('active', k === tabName);
+      });
+      Object.keys(panes).forEach(k => {
+        if (panes[k]) panes[k].classList.toggle('active', k === tabName);
+      });
+
+      const submitBtn = document.getElementById('btnSubmitBlog');
+      if (submitBtn) {
+        submitBtn.style.display = tabName === 'create' ? 'inline-flex' : 'none';
+      }
+
+      if (tabName === 'manage') {
+        renderManageBlogsList();
+      } else if (tabName === 'export') {
+        renderExportCodePreview();
+      }
+    }
+
+    // =========================================================================
+    // IMAGE UPLOAD & SELECTION HANDLERS
+    // =========================================================================
+    function switchImageMode(mode) {
+      currentImageMode = mode;
+      document.getElementById('btnModeUpload')?.classList.toggle('active', mode === 'upload');
+      document.getElementById('btnModePreset')?.classList.toggle('active', mode === 'preset');
+      document.getElementById('btnModeUrl')?.classList.toggle('active', mode === 'url');
+
+      document.getElementById('imageModeUpload').style.display = mode === 'upload' ? 'block' : 'none';
+      document.getElementById('imageModePreset').style.display = mode === 'preset' ? 'block' : 'none';
+      document.getElementById('imageModeUrl').style.display = mode === 'url' ? 'block' : 'none';
+    }
+
+    function setupImageDragAndDrop() {
+      const dropzone = document.getElementById('dropzoneBox');
+      const wrapper = document.getElementById('imageUploadWrapper');
+      if (!dropzone || !wrapper) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          wrapper.classList.add('drag-over');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          wrapper.classList.remove('drag-over');
+        });
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
+          processSelectedImageFile(files[0]);
+        }
+      });
+    }
+
+    function handleImageFileSelect(e) {
+      const file = e.target.files?.[0];
+      if (file) {
+        processSelectedImageFile(file);
+      }
+    }
+
+    function processSelectedImageFile(file) {
+      if (!file.type.startsWith('image/')) {
+        showToast('Please select a valid image file (PNG, JPG, WebP).', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const dataUrl = event.target.result;
+        uploadedImageDataUrl = dataUrl;
+
+        // Try local server disk upload if server is active
+        let finalPath = dataUrl;
+        try {
+          const res = await fetch('/api/upload-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              filename: file.name,
+              base64Data: dataUrl
+            })
+          });
+          const json = await res.json();
+          if (json && json.success && json.imagePath) {
+            finalPath = json.imagePath;
+            console.log('✅ Image uploaded to disk:', finalPath);
+          }
+        } catch (err) {
+          // Running in static environment - dataUrl is preserved in localStorage
+        }
+
+        setImagePreview(dataUrl, finalPath);
+        showToast(`Image "${file.name}" loaded successfully!`, 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function applyPresetImage(val) {
       if (val) {
-        document.getElementById('formBlogImage').value = val;
+        setImagePreview(val, val);
       }
     }
 
-    function autoGenerateSlug(title) {
-      // Helper in form if needed
+    function applyUrlImage(val) {
+      if (val && val.trim()) {
+        setImagePreview(val.trim(), val.trim());
+      }
     }
 
-    function handleSaveBlogForm(e) {
+    function setImagePreview(displaySrc, finalVal) {
+      document.getElementById('formBlogImageFinal').value = finalVal;
+      const previewBox = document.getElementById('imagePreviewBox');
+      const previewImg = document.getElementById('imagePreviewImg');
+      if (previewBox && previewImg) {
+        previewImg.src = displaySrc;
+        previewBox.style.display = 'block';
+      }
+    }
+
+    function removeUploadedImage() {
+      document.getElementById('formBlogImageFinal').value = '';
+      uploadedImageDataUrl = '';
+      const previewBox = document.getElementById('imagePreviewBox');
+      if (previewBox) previewBox.style.display = 'none';
+      const fileInput = document.getElementById('formBlogImageFile');
+      if (fileInput) fileInput.value = '';
+      const urlInput = document.getElementById('formBlogImageUrlInput');
+      if (urlInput) urlInput.value = '';
+      const presetSelect = document.getElementById('formBlogImagePresetSelect');
+      if (presetSelect) presetSelect.value = '';
+    }
+
+    // =========================================================================
+    // FORM INPUT HELPERS & LIVE SLUG / CHAR COUNTERS
+    // =========================================================================
+    function handleTitleInput(title) {
+      const charCounter = document.getElementById('titleCharCounter');
+      if (charCounter) charCounter.textContent = `${title.length} characters`;
+
+      const slugInput = document.getElementById('formBlogSlug');
+      const editId = document.getElementById('blogEditId').value;
+      // Auto-generate slug only if new article or not manually customized
+      if (!editId || !slugInput.dataset.manual) {
+        slugInput.value = generateBlogSlug(title);
+      }
+    }
+
+    function handleExcerptInput(text) {
+      const counter = document.getElementById('excerptCharCounter');
+      if (counter) counter.textContent = `${text.length}/200 chars`;
+    }
+
+    function handleCategoryChange(val) {
+      const customInput = document.getElementById('formBlogCategoryCustom');
+      if (customInput) {
+        customInput.style.display = val === '__custom__' ? 'block' : 'none';
+        if (val === '__custom__') customInput.focus();
+      }
+    }
+
+    function autoCalculateReadTime() {
+      const content = document.getElementById('formBlogContent')?.value || '';
+      const words = content.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+      const readTimeMinutes = Math.max(1, Math.ceil(words / 200));
+      const readTimeInput = document.getElementById('formBlogReadTime');
+      if (readTimeInput) {
+        readTimeInput.value = `${readTimeMinutes} min read`;
+      }
+      showToast(`Estimated read time: ${readTimeMinutes} min read (${words} words)`, 'info');
+    }
+
+    // =========================================================================
+    // RICH CONTENT BUILDER TOOLBAR & LIVE PREVIEW
+    // =========================================================================
+    function insertFormatting(type) {
+      const textarea = document.getElementById('formBlogContent');
+      if (!textarea) return;
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selected = textarea.value.substring(start, end);
+      let snippet = '';
+
+      switch(type) {
+        case 'h2':
+          snippet = `\n<h2>${selected || 'Section Heading Title'}</h2>\n`;
+          break;
+        case 'h3':
+          snippet = `\n<h3>${selected || 'Subsection Heading'}</h3>\n`;
+          break;
+        case 'p':
+          snippet = `\n<p>${selected || 'Write your informative paragraph text here explaining the equipment or technical guideline in detail...'}</p>\n`;
+          break;
+        case 'bold':
+          snippet = `<strong>${selected || 'bold text'}</strong>`;
+          break;
+        case 'italic':
+          snippet = `<em>${selected || 'italic text'}</em>`;
+          break;
+        case 'ul':
+          snippet = `\n<ul>\n  <li><strong>Point 1:</strong> Detail about SS 304 food-grade stainless steel.</li>\n  <li><strong>Point 2:</strong> Detail about gas burner efficiency and safety valves.</li>\n  <li><strong>Point 3:</strong> Detail about ease of maintenance and 24h factory support.</li>\n</ul>\n`;
+          break;
+        case 'ol':
+          snippet = `\n<ol>\n  <li><strong>Step 1:</strong> Assess kitchen floor plan and power/gas manifold lines.</li>\n  <li><strong>Step 2:</strong> Calculate exhaust airflow (CFM) and hood dimensions.</li>\n  <li><strong>Step 3:</strong> Commission custom SS 304 fabrication at factory rates.</li>\n</ol>\n`;
+          break;
+        case 'highlight':
+          snippet = `\n<div class="blog-highlight-box">\n  <p><strong>🎯 Direct Factory Key Takeaway:</strong> Sourcing directly from an authentic OEM manufacturing factory like B.K.S. Industries (Bengaluru) eliminates 20% to 30% middleman markups and guarantees genuine AISI 304 food-grade stainless steel with 24-hour on-site maintenance support. Call <strong>+91 81239 39433</strong> for free 2D/3D layouts.</p>\n</div>\n`;
+          break;
+        case 'compare-table':
+          snippet = `\n<div class="blog-table-responsive">\n  <table class="blog-table">\n    <thead>\n      <tr>\n        <th>Feature / Parameter</th>\n        <th>BKS Industries (Prime SS 304)</th>\n        <th>Generic Local Fabrications</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td><strong>Material Grade</strong></td>\n        <td>Certified Prime AISI 304 (18/8 Nickel-Chromium)</td>\n        <td>Cheap SS 202 or mixed thin alloys</td>\n      </tr>\n      <tr>\n        <td><strong>Corrosion Resistance</strong></td>\n        <td>100% rust-proof against acids, salts & moisture</td>\n        <td>Prone to surface pitting and rust within 6 months</td>\n      </tr>\n      <tr>\n        <td><strong>Welding Quality</strong></td>\n        <td>Argon-purged TIG with seamless radiused corners</td>\n        <td>Rough spot welding prone to grease traps</td>\n      </tr>\n      <tr>\n        <td><strong>Warranty & Support</strong></td>\n        <td>24h factory technician visit across Bengaluru</td>\n        <td>No dedicated service team</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n`;
+          break;
+        case 'price-table':
+          snippet = `\n<div class="blog-table-responsive">\n  <table class="blog-table">\n    <thead>\n      <tr>\n        <th>Machinery Name</th>\n        <th>Key Technical Specifications</th>\n        <th>Factory Price Range (INR)</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td><strong>4-Burner Cooking Range</strong></td>\n        <td>Heavy Cast-Iron Burners, SS 304 Top & Frame</td>\n        <td>₹38,000 – ₹58,000</td>\n      </tr>\n      <tr>\n        <td><strong>SS Prep Work Table</strong></td>\n        <td>16-Gauge SS 304, Undershelf & Backsplash</td>\n        <td>₹12,000 – ₹24,000</td>\n      </tr>\n      <tr>\n        <td><strong>Vertical Commercial Chiller</strong></td>\n        <td>2-Door / 4-Door, Embraco Compressor, +2°C to +8°C</td>\n        <td>₹65,000 – ₹1,15,000</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n`;
+          break;
+        case 'image-card':
+          snippet = `\n<div class="blog-media-card" style="margin: 2rem 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.5rem; text-align: center;">\n  <img src="images/hero-slides/slide2_commercial_restaurant.jpg" alt="Commercial Kitchen Installation by BKS Industries Bengaluru" style="max-height: 380px; width: 100%; object-fit: cover; border-radius: 0.75rem; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">\n  <p style="font-size: 0.875rem; color: #475569; margin-top: 0.85rem; font-weight: 600;">\n    <i class="fa-solid fa-shield-halved text-apollo-blue"></i> Fig: Live Commercial Kitchen Cooking Line engineered by B.K.S. Industries Bengaluru.\n  </p>\n</div>\n`;
+          break;
+        case 'quote':
+          snippet = `\n<blockquote style="border-left: 4px solid var(--apollo-blue); padding: 1rem 1.5rem; background: #F8FAFC; border-radius: 0 0.5rem 0.5rem 0; margin: 1.5rem 0; font-style: italic; color: #334155;">\n  "Investing in heavy 16-gauge SS 304 cooking equipment directly cuts down fuel waste and equipment replacement costs by over 40% in high-volume kitchens."\n  <footer style="margin-top: 0.5rem; font-weight: 700; font-style: normal; color: var(--apollo-navy); font-size: 0.85rem;">— BKS Chief Project Engineer</footer>\n</blockquote>\n`;
+          break;
+      }
+
+      textarea.value = textarea.value.substring(0, start) + snippet + textarea.value.substring(end);
+      textarea.focus();
+      textarea.selectionStart = textarea.selectionEnd = start + snippet.length;
+      updateLivePreview();
+    }
+
+    function switchEditorSubtab(subtab) {
+      document.getElementById('subtabEdit')?.classList.toggle('active', subtab === 'edit');
+      document.getElementById('subtabPreview')?.classList.toggle('active', subtab === 'preview');
+
+      document.getElementById('editorPaneEdit').style.display = subtab === 'edit' ? 'block' : 'none';
+      document.getElementById('editorPanePreview').style.display = subtab === 'preview' ? 'block' : 'none';
+
+      if (subtab === 'preview') {
+        updateLivePreview();
+      }
+    }
+
+    function updateLivePreview() {
+      const previewContainer = document.getElementById('articleLivePreviewContainer');
+      const content = document.getElementById('formBlogContent')?.value || '';
+      const quickAnswer = document.getElementById('formBlogQuickAnswer')?.value || '';
+      const title = document.getElementById('formBlogTitle')?.value || 'Your Article Title';
+      const imageSrc = document.getElementById('formBlogImageFinal')?.value || 'images/hero-slides/slide2_commercial_restaurant.jpg';
+
+      if (!previewContainer) return;
+
+      previewContainer.innerHTML = `
+        <div style="margin-bottom: 1.5rem;">
+          <h1 style="font-size: 1.6rem; font-weight: 800; color: var(--apollo-navy); line-height: 1.3; margin-bottom: 0.75rem;">${title}</h1>
+          <img src="${imageSrc}" style="width: 100%; max-height: 280px; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1.25rem;" alt="Hero Preview">
+          ${quickAnswer ? `
+            <div class="blog-highlight-box" style="margin-bottom: 1.5rem;">
+              <p><strong>🎯 Key Takeaway:</strong> ${quickAnswer}</p>
+            </div>
+          ` : ''}
+          <div class="blog-article-content">
+            ${content || '<p style="color: #94A3B8; font-style: italic;">Your formatted article content will render live here...</p>'}
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // SAVE, EDIT, DUPLICATE & DELETE BLOG
+    // =========================================================================
+    async function handleSaveBlogForm(e) {
       e.preventDefault();
       const title = document.getElementById('formBlogTitle').value.trim();
-      const category = document.getElementById('formBlogCategory').value;
+      let category = document.getElementById('formBlogCategory').value;
+      if (category === '__custom__') {
+        category = document.getElementById('formBlogCategoryCustom').value.trim() || 'General';
+      }
+
+      const slug = document.getElementById('formBlogSlug').value.trim() || generateBlogSlug(title);
       const readTime = document.getElementById('formBlogReadTime').value.trim() || '5 min read';
-      const author = document.getElementById('formBlogAuthor').value.trim() || 'BKS Engineering Team';
-      const role = document.getElementById('formBlogRole').value.trim() || 'Commercial Kitchen Consultant';
-      const image = document.getElementById('formBlogImage').value.trim() || 'images/hero-slides/slide2_commercial_restaurant.jpg';
+      const author = document.getElementById('formBlogAuthor').value.trim() || 'BKS Engineering Advisory';
+      const role = document.getElementById('formBlogRole').value.trim() || 'Chief Commercial Kitchen Equipment Engineer';
+      
+      let image = document.getElementById('formBlogImageFinal').value.trim();
+      if (!image) {
+        image = 'images/hero-slides/slide2_commercial_restaurant.jpg';
+      }
+
       const excerpt = document.getElementById('formBlogExcerpt').value.trim();
       const quickAnswer = document.getElementById('formBlogQuickAnswer').value.trim();
       const content = document.getElementById('formBlogContent').value.trim();
+      const tagsStr = document.getElementById('formBlogTags').value.trim();
+      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : [category, "Commercial Kitchen"];
+      const featured = document.getElementById('formBlogFeatured').checked;
       const editId = document.getElementById('blogEditId').value;
 
-      const slug = generateBlogSlug(title);
-      const now = new Date();
+      const dateVal = document.getElementById('formBlogDate').value;
+      const now = dateVal ? new Date(dateVal) : new Date();
       const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
       const newBlog = {
-        id: editId || 'blog-custom-' + Date.now(),
+        id: editId || `blog-custom-${Date.now()}`,
         slug: slug,
         title: title,
         category: category,
@@ -755,29 +1532,173 @@
         authorAvatar: 'images/bksi_official_logo.png',
         readTime: readTime,
         image: image,
-        featured: false,
+        featured: featured,
         excerpt: excerpt,
         quickAnswer: quickAnswer,
         content: content,
-        tags: [category, "Commercial Kitchen", "BKS Industries"]
+        tags: tags,
+        isCustom: true
       };
 
       const success = saveBlogToStorage(newBlog);
       if (success) {
-        showToast('Blog article published successfully!', 'success');
-        closeAddBlogModal();
+        showToast('🎉 Blog article published successfully!', 'success');
+        closeBlogStudio();
         renderBlogsView();
+        updateCustomBlogCountBadge();
+
+        // Smooth scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        showToast('Failed to save article. Please check your storage settings.', 'error');
+        showToast('Failed to save article. Please check your storage quota.', 'error');
       }
     }
 
+    function handleEditBlog(slugOrId) {
+      const blog = getBlogBySlug(slugOrId);
+      if (!blog) return;
+
+      openBlogStudio('create');
+      document.getElementById('blogEditId').value = blog.id || blog.slug;
+      document.getElementById('formBlogTitle').value = blog.title || '';
+      document.getElementById('formBlogSlug').value = blog.slug || '';
+      document.getElementById('formBlogReadTime').value = blog.readTime || '5 min read';
+      document.getElementById('formBlogAuthor').value = blog.author || 'BKS Engineering Advisory';
+      document.getElementById('formBlogRole').value = blog.authorRole || 'Commercial Kitchen Specialist';
+      document.getElementById('formBlogExcerpt').value = blog.excerpt || '';
+      document.getElementById('formBlogQuickAnswer').value = blog.quickAnswer || '';
+      document.getElementById('formBlogContent').value = blog.content || '';
+      document.getElementById('formBlogTags').value = (blog.tags || []).join(', ');
+      document.getElementById('formBlogFeatured').checked = !!blog.featured;
+
+      // Handle category
+      const catSelect = document.getElementById('formBlogCategory');
+      let foundOption = false;
+      for (let opt of catSelect.options) {
+        if (opt.value === blog.category) {
+          catSelect.value = blog.category;
+          foundOption = true;
+          break;
+        }
+      }
+      if (!foundOption) {
+        catSelect.value = '__custom__';
+        const customInput = document.getElementById('formBlogCategoryCustom');
+        customInput.style.display = 'block';
+        customInput.value = blog.category || '';
+      }
+
+      // Handle image
+      if (blog.image) {
+        setImagePreview(blog.image, blog.image);
+      }
+
+      handleTitleInput(blog.title || '');
+      handleExcerptInput(blog.excerpt || '');
+      updateLivePreview();
+    }
+
+    function handleDeleteBlog(slugOrId) {
+      if (confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {
+        deleteBlogFromStorage(slugOrId);
+        showToast('Blog article deleted.', 'info');
+        renderBlogsView();
+        renderManageBlogsList();
+        updateCustomBlogCountBadge();
+      }
+    }
+
+    function handleDuplicateBlog(slugOrId) {
+      const duplicated = duplicateBlogInStorage(slugOrId);
+      if (duplicated) {
+        showToast(`Cloned "${duplicated.title}"!`, 'success');
+        renderBlogsView();
+        renderManageBlogsList();
+        updateCustomBlogCountBadge();
+      }
+    }
+
+    function renderManageBlogsList(filterQuery = '') {
+      const container = document.getElementById('manageBlogsList');
+      if (!container) return;
+
+      let blogs = getAllBlogs();
+      if (filterQuery.trim()) {
+        const q = filterQuery.toLowerCase();
+        blogs = blogs.filter(b => b.title.toLowerCase().includes(q) || b.category.toLowerCase().includes(q));
+      }
+
+      if (blogs.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 2.5rem; color: #64748B; background: #F8FAFC; border-radius: 0.5rem;">
+            <p>No articles found matching "${filterQuery}".</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = blogs.map(b => {
+        const isCustom = b.isCustom || (b.id && b.id.startsWith('blog-custom-'));
+        return `
+          <div class="blog-manage-item">
+            <div class="blog-manage-info">
+              <img src="${b.image}" alt="${b.title}" class="blog-manage-thumb">
+              <div class="blog-manage-meta">
+                <div class="blog-manage-title" title="${b.title}">${b.title}</div>
+                <div class="blog-manage-sub">
+                  <span class="${isCustom ? 'blog-badge-custom' : 'blog-badge-default'}">
+                    ${isCustom ? '<i class="fa-solid fa-feather"></i> Custom' : '<i class="fa-solid fa-shield"></i> Factory'}
+                  </span>
+                  <span>&bull;</span>
+                  <span>${b.category}</span>
+                  <span>&bull;</span>
+                  <span>${b.date}</span>
+                </div>
+              </div>
+            </div>
+            <div class="blog-manage-actions">
+              <button type="button" class="blog-action-btn" title="Edit Article" onclick="handleEditBlog('${b.slug}')">
+                <i class="fa-solid fa-pencil"></i>
+              </button>
+              <a href="blog-details.html?slug=${b.slug}" target="_blank" class="blog-action-btn" title="View Live Article">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <button type="button" class="blog-action-btn" title="Duplicate Article" onclick="handleDuplicateBlog('${b.slug}')">
+                <i class="fa-solid fa-clone"></i>
+              </button>
+              ${isCustom ? `
+                <button type="button" class="blog-action-btn btn-delete" title="Delete Article" onclick="handleDeleteBlog('${b.slug}')">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderExportCodePreview() {
+      const container = document.getElementById('exportCodeContainer');
+      if (!container) return;
+      container.textContent = generateBlogsDataJsCode();
+    }
+
+    function copyExportCode() {
+      const code = generateBlogsDataJsCode();
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('✅ Full blogs-data.js code copied to clipboard!', 'success');
+      }).catch(() => {
+        showToast('Failed to copy code', 'error');
+      });
+    }
+
     function triggerResetBlogs() {
-      if (confirm('Are you sure you want to restore the factory default blog articles? Any custom articles will be reset.')) {
+      if (confirm('Are you sure you want to restore factory default blogs? Custom articles will be cleared from this browser.')) {
         resetBlogsToDefault();
         showToast('Restored default blogs.', 'info');
-        closeAddBlogModal();
+        closeBlogStudio();
         renderBlogsView();
+        updateCustomBlogCountBadge();
       }
     }
 
@@ -789,7 +1710,6 @@
 
       const targetOwnerPhone = "8123939433";
       
-      // Dispatch lead notification directly to owner emails
       try {
         fetch('https://formsubmit.co/ajax/Bks-industries@outlook.com', {
           method: 'POST',
@@ -807,7 +1727,7 @@
       } catch (err) {}
 
       if (phoneInput) phoneInput.value = '';
-      showToast(`Thank you! Your CAD layout request for phone (${phone}) has been sent directly to our factory engineering email (Bks-industries@outlook.com). We will call you shortly.`, 'success');
+      showToast(`Thank you! Your CAD layout request for phone (${phone}) has been sent directly to our factory engineering email. We will call you shortly.`, 'success');
     }
 
     // Toast notification
@@ -829,6 +1749,7 @@
         align-items: center;
         gap: 0.5rem;
         animation: fadeIn 0.3s ease;
+        z-index: 9999;
       `;
       toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check text-green-400' : 'fa-circle-info'}"></i> <span>${msg}</span>`;
       container.appendChild(toast);
@@ -838,6 +1759,7 @@
         setTimeout(() => toast.remove(), 300);
       }, 4000);
     }
+
     // Mobile Navigation Drawer
     function toggleMobileMenu() {
       const drawer = document.getElementById('apolloMobileDrawer');

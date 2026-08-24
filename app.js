@@ -648,15 +648,6 @@ const projectsData = [
     desc: 'Batch installation of heavy single-burner bulk stockpot gas stoves with high-pressure burners and removable spillage trays.'
   },
   {
-    id: 'proj-07',
-    src: 'images/main page/2 burner.jpg',
-    category: 'cooking',
-    badge: 'Gas Range Setup',
-    title: 'Two Burner Heavy Commercial Cooking Range',
-    location: 'Restaurant Kitchen Installation',
-    desc: 'Dual-burner stainless steel commercial gas range with heavy cast iron vessel supports and lower storage undershelf.'
-  },
-  {
     id: 'proj-08',
     src: 'images/main page/l type Burner.jpg',
     category: 'cooking',

@@ -1131,7 +1131,7 @@ function animateStatValue(element, start, end, duration, suffix = '', decimals =
 
 function init3DCardTilt() {
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const interactiveCards = document.querySelectorAll('.hero-image-card, .calc-card, .review-card, .apollo-ind-card, .product-card, .gmb-card');
+    const interactiveCards = document.querySelectorAll('.hero-image-card, .calc-card, .review-card, .product-card, .gmb-card');
     
     interactiveCards.forEach(card => {
       card.classList.add('tilt-card');

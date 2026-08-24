@@ -831,20 +831,9 @@ const DEFAULT_BLOGS_DATA = [
     category: "Cloud Kitchens",
     categorySlug: "cloud-kitchens",
     date: "28 July, 2026",
-    isoDate: "2026-08-28",
+    isoDate: "2026-07-28",
     author: "BKS Cloud Kitchen Advisory",
     authorRole: "Commercial Kitchen Architect",
-    authorAvatar: "images/bksi_official_logo.png",
-    readTime: "6 min read",
-    image: "images/WEB/Four Burner.png",
-    featured: false,
-    excerpt: "Optimize delivery turnaround times, maximize revenue per square foot, and design modular multi-brand cloud kitchen layouts in 300 to 800 sq.ft spaces.",
-    quickAnswer: "In a cloud kitchen, every second counts. Designing a multi-brand dark kitchen requires multi-tier vertical storage, combined hot cases, combi-steamers, undercounter chillers right below assembly counters, and a dedicated dispatch pass counter separated from delivery riders.",
-    content: `
-      <p class="lead-text">With Swiggy and Zomato dominating urban food delivery in Bangalore, Mumbai, and Hyderabad, cloud kitchens offer attractive margins with zero front-of-house rental overhead. However, kitchen space is tight (often 300-600 sq.ft), making modular space-saving equipment essential.</p>
-    isoDate: "2026-07-28",
-    author: "BKS Layout Consultants",
-    authorRole: "Cloud Kitchen Architect",
     authorAvatar: "images/bksi_official_logo.png",
     readTime: "6 min read",
     image: "images/hero-slides/slide4_custom_food_truck.jpg",
@@ -852,7 +841,7 @@ const DEFAULT_BLOGS_DATA = [
     excerpt: "Designing a high-throughput 200 to 500 sq. ft. cloud kitchen in Bengaluru for multi-brand delivery on Swiggy and Zomato.",
     quickAnswer: "A 300 sq. ft. multi-brand cloud kitchen in Bengaluru requires compact, multi-functional SS 304 equipment: a 3-burner combination range with under-counter oven, double basket deep fryer, 2-door vertical upright chiller, high-velocity exhaust canopy, and stainless steel pass-through packing tables. Total equipment investment typically averages ₹2.8 to ₹5.5 Lakhs.",
     content: `
-      <p class="lead-text">Cloud kitchens thrive on maximum orders per square foot. Every square inch must be optimized for fast order prep, zero cross-traffic, and strict hygiene compliance.</p>
+      <p class="lead-text">With Swiggy and Zomato dominating urban food delivery in Bangalore, Mumbai, and Hyderabad, cloud kitchens offer attractive margins with zero front-of-house rental overhead. However, kitchen space is tight (often 300-600 sq.ft), making modular space-saving equipment essential.</p>
 
       <h2>1. The 4 Essential Zones of a High-Output Cloud Kitchen</h2>
       <ol>
@@ -900,7 +889,7 @@ const DEFAULT_BLOGS_DATA = [
     category: "Case Studies",
     categorySlug: "case-studies",
     date: "14 July, 2026",
-    isoDate: "2026-08-14",
+    isoDate: "2026-07-14",
     author: "BKS Project Management",
     authorRole: "Commercial Project Director",
     authorAvatar: "images/bksi_official_logo.png",
@@ -960,7 +949,7 @@ const DEFAULT_BLOGS_DATA = [
     category: "SS Fabrication",
     categorySlug: "ss-fabrication",
     date: "24 June, 2026",
-    isoDate: "2026-08-24",
+    isoDate: "2026-06-24",
     author: "BKS Custom Fabrication Unit",
     authorRole: "Special Vehicles & Food Truck Engineer",
     authorAvatar: "images/bksi_official_logo.png",
@@ -984,7 +973,7 @@ const DEFAULT_BLOGS_DATA = [
   }
 ];
 
-const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v8';
+const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v10';
 
 // Get all blogs (custom + default)
 function getAllBlogs() {

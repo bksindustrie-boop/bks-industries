@@ -205,6 +205,12 @@
           <span><i class="fa-solid fa-envelope nav-icon"></i> Contact Us</span>
         </a>
       </li>
+
+      <li style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem; padding-top: 0.5rem;">
+        <a href="javascript:void(0)" onclick="closeMobileMenu(); openAdminLoginModal('create');" class="apollo-mobile-nav-link" style="color: #F59E0B; font-weight: 700;">
+          <span><i class="fa-solid fa-lock nav-icon" style="color: #F59E0B;"></i> 👑 Owner Portal Login</span>
+        </a>
+      </li>
     </ul>
 
     <div class="apollo-mobile-drawer-foot">
@@ -245,9 +251,9 @@
 
         <!-- Public / Logged Out Quick Owner Login Trigger Button -->
         <div id="headerOwnerLoginWrap" style="display: flex; align-items: center; gap: 0.75rem;">
-          <button type="button" id="headerOwnerLoginBtn" class="blog-btn-secondary" onclick="handleAdminEntryClick()" style="padding: 0.5rem 1rem; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; background: #FFFFFF; border: 1px solid #CBD5E1; color: var(--apollo-navy); font-weight: 700; border-radius: var(--radius-full); box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer;" title="BKS Owner Portal Login">
+          <button type="button" id="headerOwnerLoginBtn" class="blog-btn-primary-action" onclick="openAdminLoginModal('create')" style="padding: 0.65rem 1.35rem; font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 9999px; background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%); border: 1.5px solid #38BDF8; color: #FFFFFF; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.2);" title="BKS Owner Portal Login">
             <i class="fa-solid fa-lock" style="color: #F59E0B;"></i>
-            <span>Owner Portal</span>
+            <span>Owner Login / Upload Blogs</span>
           </button>
         </div>
 
@@ -900,14 +906,20 @@
       const modal = document.getElementById('adminLoginModal');
       const errorBox = document.getElementById('adminLoginError');
       if (errorBox) errorBox.style.display = 'none';
-      if (modal) modal.classList.add('active');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('active');
+      }
       document.body.style.overflow = 'hidden';
       setTimeout(() => document.getElementById('loginUserId')?.focus(), 200);
     }
 
     function closeAdminLoginModal() {
       const modal = document.getElementById('adminLoginModal');
-      if (modal) modal.classList.remove('active');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+      }
       document.body.style.overflow = '';
     }
 

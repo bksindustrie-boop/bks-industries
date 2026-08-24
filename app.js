@@ -2081,18 +2081,18 @@ function initLeadModal() {
             <div class="bksi-lead-grid-2">
               <div class="bksi-lead-form-group">
                 <label class="bksi-lead-label" for="leadName">Your Name <span>*</span></label>
-                <input type="text" id="leadName" class="bksi-lead-input" required placeholder="e.g. Ramesh Kumar">
+                <input type="text" id="leadName" class="bksi-lead-input" required placeholder="e.g. Vijay">
               </div>
               <div class="bksi-lead-form-group">
                 <label class="bksi-lead-label" for="leadPhone">Phone Number <span>*</span></label>
-                <input type="tel" id="leadPhone" class="bksi-lead-input" required placeholder="e.g. 98765 43210">
+                <input type="tel" id="leadPhone" class="bksi-lead-input" required placeholder="e.g. 81239 39433">
               </div>
             </div>
 
             <div class="bksi-lead-grid-2">
               <div class="bksi-lead-form-group">
                 <label class="bksi-lead-label" for="leadEmail">Email Address (Optional)</label>
-                <input type="email" id="leadEmail" class="bksi-lead-input" placeholder="e.g. name@kitchen.com">
+                <input type="email" id="leadEmail" class="bksi-lead-input" placeholder="e.g. Vijayre@gmail.com">
               </div>
               <div class="bksi-lead-form-group">
                 <label class="bksi-lead-label" for="leadType">Kitchen Type <span>*</span></label>

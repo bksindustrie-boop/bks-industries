@@ -2037,3 +2037,19 @@ document.addEventListener('keydown', function(e) {
     closeMobileMenu();
   }
 });
+
+// Auto-initialize components on DOM Ready across all pages
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('projectsGrid')) {
+    renderProjectsGallery('all');
+  }
+  if (typeof initScrollReveal === 'function') {
+    initScrollReveal();
+  }
+  if (typeof initStatCounters === 'function') {
+    initStatCounters();
+  }
+  if (typeof init3DCardTilt === 'function') {
+    init3DCardTilt();
+  }
+});

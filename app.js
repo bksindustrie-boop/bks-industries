@@ -634,15 +634,6 @@ const projectsData = [
     location: 'Commercial Dining Setup, South India',
     desc: 'Heavy-gauge SS 304 commercial kitchen equipment line customized for high-volume daily food service.'
   },
-  {
-    id: 'proj-05',
-    src: 'images/main page/bksinsutries.jpg',
-    category: 'setups',
-    badge: 'Factory Dispatch',
-    title: 'Batch Production & Quality Inspection Line',
-    location: 'BKS Manufacturing Workshop, Bengaluru',
-    desc: 'Finished commercial kitchen equipment undergoes 100% gas pressure testing and polish inspection prior to dispatch.'
-  },
 
   // =========================================================================
   // 2. COOKING LINES & BURNER RANGES (Category: 'cooking')

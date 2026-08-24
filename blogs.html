@@ -23,6 +23,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Kitchen Blogs & Equipment Guides | B.K.S. Industries Bengaluru</title>
+  <meta name="description" content="Expert insights on commercial kitchen equipment, SS 304 fabrication, exhaust CFM calculation, cloud kitchen setup, and restaurant planning from BKS Industries Bengaluru.">
+  <meta name="keywords" content="commercial kitchen blog, restaurant kitchen equipment guide, SS 304 vs SS 202, commercial exhaust hood calculation, cloud kitchen design, BKS Industries Bangalore">
+  <meta name="author" content="B.K.S. Industries">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.bksindustries.in/blogs.html">
+
+  <!-- OpenGraph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Commercial Kitchen Blogs & Equipment Buying Guides | B.K.S. Industries">
+  <meta property="og:description" content="Read expert commercial kitchen setup guides, SS 304 machinery comparisons, cloud kitchen layouts, and restaurant cost breakdowns.">
+  <meta property="og:image" content="images/hero-slides/slide2_commercial_restaurant.jpg">
+  <meta property="og:url" content="https://www.bksindustries.in/blogs.html">
+  <meta property="og:site_name" content="B.K.S. Industries">
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -30,7 +55,7 @@
   <link rel="icon" type="image/png" href="images/bksi_official_logo.png">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=20260824_v4">
+  <link rel="stylesheet" href="style.css?v=20260824_v5">
 </head>
 <body>
   <!-- Scroll Progress Indicator -->
@@ -573,7 +598,7 @@
       if (currentSort === 'newest') {
         blogs.sort((a, b) => new Date(b.isoDate || b.date) - new Date(a.isoDate || a.date));
       } else if (currentSort === 'oldest') {
-        blogs.sort((a, b) => new Date(a.isoDate || a.date) - new Date(b.isoDate || b.date));
+        blogs.sort((a, b) => new Date(a.isoDate || b.date) - new Date(b.isoDate || a.date));
       } else if (currentSort === 'readtime') {
         blogs.sort((a, b) => parseInt(a.readTime) - parseInt(b.readTime));
       }
@@ -894,6 +919,6 @@
     }
   </script>
   <!-- Global App Script -->
-  <script src="app.js?v=20260824_v4"></script>
+  <script src="app.js?v=20260824_v5"></script>
 </body>
 </html>

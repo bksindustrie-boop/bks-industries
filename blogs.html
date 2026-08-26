@@ -10,13 +10,25 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bksindustries.in/blogs.html">
 
+  <!-- Geographic Meta Tags (GEO / Local SEO) -->
+  <meta name="geo.region" content="IN-KA">
+  <meta name="geo.placename" content="Bengaluru">
+  <meta name="geo.position" content="13.0298;77.5255">
+  <meta name="ICBM" content="13.0298, 77.5255">
+
   <!-- OpenGraph / Social Meta Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Commercial Kitchen Blogs & Equipment Buying Guides | B.K.S. Industries">
+  <meta property="og:title" content="Commercial Kitchen Blogs &amp; Equipment Buying Guides | B.K.S. Industries">
   <meta property="og:description" content="Read expert commercial kitchen setup guides, SS 304 machinery comparisons, cloud kitchen layouts, and restaurant cost breakdowns.">
-  <meta property="og:image" content="images/hero-slides/slide2_commercial_restaurant.jpg">
+  <meta property="og:image" content="https://www.bksindustries.in/images/hero-slides/slide2_commercial_restaurant.jpg">
   <meta property="og:url" content="https://www.bksindustries.in/blogs.html">
   <meta property="og:site_name" content="B.K.S. Industries">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Commercial Kitchen Blogs &amp; Equipment Buying Guides | B.K.S. Industries">
+  <meta name="twitter:description" content="Read expert commercial kitchen setup guides, SS 304 machinery comparisons, and cost breakdowns.">
+  <meta name="twitter:image" content="https://www.bksindustries.in/images/hero-slides/slide2_commercial_restaurant.jpg">
 
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,10 +62,6 @@
           <i class="fa-solid fa-envelope pill-icon-mail"></i>
           <span>Bks-industries@outlook.com</span>
         </a>
-        <a href="mailto:Bksindustries23@gmail.com" class="apollo-topbar-pill">
-          <i class="fa-solid fa-envelope pill-icon-mail"></i>
-          <span>Bksindustries23@gmail.com</span>
-        </a>
       </div>
       <div class="apollo-topbar-right">
         <a href="tel:+918123939433" class="apollo-topbar-pill apollo-topbar-phone">
@@ -63,7 +71,7 @@
         <div class="apollo-topbar-socials">
           <a href="https://wa.me/918123939433" target="_blank" rel="noopener" class="apollo-social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#" class="apollo-social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" class="apollo-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.instagram.com/bks_industries04/" target="_blank" rel="noopener" class="apollo-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="#" class="apollo-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
           <a href="#" class="apollo-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
@@ -107,10 +115,6 @@
       </nav>
 
       <div style="display: flex; align-items: center; gap: 0.65rem;">
-        <button type="button" id="navAdminLoginBtn" onclick="openAdminLoginModal('create')" class="apollo-btn-enquiry" style="background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%); border: 1.5px solid #38BDF8; color: #FFFFFF; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 9999px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" title="BKS Owner Admin Portal">
-          <i class="fa-solid fa-lock" style="color: #F59E0B;"></i>
-          <span id="navAdminLoginBtnText">Admin Login</span>
-        </button>
         <button type="button" class="apollo-btn-enquiry" onclick="openEnquiryModal()" style="cursor: pointer; border: none;">
           <span>Enquiry</span>
         </button>
@@ -869,7 +873,7 @@
     // PRIVATE OWNER AUTHENTICATION SYSTEM
     // =========================================================================
     const DEFAULT_ADMIN_USER = 'bksadmin';
-    const DEFAULT_ADMIN_PASS = 'bks@2026';
+    const DEFAULT_ADMIN_PASS = 'VijayRE@04895';
     const ADMIN_AUTH_STORAGE_KEY = 'bksi_admin_authenticated_v1';
     let pendingStudioTab = 'create';
 
@@ -884,22 +888,6 @@
       const floatingBtn = document.getElementById('floatingCreatorBtn');
       const topbarLockText = document.getElementById('topbarAdminLockText');
       const footerLockText = document.getElementById('footerAdminLockText');
-      const navAdminBtn = document.getElementById('navAdminLoginBtn');
-      const navAdminBtnText = document.getElementById('navAdminLoginBtnText');
-
-      if (navAdminBtn && navAdminBtnText) {
-        if (isAuth) {
-          navAdminBtn.innerHTML = '<i class="fa-solid fa-crown" style="color: #F59E0B;"></i> <span>Studio Portal</span>';
-          navAdminBtn.onclick = function() { openBlogStudio('create'); };
-          navAdminBtn.style.background = 'linear-gradient(135deg, #047857 0%, #065F46 100%)';
-          navAdminBtn.style.borderColor = '#34D399';
-        } else {
-          navAdminBtn.innerHTML = '<i class="fa-solid fa-lock" style="color: #F59E0B;"></i> <span>Admin Login</span>';
-          navAdminBtn.onclick = function() { openAdminLoginModal('create'); };
-          navAdminBtn.style.background = 'linear-gradient(135deg, #0B192C 0%, #1E3E62 100%)';
-          navAdminBtn.style.borderColor = '#38BDF8';
-        }
-      }
 
       if (headerLoginWrap) {
         headerLoginWrap.style.display = isAuth ? 'none' : 'flex';

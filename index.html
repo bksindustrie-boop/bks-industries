@@ -1271,19 +1271,19 @@
        ========================================================================= -->
   <div class="bksi-ai-widget" id="bksiAiWidget">
     <!-- Chat Trigger Button -->
-    <div class="bksi-ai-trigger" id="bksiAiTrigger" onclick="toggleBksiChat()" aria-label="Open BKSI AI Assistant">
-      <div class="bksi-ai-trigger-icon">
+    <button type="button" class="bksi-ai-trigger" id="bksiAiTrigger" onclick="toggleBksiChat()" aria-label="Open BKSI AI Assistant">
+      <span class="bksi-ai-trigger-icon" aria-hidden="true">
         <i class="fa-solid fa-robot"></i>
         <span class="bksi-ai-pulse-dot"></span>
-      </div>
-      <div class="bksi-ai-trigger-label">
+      </span>
+      <span class="bksi-ai-trigger-label">
         <span class="bksi-ai-trigger-title">BKSI AI Assistant</span>
         <span class="bksi-ai-trigger-sub">Automated Kitchen Expert &bull; Online</span>
-      </div>
-    </div>
+      </span>
+    </button>
 
     <!-- Chat Modal Window -->
-    <div class="bksi-chat-window" id="bksiChatWindow">
+    <div class="bksi-chat-window" id="bksiChatWindow" role="dialog" aria-modal="false" aria-label="BKSI Kitchen AI Chat">
       <!-- Header -->
       <div class="bksi-chat-header">
         <div class="bksi-chat-header-info">
@@ -1299,8 +1299,8 @@
           </div>
         </div>
         <div class="bksi-chat-header-actions">
-          <button class="bksi-chat-action-btn" onclick="resetBksiChat()" title="Restart Chat"><i class="fa-solid fa-rotate-right"></i></button>
-          <button class="bksi-chat-action-btn" onclick="toggleBksiChat()" title="Close"><i class="fa-solid fa-xmark"></i></button>
+          <button type="button" class="bksi-chat-action-btn" onclick="resetBksiChat()" aria-label="Restart Chat" title="Restart Chat"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i></button>
+          <button type="button" class="bksi-chat-action-btn" onclick="toggleBksiChat()" aria-label="Close Chat" title="Close"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
       </div>
 

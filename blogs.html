@@ -42,7 +42,7 @@
   <link rel="icon" type="image/png" href="images/bksi_official_logo.png">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=20260824_v12">
+  <link rel="stylesheet" href="style.css?v=20260903_v14">
 </head>
 <body>
   <!-- Scroll Progress Indicator -->
@@ -1166,8 +1166,14 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- JavaScript Modules -->
-  <script src="blogs-data.js?v=20260824_v12"></script>
+  <script src="blogs-data.js?v=20260903_v14"></script>
   <script>
+    // Automatically purge legacy August local storage caches
+    try {
+      localStorage.removeItem('bksi_custom_blogs_v12');
+      localStorage.removeItem('bksi_custom_blogs_v11');
+      localStorage.removeItem('bksi_custom_blogs_v10');
+    } catch (e) {}
     // =========================================================================
     // PRIVATE OWNER AUTHENTICATION SYSTEM
     // =========================================================================

@@ -1156,7 +1156,7 @@ const DEFAULT_BLOGS_DATA = [
   }
 ];
 
-const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v12';
+const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v14';
 
 // Helper: sanitize blogs array to prevent localStorage quota exhaustion
 function sanitizeBlogsForStorage(blogsList) {
@@ -1189,11 +1189,12 @@ function getAllBlogs() {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Ensure default blogs are seamlessly included if localStorage only stores custom blogs
-        const savedSlugs = new Set(parsed.map(b => b.slug));
-        const savedIds = new Set(parsed.map(b => b.id));
-        const missingDefaults = DEFAULT_BLOGS_DATA.filter(b => !savedSlugs.has(b.slug) && !savedIds.has(b.id));
-        return [...parsed, ...missingDefaults];
+        // Only keep genuine custom blogs created by the admin in localStorage
+        const customBlogs = parsed.filter(b => b && (b.isCustom || (b.id && b.id.startsWith('blog-custom-'))));
+        const customSlugs = new Set(customBlogs.map(b => b.slug));
+        const customIds = new Set(customBlogs.map(b => b.id));
+        const defaults = DEFAULT_BLOGS_DATA.filter(b => !customSlugs.has(b.slug) && !customIds.has(b.id));
+        return [...customBlogs, ...defaults];
       }
     }
   } catch (e) {
@@ -1363,14 +1364,20 @@ ${BLOG_HELPER_FUNCTIONS_STRING}
 }
 
 // Helper code block to embed when exporting blogs-data.js
-const BLOG_HELPER_FUNCTIONS_STRING = `const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v12';
+const BLOG_HELPER_FUNCTIONS_STRING = `const BLOG_STORAGE_KEY = 'bksi_custom_blogs_v14';
 
 function getAllBlogs() {
   try {
     const saved = localStorage.getItem(BLOG_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const customBlogs = parsed.filter(b => b && (b.isCustom || (b.id && b.id.startsWith('blog-custom-'))));
+        const customSlugs = new Set(customBlogs.map(b => b.slug));
+        const customIds = new Set(customBlogs.map(b => b.id));
+        const defaults = DEFAULT_BLOGS_DATA.filter(b => !customSlugs.has(b.slug) && !customIds.has(b.id));
+        return [...customBlogs, ...defaults];
+      }
     }
   } catch (e) {
     console.error('Error reading blogs from localStorage:', e);

@@ -216,19 +216,19 @@ const DEFAULT_BLOGS_DATA = [
   {
     id: "blog-best-kitchen-equipment-manufacturer",
     slug: "best-kitchen-equipment-manufacturer-bangalore-india-guide",
-    title: "Best Kitchen Equipment Manufacturer in Bangalore & India: 2026 Complete Direct Factory Guide, SS 304 Standards & Machinery Price List",
-    seoTitle: "Best Kitchen Equipment Manufacturer Bangalore (2026 Price List) | BKS Industries",
+    title: "Best Kitchen Equipment Manufacturers in Bangalore: Complete Guide to Commercial Kitchen Equipment",
+    seoTitle: "Best Kitchen Equipment Manufacturers Bangalore | BKS Industries",
     metaDescription: "Looking for the best kitchen equipment manufacturer in Bangalore? Direct factory SS 304 cooking ranges, upright chillers, exhaust ducting, CAD layouts & wholesale prices.",
     category: "Buying Guides",
     categorySlug: "buying-guides",
-    date: "24 August, 2026",
-    isoDate: "2026-08-24",
+    date: "3 September, 2026",
+    isoDate: "2026-09-03",
     author: "BKS Engineering Advisory",
     authorRole: "Chief Commercial Kitchen Equipment Engineer",
     authorAvatar: "images/bksi_official_logo.png",
-    readTime: "11 min read",
-    image: "images/ai-renders/hero_luxury_hotel_kitchen.jpg",
-    imageAlt: "Best Commercial Kitchen Equipment Manufacturer in Bangalore BKS Industries Live Commercial Setup",
+    readTime: "6 min read",
+    image: "images/hero-slides/best_kitchen_equipment_manufacturers_bangalore.jpg",
+    imageAlt: "Best Kitchen Equipment Manufacturers in Bangalore: Complete Guide to Commercial Kitchen Equipment by BKS Industries",
     featured: true,
     excerpt: "Looking for the best kitchen equipment manufacturer for your restaurant, hotel, cloud kitchen, or catering setup? Read our 2026 direct factory guide covering essential SS 304 machinery, 2D/3D CAD layouts, zone checklists, pricing, and why B.K.S. Industries is rated Bangalore's #1 manufacturer.",
     quickAnswer: "To find the best kitchen equipment manufacturer in Bangalore and India, evaluate 4 key criteria: 1) Authentic certified AISI 304 food-grade stainless steel with heavy-gauge argon TIG welding, 2) Direct factory manufacturing eliminating 20% to 30% trader markups, 3) End-to-end kitchen solutions including 2D/3D CAD layout planning and gas pipeline installation, and 4) Rapid 24-hour local maintenance and spare parts availability. B.K.S. Industries (Bengaluru) has delivered 500+ commercial kitchens across South India. Call +91 81239 39433 or visit our factory in Lakshmidevinagar, Bengaluru for wholesale factory quotes.",
@@ -330,7 +330,7 @@ const DEFAULT_BLOGS_DATA = [
 
       <!-- Embedded Featured Showcase Image -->
       <div class="blog-media-card" style="margin: 2rem 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.5rem; text-align: center;">
-        <img src="images/ai-renders/hero_luxury_hotel_kitchen.jpg" alt="Best Commercial Kitchen Equipment Manufacturer in Bangalore BKS Industries Live Commercial Setup" style="max-height: 380px; width: 100%; object-fit: cover; border-radius: 0.75rem; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
+        <img src="images/hero-slides/best_kitchen_equipment_manufacturers_bangalore.jpg" alt="Best Kitchen Equipment Manufacturers in Bangalore Complete Guide to Commercial Kitchen Equipment by BKS Industries" style="max-height: 380px; width: 100%; object-fit: cover; border-radius: 0.75rem; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">
         <p style="font-size: 0.875rem; color: #475569; margin-top: 0.85rem; font-weight: 600;">
           <i class="fa-solid fa-crown text-amber-500"></i> Fig 1: Complete Commercial Kitchen Installation engineered with Food-Grade SS 304 Cooking Lines, Exhaust Hoods, and Prep Stations by B.K.S. Industries Bengaluru.
         </p>

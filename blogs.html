@@ -62,10 +62,6 @@
           <i class="fa-solid fa-envelope pill-icon-mail"></i>
           <span>Bks-industries@outlook.com</span>
         </a>
-        <a href="mailto:Bksindustries23@gmail.com" class="apollo-topbar-pill">
-          <i class="fa-solid fa-envelope pill-icon-mail"></i>
-          <span>Bksindustries23@gmail.com</span>
-        </a>
       </div>
       <div class="apollo-topbar-right">
         <a href="tel:+918123939433" class="apollo-topbar-pill apollo-topbar-phone">
@@ -119,10 +115,6 @@
       </nav>
 
       <div style="display: flex; align-items: center; gap: 0.65rem;">
-        <button type="button" id="navAdminLoginBtn" onclick="openAdminLoginModal('create')" class="apollo-btn-enquiry" style="background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%); border: 1.5px solid #38BDF8; color: #FFFFFF; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; border-radius: 9999px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" title="BKS Owner Admin Portal">
-          <i class="fa-solid fa-lock" style="color: #F59E0B;"></i>
-          <span id="navAdminLoginBtnText">Admin Login</span>
-        </button>
         <button type="button" class="apollo-btn-enquiry" onclick="openEnquiryModal()" style="cursor: pointer; border: none;">
           <span>Enquiry</span>
         </button>
@@ -395,7 +387,7 @@
 
           <div class="blog-form-group">
             <label class="blog-form-label" for="loginUserId">Owner User ID</label>
-            <input type="text" id="loginUserId" class="blog-form-input" placeholder="e.g. bksadmin" required autocomplete="username">
+            <input type="text" id="loginUserId" class="blog-form-input" required autocomplete="username">
           </div>
 
           <div class="blog-form-group">
@@ -1195,22 +1187,6 @@
       const floatingBtn = document.getElementById('floatingCreatorBtn');
       const topbarLockText = document.getElementById('topbarAdminLockText');
       const footerLockText = document.getElementById('footerAdminLockText');
-      const navAdminBtn = document.getElementById('navAdminLoginBtn');
-      const navAdminBtnText = document.getElementById('navAdminLoginBtnText');
-
-      if (navAdminBtn && navAdminBtnText) {
-        if (isAuth) {
-          navAdminBtn.innerHTML = '<i class="fa-solid fa-crown" style="color: #F59E0B;"></i> <span>Studio Portal</span>';
-          navAdminBtn.onclick = function() { openBlogStudio('create'); };
-          navAdminBtn.style.background = 'linear-gradient(135deg, #047857 0%, #065F46 100%)';
-          navAdminBtn.style.borderColor = '#34D399';
-        } else {
-          navAdminBtn.innerHTML = '<i class="fa-solid fa-lock" style="color: #F59E0B;"></i> <span>Admin Login</span>';
-          navAdminBtn.onclick = function() { openAdminLoginModal('create'); };
-          navAdminBtn.style.background = 'linear-gradient(135deg, #0B192C 0%, #1E3E62 100%)';
-          navAdminBtn.style.borderColor = '#38BDF8';
-        }
-      }
 
       if (headerLoginWrap) {
         headerLoginWrap.style.display = isAuth ? 'none' : 'flex';

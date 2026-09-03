@@ -5,7 +5,7 @@
 // ==========================================================================
 // AUTHENTIC PRODUCT CATALOG DATA (MAPPED TO IMAGES/WEB/ REPOSITORY PHOTOS)
 // ==========================================================================
-const webProductsData = [
+var webProductsData = (typeof getAllProducts === 'function') ? getAllProducts() : [
   // =========================================================================
   // 1. COOKING RANGES & BURNERS (Category: 'cooking')
   // =========================================================================
@@ -572,7 +572,7 @@ let currentProductsSearch = '';
 // ==========================================================================
 // AUTHENTIC PROJECTS GALLERY DATA (MAPPED TO IMAGES/MAIN PAGE/ PHOTOS)
 // ==========================================================================
-const projectsData = [
+var projectsData = (typeof getAllProjects === 'function') ? getAllProjects() : [
   // =========================================================================
   // 1. RECENT CLIENT INSTALLATIONS & ON-SITE EXECUTION (AUTHENTIC PHOTOS)
   // =========================================================================

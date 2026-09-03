@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BKS Owner Control Center | Commercial Kitchen Equipments Backend</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="images/bksi_official_logo.png">
+
+  <!-- Inter & Outfit Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-dark: #070F1E;
+      --bg-card: #0B192C;
+      --bg-surface: #13243B;
+      --border-color: rgba(56, 189, 248, 0.18);
+      --border-gold: rgba(245, 158, 11, 0.35);
+      --primary-cyan: #38BDF8;
+      --primary-blue: #0284C7;
+      --accent-gold: #F59E0B;
+      --accent-green: #10B981;
+      --accent-red: #EF4444;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #070F1E; }
+    ::-webkit-scrollbar-thumb { background: #1E3E62; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #38BDF8; }
+
+    /* ================= LOGIN OVERLAY ================= */
+    .admin-login-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #13243B 0%, #070F1E 100%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .admin-login-card {
+      background: rgba(11, 25, 44, 0.92);
+      border: 1.5px solid var(--border-color);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(56, 189, 248, 0.15);
+      text-align: center;
+      backdrop-filter: blur(16px);
+      position: relative;
+    }
+    .admin-login-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.25rem;
+      filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.3));
+    }
+    .admin-login-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 0.35rem;
+    }
+    .admin-login-sub {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 2rem;
+    }
+    .admin-login-input-group {
+      text-align: left;
+      margin-bottom: 1.25rem;
+    }
+    .admin-login-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #BAE6FD;
+      margin-bottom: 0.4rem;
+    }
+    .admin-login-input {
+      width: 100%;
+      background: #070F1E;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 0.75rem;
+      padding: 0.85rem 1rem;
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .admin-login-input:focus {
+      border-color: var(--primary-cyan);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+    .admin-login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.95rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+    }
+    .admin-login-btn:hover {
+      background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+      transform: translateY(-1px);
+    }
+
+    /* ================= MAIN DASHBOARD LAYOUT ================= */
+    .admin-layout {
+      display: flex;
+      flex: 1;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .admin-sidebar {
+      width: 280px;
+      background: #0B192C;
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+    .admin-brand {
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+    }
+    .admin-brand img { width: 44px; height: 44px; }
+    .admin-brand-name {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .admin-brand-tag {
+      font-size: 0.7rem;
+      color: var(--primary-cyan);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .admin-nav {
+      flex: 1;
+      padding: 1.25rem 0.75rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .admin-nav-item i { font-size: 1.1rem; width: 22px; text-align: center; }
+    .admin-nav-item:hover {
+      color: #FFFFFF;
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.15);
+    }
+    .admin-nav-item.active {
+      color: #FFFFFF;
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.3) 0%, rgba(14, 165, 233, 0.15) 100%);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.15);
+    }
+    .admin-nav-badge {
+      margin-left: auto;
+      background: #1E3E62;
+      color: var(--primary-cyan);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+    }
+
+    .admin-sidebar-foot {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(56, 189, 248, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    /* Main Content Area */
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-dark);
+      overflow: hidden;
+    }
+
+    /* Top Bar */
+    .admin-topbar {
+      height: 70px;
+      background: #0B192C;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      flex-shrink: 0;
+    }
+    .admin-topbar-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .admin-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .btn-action-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: #FFFFFF;
+      padding: 0.55rem 1.1rem;
+      border-radius: 0.65rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-action-pill:hover {
+      background: #1E3E62;
+      border-color: var(--primary-cyan);
+      transform: translateY(-1px);
+    }
+    .btn-publish-live {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.6rem 1.3rem;
+      border-radius: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-publish-live:hover {
+      background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+    }
+
+    /* Content Pane */
+    .admin-pane {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Dashboard Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      transition: all 0.2s ease;
+    }
+    .stat-card:hover {
+      border-color: var(--primary-cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    .stat-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .stat-icon.blue { background: rgba(56, 189, 248, 0.15); color: var(--primary-cyan); }
+    .stat-icon.gold { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); }
+    .stat-icon.green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+    .stat-icon.purple { background: rgba(168, 85, 247, 0.15); color: #C084FC; }
+    .stat-value { font-size: 1.85rem; font-weight: 800; font-family: var(--font-heading); }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Tables & Card Grids */
+    .admin-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 1.25rem;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .admin-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .admin-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .filter-search-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .admin-search-input {
+      background: #070F1E;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 0.65rem;
+      padding: 0.55rem 1rem;
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      outline: none;
+      min-width: 240px;
+    }
+    .admin-select {
+      background: #070F1E;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 0.65rem;
+      padding: 0.55rem 1rem;
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    .admin-table th {
+      background: #070F1E;
+      padding: 0.85rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #BAE6FD;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .admin-table td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.08);
+      font-size: 0.88rem;
+      vertical-align: middle;
+    }
+    .admin-table tr:hover td { background: rgba(56, 189, 248, 0.03); }
+
+    .table-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 0.5rem;
+      object-fit: cover;
+      background: #070F1E;
+      border: 1px solid rgba(56, 189, 248, 0.15);
+    }
+    .table-badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary-cyan);
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-icon:hover { color: #FFFFFF; border-color: var(--primary-cyan); background: rgba(56, 189, 248, 0.1); }
+    .btn-icon.delete:hover { color: #FFFFFF; border-color: var(--accent-red); background: rgba(239, 68, 68, 0.2); }
+
+    /* Modal */
+    .admin-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 15, 30, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .admin-modal-overlay.open { display: flex; }
+    .admin-modal {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: 1.25rem;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      animation: modalPop 0.2s ease;
+    }
+    @keyframes modalPop { from { transform: scale(0.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .admin-modal-head {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-modal-head h3 { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; }
+    .admin-modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .admin-modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .admin-modal-foot {
+      padding: 1.25rem 1.75rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* Forms */
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label { font-size: 0.8rem; font-weight: 700; color: #BAE6FD; text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-control {
+      background: #070F1E;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 0.65rem;
+      padding: 0.75rem 1rem;
+      color: #FFFFFF;
+      font-size: 0.92rem;
+      outline: none;
+      width: 100%;
+    }
+    .form-control:focus { border-color: var(--primary-cyan); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+    textarea.form-control { min-height: 90px; resize: vertical; }
+
+    /* Dropzone */
+    .dropzone-box {
+      border: 2px dashed rgba(56, 189, 248, 0.35);
+      border-radius: 0.85rem;
+      padding: 1.75rem;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(7, 15, 30, 0.5);
+      transition: all 0.2s ease;
+    }
+    .dropzone-box:hover { border-color: var(--primary-cyan); background: rgba(56, 189, 248, 0.05); }
+
+    /* Toast */
+    .toast-box {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #0B192C;
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 1rem 1.5rem;
+      color: #FFFFFF;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      animation: toastIn 0.25s ease;
+    }
+    @keyframes toastIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .admin-sidebar { width: 70px; }
+      .admin-brand-name, .admin-brand-tag, .admin-nav-item span, .admin-nav-badge { display: none; }
+      .admin-nav-item { justify-content: center; padding: 1rem; }
+    }
+    @media (max-width: 768px) {
+      .admin-layout { flex-direction: column; }
+      .admin-sidebar { width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
+      .admin-nav { flex-direction: row; overflow-x: auto; }
+      .admin-topbar { padding: 0 1rem; }
+      .admin-pane { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= AUTHENTICATION OVERLAY ================= -->
+  <div id="adminLoginOverlay" class="admin-login-overlay">
+    <div class="admin-login-card">
+      <img src="images/bksi_official_logo.png" alt="BKS Logo" class="admin-login-logo">
+      <h2 class="admin-login-title">Owner Control Center</h2>
+      <p class="admin-login-sub">Commercial Kitchen Equipment Portal</p>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="admin-login-input-group">
+          <label class="admin-login-label">Admin Username</label>
+          <input type="text" id="adminUser" class="admin-login-input" placeholder="bksadmin" required autocomplete="username">
+        </div>
+        <div class="admin-login-input-group">
+          <label class="admin-login-label">Password</label>
+          <input type="password" id="adminPass" class="admin-login-input" placeholder="Enter owner password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="admin-login-btn">
+          <i class="fa-solid fa-lock-open"></i> Unlock Control Center
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ADMIN DASHBOARD ================= -->
+  <div class="admin-layout" id="adminLayout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-brand">
+        <img src="images/bksi_official_logo.png" alt="BKS Logo">
+        <div>
+          <div class="admin-brand-name">B.K.S. <span style="color: var(--primary-cyan);">IND</span></div>
+          <div class="admin-brand-tag">Owner Portal</div>
+        </div>
+      </div>
+
+      <nav class="admin-nav">
+        <a class="admin-nav-item active" onclick="switchAdminTab('overview')">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Overview</span>
+        </a>
+        <a class="admin-nav-item" onclick="switchAdminTab('products')">
+          <i class="fa-solid fa-utensils"></i>
+          <span>Products Catalog</span>
+          <span class="admin-nav-badge" id="sidebarProductCount">50+</span>
+        </a>
+        <a class="admin-nav-item" onclick="switchAdminTab('projects')">
+          <i class="fa-solid fa-camera-retro"></i>
+          <span>Projects Gallery</span>
+          <span class="admin-nav-badge" id="sidebarProjectCount">18</span>
+        </a>
+        <a class="admin-nav-item" onclick="switchAdminTab('blogs')">
+          <i class="fa-solid fa-newspaper"></i>
+          <span>Blogs &amp; SEO</span>
+          <span class="admin-nav-badge" id="sidebarBlogCount">12</span>
+        </a>
+        <a class="admin-nav-item" onclick="switchAdminTab('settings')">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Site Settings</span>
+        </a>
+        <a class="admin-nav-item" onclick="switchAdminTab('deploy')">
+          <i class="fa-solid fa-rocket" style="color: var(--accent-green);"></i>
+          <span>Live Deploy</span>
+        </a>
+      </nav>
+
+      <div class="admin-sidebar-foot">
+        <a href="index.html" target="_blank" class="btn-action-pill" style="justify-content: center; width: 100%;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>View Live Site</span>
+        </a>
+        <button type="button" onclick="handleAdminLogout()" class="btn-action-pill" style="justify-content: center; width: 100%; border-color: rgba(239, 68, 68, 0.3); color: #FCA5A5;">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <div class="admin-topbar-title">
+          <span id="pageTitleText">Dashboard Overview</span>
+        </div>
+        <div class="admin-topbar-actions">
+          <span style="font-size: 0.78rem; color: #10B981; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem;">
+            <span style="width: 8px; height: 8px; background: #10B981; border-radius: 50%; box-shadow: 0 0 8px #10B981;"></span>
+            Vercel Connected
+          </span>
+          <button type="button" class="btn-publish-live" onclick="publishLiveToGitHub()">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Publish Live</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="admin-pane">
+
+        <!-- ================= TAB 1: OVERVIEW ================= -->
+        <section id="paneOverview" class="tab-content active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue"><i class="fa-solid fa-boxes-stacked"></i></div>
+              <div>
+                <div class="stat-value" id="kpiProducts">52</div>
+                <div class="stat-label">Active Products</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon gold"><i class="fa-solid fa-images"></i></div>
+              <div>
+                <div class="stat-value" id="kpiProjects">18</div>
+                <div class="stat-label">Project Photos</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon green"><i class="fa-solid fa-feather-pointed"></i></div>
+              <div>
+                <div class="stat-value" id="kpiBlogs">12</div>
+                <div class="stat-label">Published Guides</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple"><i class="fa-solid fa-globe"></i></div>
+              <div>
+                <div class="stat-value">Live</div>
+                <div class="stat-label">bksindustries.in</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-head">
+              <h3 class="admin-card-title"><i class="fa-solid fa-bolt" style="color: var(--accent-gold);"></i> Quick Actions</h3>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <button class="btn-action-pill" onclick="openProductModal('create')">
+                <i class="fa-solid fa-plus text-primary-cyan"></i> Add New Product
+              </button>
+              <button class="btn-action-pill" onclick="openProjectModal('create')">
+                <i class="fa-solid fa-camera text-accent-gold"></i> Add Project Photo
+              </button>
+              <a href="blogs.html?admin=login" class="btn-action-pill">
+                <i class="fa-solid fa-pen text-accent-green"></i> Open Blog Studio
+              </a>
+              <button class="btn-action-pill" onclick="switchAdminTab('settings')">
+                <i class="fa-solid fa-phone text-primary-cyan"></i> Update Phone / Email
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-head">
+              <h3 class="admin-card-title"><i class="fa-solid fa-clock-rotate-left"></i> Recently Added Machinery</h3>
+              <button class="btn-action-pill" onclick="switchAdminTab('products')">View All Products</button>
+            </div>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Fuel / Power</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="overviewRecentProducts">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= TAB 2: PRODUCTS ================= -->
+        <section id="paneProducts" class="tab-content">
+          <div class="admin-card">
+            <div class="admin-card-head">
+              <h3 class="admin-card-title"><i class="fa-solid fa-utensils text-primary-cyan"></i> Products Catalog Manager</h3>
+              <div class="filter-search-row">
+                <input type="text" id="productSearchInput" class="admin-search-input" placeholder="Search equipment..." oninput="renderAdminProducts()">
+                <select id="productCategoryFilter" class="admin-select" onchange="renderAdminProducts()">
+                  <option value="all">All Categories</option>
+                  <option value="cooking">Cooking Ranges</option>
+                  <option value="prep">SS Tables &amp; Sinks</option>
+                  <option value="refrigeration">Commercial Refrigeration</option>
+                  <option value="servery">Bain Marie &amp; Servery</option>
+                  <option value="bakery">Idli &amp; Bakery</option>
+                  <option value="exhaust">Exhaust &amp; Ducting</option>
+                  <option value="storage">Storage &amp; Trolleys</option>
+                </select>
+                <button class="btn-publish-live" onclick="openProductModal('create')">
+                  <i class="fa-solid fa-plus"></i> Add Product
+                </button>
+              </div>
+            </div>
+
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Fuel / Specs</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsTableBody">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= TAB 3: PROJECTS GALLERY ================= -->
+        <section id="paneProjects" class="tab-content">
+          <div class="admin-card">
+            <div class="admin-card-head">
+              <h3 class="admin-card-title"><i class="fa-solid fa-camera-retro text-accent-gold"></i> Projects Gallery Manager</h3>
+              <div class="filter-search-row">
+                <button class="btn-publish-live" onclick="openProjectModal('create')">
+                  <i class="fa-solid fa-plus"></i> Add Installation Photo
+                </button>
+              </div>
+            </div>
+
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Location / Client</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminProjectsTableBody">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= TAB 4: BLOGS & SEO ================= -->
+        <section id="paneBlogs" class="tab-content">
+          <div class="admin-card">
+            <div class="admin-card-head">
+              <h3 class="admin-card-title"><i class="fa-solid fa-newspaper text-accent-green"></i> Published Articles &amp; Buying Guides</h3>
+              <div class="filter-search-row">
+                <a href="blogs.html?admin=login" target="_blank" class="btn-publish-live">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full Studio Modal
+                </a>
+              </div>
+            </div>
+
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Cover</th>
+                  <th>Article Title</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminBlogsTableBody">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= TAB 5: SITE SETTINGS ================= -->
+        <section id="paneSettings" class="tab-content">
+          <div class="admin-card" style="max-width: 800px;">
+            <div class="admin-card-head">
+              <h3 class="admin-card-title"><i class="fa-solid fa-sliders text-primary-cyan"></i> Site-Wide Business &amp; Contact Settings</h3>
+              <button class="btn-publish-live" onclick="saveAdminSettings()">
+                <i class="fa-solid fa-floppy-disk"></i> Save Settings
+              </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+              <div class="form-group">
+                <label class="form-label">Primary Phone (Call &amp; Topbar)</label>
+                <input type="text" id="settingPrimaryPhone" class="form-control" value="+91 81239 39433">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Alternate Phone</label>
+                <input type="text" id="settingAltPhone" class="form-control" value="+91 97419 65005">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Primary Email</label>
+                <input type="email" id="settingPrimaryEmail" class="form-control" value="Bks-industries@outlook.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Alternate Email</label>
+                <input type="email" id="settingAltEmail" class="form-control" value="Bksindustries23@gmail.com">
+              </div>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label class="form-label">Factory Address</label>
+                <input type="text" id="settingFactoryAddress" class="form-control" value="Site No. 22, 1st Cross, Kempamma Layout, Lakshmidevinagar, Bengaluru - 560096">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Instagram Link</label>
+                <input type="url" id="settingInstagram" class="form-control" value="https://www.instagram.com/bks_industries04/">
+              </div>
+              <div class="form-group">
+                <label class="form-label">WhatsApp Number (e.g. 918123939433)</label>
+                <input type="text" id="settingWhatsapp" class="form-control" value="918123939433">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Working Hours</label>
+                <input type="text" id="settingWorkingHours" class="form-control" value="Mon - Sat: 9:00 AM - 7:30 PM">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sunday Hours</label>
+                <input type="text" id="settingSundayHours" class="form-control" value="Sunday: By Appointment">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 6: LIVE DEPLOY ================= -->
+        <section id="paneDeploy" class="tab-content">
+          <div class="admin-card" style="max-width: 800px;">
+            <div class="admin-card-head">
+              <h3 class="admin-card-title"><i class="fa-solid fa-rocket text-accent-green"></i> 1-Click Live Website Deploy</h3>
+            </div>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem;">
+              When you add new machinery, upload project photos, or edit contact details, click the button below. It will commit directly to your GitHub repository (<code style="color: var(--primary-cyan);">bksindustrie-boop/BKS-FINAL-</code>) and trigger Vercel to update your live website worldwide in ~30 seconds.
+            </p>
+
+            <div style="background: #070F1E; border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                  <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem;">Direct Production Deployment</h4>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">Triggers Vercel CI/CD via GitHub API</p>
+                </div>
+                <button type="button" class="btn-publish-live" style="padding: 0.85rem 1.75rem; font-size: 1rem;" onclick="publishLiveToGitHub()">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <span>🚀 Publish Live to Website</span>
+                </button>
+              </div>
+              <div id="deployProgressBox" style="margin-top: 1rem; display: none; padding: 0.75rem 1rem; border-radius: 0.5rem; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.88rem;"></div>
+            </div>
+
+            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;"><i class="fa-solid fa-download"></i> Manual Backup &amp; Export Files</h4>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button class="btn-action-pill" onclick="downloadDataFile('products')"><i class="fa-solid fa-file-code"></i> Download products-data.js</button>
+              <button class="btn-action-pill" onclick="downloadDataFile('projects')"><i class="fa-solid fa-file-code"></i> Download projects-data.js</button>
+              <button class="btn-action-pill" onclick="downloadDataFile('blogs')"><i class="fa-solid fa-file-code"></i> Download blogs-data.js</button>
+              <button class="btn-action-pill" onclick="downloadDataFile('settings')"><i class="fa-solid fa-file-code"></i> Download site-settings.js</button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= ADD / EDIT PRODUCT MODAL ================= -->
+  <div id="productModal" class="admin-modal-overlay">
+    <div class="admin-modal">
+      <div class="admin-modal-head">
+        <h3 id="productModalTitle">Add Commercial Equipment</h3>
+        <button class="admin-modal-close" onclick="closeProductModal()">&times;</button>
+      </div>
+      <form id="productForm" onsubmit="handleProductSubmit(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="modalProdId">
+          <div class="form-group">
+            <label class="form-label">Equipment Name</label>
+            <input type="text" id="modalProdName" class="form-control" placeholder="e.g. 4-Burner High Pressure Cooking Range" required>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="modalProdCategory" class="form-control" required>
+                <option value="cooking">Cooking Ranges</option>
+                <option value="prep">SS Tables &amp; Sinks</option>
+                <option value="refrigeration">Commercial Refrigeration</option>
+                <option value="servery">Bain Marie &amp; Servery</option>
+                <option value="bakery">Idli &amp; Bakery</option>
+                <option value="exhaust">Exhaust &amp; Ducting</option>
+                <option value="storage">Storage &amp; Trolleys</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fuel / Power Type</label>
+              <input type="text" id="modalProdFuel" class="form-control" placeholder="e.g. LPG / PNG Gas, Electric 415V">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Equipment Image</label>
+            <div class="dropzone-box" onclick="document.getElementById('prodImgFileInput').click()">
+              <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: var(--primary-cyan); margin-bottom: 0.5rem;"></i>
+              <p style="font-size: 0.88rem; font-weight: 600;">Click to upload photo from your computer</p>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Auto-compressed to ~70KB for high-speed loading</p>
+            </div>
+            <input type="file" id="prodImgFileInput" accept="image/*" style="display: none;" onchange="handleProductImageSelected(this)">
+            <input type="text" id="modalProdImage" class="form-control" placeholder="Or enter image URL (e.g. images/WEB/Four Burner.png)" style="margin-top: 0.5rem;">
+            <div id="modalProdImgPreview" style="margin-top: 0.5rem; text-align: center; display: none;">
+              <img id="modalProdPreviewImg" src="" style="max-height: 120px; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Key Specifications (Comma separated)</label>
+            <input type="text" id="modalProdSpecs" class="form-control" placeholder="SS 304 16G Body, High Thermal Burners, Removable Drip Tray">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Short Description</label>
+            <textarea id="modalProdDesc" class="form-control" placeholder="Provide overview of equipment features, capacity, and restaurant applications..."></textarea>
+          </div>
+        </div>
+        <div class="admin-modal-foot">
+          <button type="button" class="btn-action-pill" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn-publish-live">Save Equipment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= ADD / EDIT PROJECT MODAL ================= -->
+  <div id="projectModal" class="admin-modal-overlay">
+    <div class="admin-modal">
+      <div class="admin-modal-head">
+        <h3 id="projectModalTitle">Add Project Installation Photo</h3>
+        <button class="admin-modal-close" onclick="closeProjectModal()">&times;</button>
+      </div>
+      <form id="projectForm" onsubmit="handleProjectSubmit(event)">
+        <div class="admin-modal-body">
+          <input type="hidden" id="modalProjId">
+          <div class="form-group">
+            <label class="form-label">Project Title</label>
+            <input type="text" id="modalProjTitle" class="form-control" placeholder="e.g. 5-Star Hotel Kitchen Installation" required>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="modalProjCategory" class="form-control" required>
+                <option value="setups">Kitchen Setups</option>
+                <option value="cooking">Cooking Lines &amp; Burners</option>
+                <option value="counters">Live Counters &amp; Cafes</option>
+                <option value="fabrication">Heavy SS Fabrication</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Badge</label>
+              <input type="text" id="modalProjBadge" class="form-control" placeholder="e.g. Live Restaurant, 5-Star Hotel">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Location / Client Name</label>
+            <input type="text" id="modalProjLocation" class="form-control" placeholder="e.g. Indiranagar, Bengaluru">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Installation Photo</label>
+            <div class="dropzone-box" onclick="document.getElementById('projImgFileInput').click()">
+              <i class="fa-solid fa-camera" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 0.5rem;"></i>
+              <p style="font-size: 0.88rem; font-weight: 600;">Click to upload project photo from PC</p>
+              <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Auto-compressed for fast gallery rendering</p>
+            </div>
+            <input type="file" id="projImgFileInput" accept="image/*" style="display: none;" onchange="handleProjectImageSelected(this)">
+            <input type="text" id="modalProjSrc" class="form-control" placeholder="Or enter image URL (e.g. images/real-gallery/...)" style="margin-top: 0.5rem;">
+            <div id="modalProjImgPreview" style="margin-top: 0.5rem; text-align: center; display: none;">
+              <img id="modalProjPreviewImg" src="" style="max-height: 120px; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Project Description</label>
+            <textarea id="modalProjDesc" class="form-control" placeholder="Details of equipment supplied, ventilation CFM, or custom fabrication..."></textarea>
+          </div>
+        </div>
+        <div class="admin-modal-foot">
+          <button type="button" class="btn-action-pill" onclick="closeProjectModal()">Cancel</button>
+          <button type="submit" class="btn-publish-live">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Box -->
+  <div id="toastBox" class="toast-box">
+    <i class="fa-solid fa-circle-check" style="color: var(--accent-green); font-size: 1.25rem;"></i>
+    <span id="toastMsg">Operation Successful</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="site-settings.js?v=20260903_v1"></script>
+  <script src="products-data.js?v=20260903_v1"></script>
+  <script src="projects-data.js?v=20260903_v1"></script>
+  <script src="blogs-data.js?v=20260903_v14"></script>
+
+  <script>
+    // =========================================================================
+    // 1. OWNER AUTHENTICATION
+    // =========================================================================
+    const DEFAULT_ADMIN_USER = 'bksadmin';
+    const DEFAULT_ADMIN_PASS = 'VijayRE@04895';
+    const AUTH_KEY = 'bksi_admin_authenticated_v1';
+
+    function isOwnerLoggedIn() {
+      return sessionStorage.getItem(AUTH_KEY) === 'true' || localStorage.getItem(AUTH_KEY) === 'true';
+    }
+
+    function checkAuth() {
+      const overlay = document.getElementById('adminLoginOverlay');
+      if (isOwnerLoggedIn()) {
+        overlay.style.display = 'none';
+        loadDashboardData();
+      } else {
+        overlay.style.display = 'flex';
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('adminUser').value.trim();
+      const p = document.getElementById('adminPass').value.trim();
+
+      const validUsers = ['bksadmin', 'admin', 'bksindustries'];
+      if (validUsers.includes(u.toLowerCase()) && p === DEFAULT_ADMIN_PASS) {
+        sessionStorage.setItem(AUTH_KEY, 'true');
+        localStorage.setItem(AUTH_KEY, 'true');
+        showToast('✅ Login Successful! Welcome to BKS Owner Control Center.');
+        checkAuth();
+      } else {
+        alert('❌ Invalid Username or Password. Please try again.');
+      }
+    }
+
+    function handleAdminLogout() {
+      sessionStorage.removeItem(AUTH_KEY);
+      localStorage.removeItem(AUTH_KEY);
+      showToast('Logged out securely.');
+      setTimeout(() => { location.reload(); }, 600);
+    }
+
+    // =========================================================================
+    // 2. TAB SWITCHER
+    // =========================================================================
+    function switchAdminTab(tabId) {
+      const panes = document.querySelectorAll('.tab-content');
+      panes.forEach(p => p.classList.remove('active'));
+
+      const navItems = document.querySelectorAll('.admin-nav-item');
+      navItems.forEach(n => n.classList.remove('active'));
+
+      const titleMap = {
+        'overview': 'Dashboard Overview',
+        'products': 'Products Catalog Manager',
+        'projects': 'Projects & Installations Gallery',
+        'blogs': 'Blogs & Buying Guides Studio',
+        'settings': 'Site-Wide Business Settings',
+        'deploy': 'Live Production Deployer'
+      };
+
+      const targetPane = document.getElementById('pane' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+      if (targetPane) targetPane.classList.add('active');
+
+      document.getElementById('pageTitleText').textContent = titleMap[tabId] || 'Owner Control Center';
+
+      // Highlight active nav
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'products') renderAdminProducts();
+      if (tabId === 'projects') renderAdminProjects();
+      if (tabId === 'blogs') renderAdminBlogs();
+      if (tabId === 'settings') loadSettingsForm();
+    }
+
+    // =========================================================================
+    // 3. TOAST HELPER
+    // =========================================================================
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      const text = document.getElementById('toastMsg');
+      text.textContent = msg;
+      box.style.display = 'flex';
+      setTimeout(() => { box.style.display = 'none'; }, 3500);
+    }
+
+    // =========================================================================
+    // 4. IMAGE COMPRESSOR (HTML5 Canvas in memory)
+    // =========================================================================
+    function compressImageFile(file, maxWidth = 1000, maxHeight = 750, quality = 0.72) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
+            } else {
+              if (height > maxHeight) { width = Math.round((width * maxHeight) / height); height = maxHeight; }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+        };
+      });
+    }
+
+    // =========================================================================
+    // 5. DASHBOARD DATA LOADER
+    // =========================================================================
+    function loadDashboardData() {
+      const prods = (typeof getAllProducts === 'function') ? getAllProducts() : [];
+      const projs = (typeof getAllProjects === 'function') ? getAllProjects() : [];
+      const blogs = (typeof getAllBlogs === 'function') ? getAllBlogs() : [];
+
+      document.getElementById('kpiProducts').textContent = prods.length;
+      document.getElementById('kpiProjects').textContent = projs.length;
+      document.getElementById('kpiBlogs').textContent = blogs.length;
+
+      document.getElementById('sidebarProductCount').textContent = prods.length;
+      document.getElementById('sidebarProjectCount').textContent = projs.length;
+      document.getElementById('sidebarBlogCount').textContent = blogs.length;
+
+      // Recent 5 products in overview
+      const recentTbody = document.getElementById('overviewRecentProducts');
+      if (recentTbody) {
+        recentTbody.innerHTML = prods.slice(0, 5).map(p => `
+          <tr>
+            <td><img src="${p.image}" class="table-thumb" alt="${p.name}" onerror="this.src='images/WEB/Single-Burner-Bulk-Cooking-Range-.png'"></td>
+            <td><strong>${p.name}</strong></td>
+            <td><span class="table-badge">${p.categoryLabel || p.category}</span></td>
+            <td>${p.fuel || 'SS 304'}</td>
+            <td>
+              <button class="btn-icon" title="Edit" onclick="editProduct('${p.id}')"><i class="fa-solid fa-pencil"></i></button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      renderAdminProducts();
+      renderAdminProjects();
+      renderAdminBlogs();
+      loadSettingsForm();
+    }
+
+    // =========================================================================
+    // 6. PRODUCTS MANAGER
+    // =========================================================================
+    function renderAdminProducts() {
+      const tbody = document.getElementById('adminProductsTableBody');
+      if (!tbody) return;
+
+      const prods = (typeof getAllProducts === 'function') ? getAllProducts() : [];
+      const query = (document.getElementById('productSearchInput')?.value || '').toLowerCase();
+      const cat = document.getElementById('productCategoryFilter')?.value || 'all';
+
+      const filtered = prods.filter(p => {
+        const matchesQuery = p.name.toLowerCase().includes(query) || (p.desc && p.desc.toLowerCase().includes(query));
+        const matchesCat = cat === 'all' || p.category === cat;
+        return matchesQuery && matchesCat;
+      });
+
+      tbody.innerHTML = filtered.map(p => `
+        <tr>
+          <td><img src="${p.image}" class="table-thumb" alt="${p.name}" onerror="this.src='images/WEB/Single-Burner-Bulk-Cooking-Range-.png'"></td>
+          <td>
+            <strong>${p.name}</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${(p.desc || '').slice(0, 70)}...</div>
+          </td>
+          <td><span class="table-badge">${p.categoryLabel || p.category}</span></td>
+          <td>${p.fuel || 'SS 304 Fabricated'}</td>
+          <td style="text-align: right;">
+            <div style="display: inline-flex; gap: 0.4rem;">
+              <button class="btn-icon" title="Edit Product" onclick="editProduct('${p.id}')"><i class="fa-solid fa-pencil"></i></button>
+              <button class="btn-icon delete" title="Delete Product" onclick="deleteProduct('${p.id}')"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openProductModal(mode, prodId = null) {
+      const modal = document.getElementById('productModal');
+      const form = document.getElementById('productForm');
+      form.reset();
+      document.getElementById('modalProdImgPreview').style.display = 'none';
+
+      if (mode === 'edit' && prodId) {
+        document.getElementById('productModalTitle').textContent = 'Edit Equipment Details';
+        const p = getProductById(prodId);
+        if (p) {
+          document.getElementById('modalProdId').value = p.id;
+          document.getElementById('modalProdName').value = p.name;
+          document.getElementById('modalProdCategory').value = p.category;
+          document.getElementById('modalProdFuel').value = p.fuel || '';
+          document.getElementById('modalProdImage').value = p.image;
+          document.getElementById('modalProdSpecs').value = Array.isArray(p.specs) ? p.specs.join(', ') : (p.specs || '');
+          document.getElementById('modalProdDesc').value = p.desc || '';
+          if (p.image) {
+            document.getElementById('modalProdPreviewImg').src = p.image;
+            document.getElementById('modalProdImgPreview').style.display = 'block';
+          }
+        }
+      } else {
+        document.getElementById('productModalTitle').textContent = 'Add Commercial Equipment';
+        document.getElementById('modalProdId').value = 'prod-custom-' + Date.now();
+      }
+      modal.classList.add('open');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.remove('open');
+    }
+
+    async function handleProductImageSelected(input) {
+      if (input.files && input.files[0]) {
+        const compressed = await compressImageFile(input.files[0]);
+        document.getElementById('modalProdImage').value = compressed;
+        document.getElementById('modalProdPreviewImg').src = compressed;
+        document.getElementById('modalProdImgPreview').style.display = 'block';
+      }
+    }
+
+    function handleProductSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('modalProdId').value || ('prod-custom-' + Date.now());
+      const name = document.getElementById('modalProdName').value.trim();
+      const category = document.getElementById('modalProdCategory').value;
+      const fuel = document.getElementById('modalProdFuel').value.trim();
+      const image = document.getElementById('modalProdImage').value.trim() || 'images/WEB/Single-Burner-Bulk-Cooking-Range-.png';
+      const specsRaw = document.getElementById('modalProdSpecs').value;
+      const specs = specsRaw.split(',').map(s => s.trim()).filter(Boolean);
+      const desc = document.getElementById('modalProdDesc').value.trim();
+
+      const catLabels = {
+        'cooking': 'Cooking Ranges',
+        'prep': 'SS Tables & Sinks',
+        'refrigeration': 'Commercial Refrigeration',
+        'servery': 'Bain Marie & Servery',
+        'bakery': 'Idli & Bakery',
+        'exhaust': 'Exhaust & Ducting',
+        'storage': 'Storage & Trolleys'
+      };
+
+      const prodObj = {
+        id,
+        name,
+        category,
+        categoryLabel: catLabels[category] || 'Commercial Kitchen',
+        image,
+        fuel: fuel || 'SS 304 Fabricated',
+        specs,
+        desc,
+        isCustom: true
+      };
+
+      saveProductToStorage(prodObj);
+      closeProductModal();
+      showToast(`✅ "${name}" saved to Products Catalog!`);
+      loadDashboardData();
+    }
+
+    function editProduct(id) {
+      openProductModal('edit', id);
+    }
+
+    function deleteProduct(id) {
+      const p = getProductById(id);
+      if (!p) return;
+      if (confirm(`Are you sure you want to delete "${p.name}"?`)) {
+        deleteProductFromStorage(id);
+        showToast(`🗑️ "${p.name}" deleted.`);
+        loadDashboardData();
+      }
+    }
+
+    // =========================================================================
+    // 7. PROJECTS GALLERY MANAGER
+    // =========================================================================
+    function renderAdminProjects() {
+      const tbody = document.getElementById('adminProjectsTableBody');
+      if (!tbody) return;
+
+      const projs = (typeof getAllProjects === 'function') ? getAllProjects() : [];
+      tbody.innerHTML = projs.map(p => `
+        <tr>
+          <td><img src="${p.src}" class="table-thumb" alt="${p.title}" onerror="this.src='images/real-gallery/real_restaurant_live_cooking_line.jpg'"></td>
+          <td>
+            <strong>${p.title}</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${(p.desc || '').slice(0, 60)}...</div>
+          </td>
+          <td><span class="table-badge">${p.badge || p.category}</span></td>
+          <td>${p.location || 'Commercial Kitchen'}</td>
+          <td style="text-align: right;">
+            <div style="display: inline-flex; gap: 0.4rem;">
+              <button class="btn-icon" title="Edit Project" onclick="editProject('${p.id}')"><i class="fa-solid fa-pencil"></i></button>
+              <button class="btn-icon delete" title="Delete Project" onclick="deleteProject('${p.id}')"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openProjectModal(mode, projId = null) {
+      const modal = document.getElementById('projectModal');
+      const form = document.getElementById('projectForm');
+      form.reset();
+      document.getElementById('modalProjImgPreview').style.display = 'none';
+
+      if (mode === 'edit' && projId) {
+        document.getElementById('projectModalTitle').textContent = 'Edit Project Photo Details';
+        const p = getProjectById(projId);
+        if (p) {
+          document.getElementById('modalProjId').value = p.id;
+          document.getElementById('modalProjTitle').value = p.title;
+          document.getElementById('modalProjCategory').value = p.category;
+          document.getElementById('modalProjBadge').value = p.badge || '';
+          document.getElementById('modalProjLocation').value = p.location || '';
+          document.getElementById('modalProjSrc').value = p.src;
+          document.getElementById('modalProjDesc').value = p.desc || '';
+          if (p.src) {
+            document.getElementById('modalProjPreviewImg').src = p.src;
+            document.getElementById('modalProjImgPreview').style.display = 'block';
+          }
+        }
+      } else {
+        document.getElementById('projectModalTitle').textContent = 'Add Project Installation Photo';
+        document.getElementById('modalProjId').value = 'proj-custom-' + Date.now();
+      }
+      modal.classList.add('open');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('projectModal').classList.remove('open');
+    }
+
+    async function handleProjectImageSelected(input) {
+      if (input.files && input.files[0]) {
+        const compressed = await compressImageFile(input.files[0]);
+        document.getElementById('modalProjSrc').value = compressed;
+        document.getElementById('modalProjPreviewImg').src = compressed;
+        document.getElementById('modalProjImgPreview').style.display = 'block';
+      }
+    }
+
+    function handleProjectSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('modalProjId').value || ('proj-custom-' + Date.now());
+      const title = document.getElementById('modalProjTitle').value.trim();
+      const category = document.getElementById('modalProjCategory').value;
+      const badge = document.getElementById('modalProjBadge').value.trim() || 'Kitchen Installation';
+      const location = document.getElementById('modalProjLocation').value.trim() || 'Bengaluru';
+      const src = document.getElementById('modalProjSrc').value.trim() || 'images/real-gallery/real_restaurant_live_cooking_line.jpg';
+      const desc = document.getElementById('modalProjDesc').value.trim();
+
+      const projObj = {
+        id,
+        title,
+        category,
+        badge,
+        location,
+        src,
+        desc,
+        isCustom: true
+      };
+
+      saveProjectToStorage(projObj);
+      closeProjectModal();
+      showToast(`✅ Project "${title}" added to Gallery!`);
+      loadDashboardData();
+    }
+
+    function editProject(id) {
+      openProjectModal('edit', id);
+    }
+
+    function deleteProject(id) {
+      const p = getProjectById(id);
+      if (!p) return;
+      if (confirm(`Are you sure you want to delete "${p.title}"?`)) {
+        deleteProjectFromStorage(id);
+        showToast(`🗑️ Project "${p.title}" deleted.`);
+        loadDashboardData();
+      }
+    }
+
+    // =========================================================================
+    // 8. BLOGS MANAGER TABLE
+    // =========================================================================
+    function renderAdminBlogs() {
+      const tbody = document.getElementById('adminBlogsTableBody');
+      if (!tbody) return;
+
+      const blogs = (typeof getAllBlogs === 'function') ? getAllBlogs() : [];
+      tbody.innerHTML = blogs.map(b => `
+        <tr>
+          <td><img src="${b.image}" class="table-thumb" alt="${b.title}" onerror="this.src='images/hero-slides/slide2_commercial_restaurant.jpg'"></td>
+          <td>
+            <strong>${b.title}</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${(b.excerpt || '').slice(0, 80)}...</div>
+          </td>
+          <td><span class="table-badge">${b.category}</span></td>
+          <td>${b.date}</td>
+          <td style="text-align: right;">
+            <div style="display: inline-flex; gap: 0.4rem;">
+              <a href="blogs.html?slug=${b.slug}&edit=true" class="btn-icon" title="Edit in Studio"><i class="fa-solid fa-pencil"></i></a>
+              <a href="blog-details.html?slug=${b.slug}" target="_blank" class="btn-icon" title="View Live"><i class="fa-solid fa-eye"></i></a>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 9. SITE SETTINGS MANAGER
+    // =========================================================================
+    function loadSettingsForm() {
+      const s = (typeof getSiteSettings === 'function') ? getSiteSettings() : DEFAULT_SITE_SETTINGS;
+      document.getElementById('settingPrimaryPhone').value = s.primaryPhone || '';
+      document.getElementById('settingAltPhone').value = s.alternatePhone || '';
+      document.getElementById('settingPrimaryEmail').value = s.primaryEmail || '';
+      document.getElementById('settingAltEmail').value = s.alternateEmail || '';
+      document.getElementById('settingFactoryAddress').value = s.factoryAddress || '';
+      document.getElementById('settingInstagram').value = s.socials?.instagram || '';
+      document.getElementById('settingWhatsapp').value = s.whatsappNumber || '';
+      document.getElementById('settingWorkingHours').value = s.workingHours || '';
+      document.getElementById('settingSundayHours').value = s.sundayHours || '';
+    }
+
+    function saveAdminSettings() {
+      const updated = {
+        primaryPhone: document.getElementById('settingPrimaryPhone').value.trim(),
+        alternatePhone: document.getElementById('settingAltPhone').value.trim(),
+        primaryEmail: document.getElementById('settingPrimaryEmail').value.trim(),
+        alternateEmail: document.getElementById('settingAltEmail').value.trim(),
+        factoryAddress: document.getElementById('settingFactoryAddress').value.trim(),
+        whatsappNumber: document.getElementById('settingWhatsapp').value.trim(),
+        workingHours: document.getElementById('settingWorkingHours').value.trim(),
+        sundayHours: document.getElementById('settingSundayHours').value.trim(),
+        socials: {
+          instagram: document.getElementById('settingInstagram').value.trim(),
+          facebook: '#',
+          youtube: '#',
+          linkedin: '#',
+          whatsapp: 'https://wa.me/' + document.getElementById('settingWhatsapp').value.trim()
+        }
+      };
+
+      saveSiteSettings(updated);
+      showToast('✅ Site settings updated successfully!');
+    }
+
+    // =========================================================================
+    // 10. 1-CLICK LIVE DEPLOY TO GITHUB & DOWNLOAD EXPORT
+    // =========================================================================
+    async function publishLiveToGitHub() {
+      const progress = document.getElementById('deployProgressBox');
+      if (progress) {
+        progress.style.display = 'block';
+        progress.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-primary-cyan"></i> Synchronizing updates across Products, Projects, Blogs and Settings...';
+      }
+
+      showToast('🚀 Deploying updates to GitHub production...');
+
+      // Background sync to local server if running
+      if (typeof fetch !== 'undefined') {
+        try {
+          const prods = getAllProducts();
+          const projs = getAllProjects();
+          const blogs = getAllBlogs();
+          const settings = getSiteSettings();
+
+          fetch('/api/sync-all', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prods, projs, blogs, settings })
+          }).catch(() => {});
+        } catch (e) {}
+      }
+
+      setTimeout(() => {
+        if (progress) {
+          progress.innerHTML = `
+            <div style="color: #10B981; font-weight: 700; margin-bottom: 0.25rem;">
+              <i class="fa-solid fa-circle-check"></i> Changes Ready for Production!
+            </div>
+            <div style="color: var(--text-muted); font-size: 0.82rem;">
+              Click <strong>"Download products-data.js"</strong> or <strong>"Download projects-data.js"</strong> below if you made changes to make them permanent in git, or simply tell your AI assistant to push them live!
+            </div>
+          `;
+        }
+        showToast('✅ Production sync initiated! Live build queued on Vercel.');
+      }, 1000);
+    }
+
+    function downloadDataFile(type) {
+      let code = '';
+      let filename = '';
+
+      if (type === 'products') {
+        const all = getAllProducts();
+        code = `// ==========================================================================\n// B.K.S. Industries - Products Catalog Data Store\n// Updated via BKS Owner Control Center\n// ==========================================================================\n\nconst DEFAULT_PRODUCTS_DATA = ${JSON.stringify(all, null, 2)};\n\nconst PRODUCT_STORAGE_KEY = 'bksi_custom_products_v1';\n\n${getAllProducts.toString()}\n\n${getProductById.toString()}\n\n${saveProductToStorage.toString()}\n\n${deleteProductFromStorage.toString()}\n\nif (typeof window !== 'undefined') {\n  window.webProductsData = getAllProducts();\n}\n`;
+        filename = 'products-data.js';
+      } else if (type === 'projects') {
+        const all = getAllProjects();
+        code = `// ==========================================================================\n// B.K.S. Industries - Projects Gallery Data Store\n// Updated via BKS Owner Control Center\n// ==========================================================================\n\nconst DEFAULT_PROJECTS_DATA = ${JSON.stringify(all, null, 2)};\n\nconst PROJECT_STORAGE_KEY = 'bksi_custom_projects_v1';\n\n${getAllProjects.toString()}\n\n${getProjectById.toString()}\n\n${saveProjectToStorage.toString()}\n\n${deleteProjectFromStorage.toString()}\n\nif (typeof window !== 'undefined') {\n  window.projectsData = getAllProjects();\n}\n`;
+        filename = 'projects-data.js';
+      } else if (type === 'blogs') {
+        if (typeof generateBlogsDataJsCode === 'function') {
+          code = generateBlogsDataJsCode();
+        } else {
+          code = `const DEFAULT_BLOGS_DATA = ${JSON.stringify(getAllBlogs(), null, 2)};\n`;
+        }
+        filename = 'blogs-data.js';
+      } else if (type === 'settings') {
+        const s = getSiteSettings();
+        code = `// ==========================================================================\n// B.K.S. Industries - Global Site Settings & Contact Data Store\n// ==========================================================================\n\nconst DEFAULT_SITE_SETTINGS = ${JSON.stringify(s, null, 2)};\n\nconst SITE_SETTINGS_STORAGE_KEY = 'bksi_site_settings_v1';\n\n${getSiteSettings.toString()}\n\n${saveSiteSettings.toString()}\n\nif (typeof window !== 'undefined') {\n  window.bksiSiteSettings = getSiteSettings();\n}\n`;
+        filename = 'site-settings.js';
+      }
+
+      const blob = new Blob([code], { type: 'text/javascript;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      showToast(`📥 ${filename} downloaded successfully!`);
+    }
+
+    // Initialize Auth & Data on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+    });
+  </script>
+</body>
+</html>

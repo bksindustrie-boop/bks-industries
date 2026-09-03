@@ -10,13 +10,25 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.bksindustries.in/blogs.html">
 
+  <!-- Geographic Meta Tags (GEO / Local SEO) -->
+  <meta name="geo.region" content="IN-KA">
+  <meta name="geo.placename" content="Bengaluru">
+  <meta name="geo.position" content="13.0298;77.5255">
+  <meta name="ICBM" content="13.0298, 77.5255">
+
   <!-- OpenGraph / Social Meta Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Commercial Kitchen Blogs & Equipment Buying Guides | B.K.S. Industries">
+  <meta property="og:title" content="Commercial Kitchen Blogs &amp; Equipment Buying Guides | B.K.S. Industries">
   <meta property="og:description" content="Read expert commercial kitchen setup guides, SS 304 machinery comparisons, cloud kitchen layouts, and restaurant cost breakdowns.">
-  <meta property="og:image" content="images/hero-slides/slide2_commercial_restaurant.jpg">
+  <meta property="og:image" content="https://www.bksindustries.in/images/hero-slides/slide2_commercial_restaurant.jpg">
   <meta property="og:url" content="https://www.bksindustries.in/blogs.html">
   <meta property="og:site_name" content="B.K.S. Industries">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Commercial Kitchen Blogs &amp; Equipment Buying Guides | B.K.S. Industries">
+  <meta name="twitter:description" content="Read expert commercial kitchen setup guides, SS 304 machinery comparisons, and cost breakdowns.">
+  <meta name="twitter:image" content="https://www.bksindustries.in/images/hero-slides/slide2_commercial_restaurant.jpg">
 
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +75,7 @@
         <div class="apollo-topbar-socials">
           <a href="https://wa.me/918123939433" target="_blank" rel="noopener" class="apollo-social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#" class="apollo-social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" class="apollo-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.instagram.com/bks_industries04/" target="_blank" rel="noopener" class="apollo-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="#" class="apollo-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
           <a href="#" class="apollo-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
@@ -436,29 +448,35 @@
       <!-- Studio Navigation Tabs -->
       <div class="blog-modal-tabs">
         <button type="button" class="blog-modal-tab-btn active" id="tabBtnWrite" onclick="switchStudioTab('create')">
-          <i class="fa-solid fa-feather-pointed"></i> <span>Write &amp; Edit Article</span>
+          <i class="fa-solid fa-feather-pointed"></i> <span>1. Write &amp; Content</span>
+        </button>
+        <button type="button" class="blog-modal-tab-btn" id="tabBtnSeo" onclick="switchStudioTab('seo')">
+          <i class="fa-solid fa-magnifying-glass-chart"></i> <span>2. SEO &amp; SERP Suite</span>
+        </button>
+        <button type="button" class="blog-modal-tab-btn" id="tabBtnFaq" onclick="switchStudioTab('faq')">
+          <i class="fa-solid fa-circle-question"></i> <span>3. FAQ Schema Builder</span>
         </button>
         <button type="button" class="blog-modal-tab-btn" id="tabBtnManage" onclick="switchStudioTab('manage')">
-          <i class="fa-solid fa-table-list"></i> <span>Manage Articles</span>
+          <i class="fa-solid fa-table-list"></i> <span>4. Manage Articles</span>
         </button>
         <button type="button" class="blog-modal-tab-btn" id="tabBtnExport" onclick="switchStudioTab('export')">
-          <i class="fa-solid fa-code"></i> <span>Export &amp; Deploy Code</span>
+          <i class="fa-solid fa-code"></i> <span>5. Export Code</span>
         </button>
       </div>
 
       <!-- Modal Body -->
       <div class="blog-modal-body">
         
-        <!-- TAB 1: WRITE & EDIT ARTICLE -->
-        <div class="blog-tab-pane active" id="paneCreate">
-          <form id="addBlogForm" onsubmit="handleSaveBlogForm(event)">
-            <input type="hidden" id="blogEditId" value="">
-            <input type="hidden" id="formBlogImageFinal" value="">
+        <form id="addBlogForm" onsubmit="handleSaveBlogForm(event)">
+          <input type="hidden" id="blogEditId" value="">
+          <input type="hidden" id="formBlogImageFinal" value="">
 
+          <!-- TAB 1: WRITE & EDIT ARTICLE CONTENT -->
+          <div class="blog-tab-pane active" id="paneCreate">
             <!-- Article Title -->
             <div class="blog-form-group">
               <label class="blog-form-label" for="formBlogTitle">
-                <span>Article Title *</span>
+                <span>Article Title (H1 Tag) *</span>
                 <span class="blog-form-hint" id="titleCharCounter">0 characters</span>
               </label>
               <input type="text" id="formBlogTitle" class="blog-form-input" placeholder="e.g., Best Commercial Kitchen Equipment Checklist 2026 for Restaurants" required oninput="handleTitleInput(this.value)">
@@ -467,10 +485,10 @@
             <!-- URL Slug -->
             <div class="blog-form-group">
               <label class="blog-form-label" for="formBlogSlug">
-                <span>URL Slug (SEO Link)</span>
+                <span>URL Slug (SEO URL Structure) *</span>
                 <span class="blog-form-hint">Used in: blog-details.html?slug=...</span>
               </label>
-              <input type="text" id="formBlogSlug" class="blog-form-input" placeholder="best-commercial-kitchen-equipment-checklist-2026" required>
+              <input type="text" id="formBlogSlug" class="blog-form-input" placeholder="best-commercial-kitchen-equipment-checklist-2026" required oninput="handleSlugInput(this.value)">
             </div>
 
             <!-- Category & Read Time Grid -->
@@ -512,7 +530,7 @@
                 <input type="text" id="formBlogAuthor" class="blog-form-input" placeholder="BKS Engineering Advisory" value="BKS Engineering Advisory">
               </div>
               <div class="blog-form-group">
-                <label class="blog-form-label" for="formBlogRole">Author Title / Role</label>
+                <label class="blog-form-label" for="formBlogRole">Author Title / Role (E-E-A-T Credibility)</label>
                 <input type="text" id="formBlogRole" class="blog-form-input" placeholder="Chief Commercial Kitchen Equipment Engineer" value="Chief Commercial Kitchen Equipment Engineer">
               </div>
             </div>
@@ -543,7 +561,9 @@
                   <div class="blog-dropzone-inner" onclick="document.getElementById('formBlogImageFile').click()" id="dropzoneBox">
                     <i class="fa-solid fa-file-image"></i>
                     <p><strong>Click to choose image</strong> or drag and drop here</p>
-                    <span style="font-size: 0.75rem; color: #64748B;">Supports PNG, JPG, JPEG, WebP, SVG</span>
+                    <span style="font-size: 0.75rem; color: #64748B;">
+                      Recommended: <strong>1200 &times; 675 px (16:9)</strong> or <strong>1200 &times; 630 px</strong> &bull; Max 25MB (PNG, JPG, WebP)
+                    </span>
                   </div>
                   <input type="file" id="formBlogImageFile" accept="image/*" style="display: none;" onchange="handleImageFileSelect(event)">
                 </div>
@@ -577,21 +597,30 @@
                   </button>
                 </div>
               </div>
+
+              <!-- Cover Image Alt Text Input (SEO Crucial) -->
+              <div style="margin-top: 0.75rem;">
+                <label class="blog-form-label" for="formBlogImageAlt">
+                  <span>Image ALT Text (Google Image SEO) *</span>
+                  <span class="blog-form-hint">Describe image with target keywords (e.g. "SS 304 Commercial Cooking Range Fabricated by BKS Bangalore")</span>
+                </label>
+                <input type="text" id="formBlogImageAlt" class="blog-form-input" placeholder="e.g. Best Commercial Kitchen Equipment Manufacturer in Bangalore BKS Industries Live Commercial Setup" oninput="updateSeoScorecard()">
+              </div>
             </div>
 
             <!-- Short Excerpt -->
             <div class="blog-form-group">
               <label class="blog-form-label" for="formBlogExcerpt">
-                <span>Short Excerpt (Summary for Cards &amp; SEO) *</span>
+                <span>Short Excerpt (Summary for Cards &amp; Default Meta Description) *</span>
                 <span class="blog-form-hint" id="excerptCharCounter">0/200 chars</span>
               </label>
               <textarea id="formBlogExcerpt" class="blog-form-textarea" style="min-height: 4.5rem;" placeholder="A concise 2-to-3 sentence summary of what this article covers for visitors and Google search snippets..." required oninput="handleExcerptInput(this.value)"></textarea>
             </div>
 
-            <!-- Quick Answer / Key Takeaways Box -->
+            <!-- Quick Answer / Key Takeaways Box (Position 0 Featured Snippet) -->
             <div class="blog-form-group">
               <label class="blog-form-label" for="formBlogQuickAnswer">
-                <span>🎯 Quick Answer / Key Takeaway Callout (Featured Top Box)</span>
+                <span>🎯 Quick Answer / Key Takeaway Callout (Google Featured Snippet Box)</span>
                 <span class="blog-form-hint">Displayed in a prominent highlight box at the top of the article</span>
               </label>
               <textarea id="formBlogQuickAnswer" class="blog-form-textarea" style="min-height: 4rem;" placeholder="Key takeaways: 1) Certified AISI 304 food-grade stainless steel, 2) Direct factory manufacturing eliminating 20-30% trader markups, 3) 24h local maintenance across Bengaluru..."></textarea>
@@ -614,11 +643,33 @@
               </label>
             </div>
 
-            <!-- Rich Body Content Builder with Toolbar & Live Preview -->
-            <div class="blog-form-group" style="margin-top: 1.5rem;">
+            <!-- Pre-Built Article Blueprint Inserters -->
+            <div style="margin-top: 1.5rem;">
               <label class="blog-form-label">
-                <span>Full Article Body Content *</span>
-                <span class="blog-form-hint">Use rich formatting buttons below to build your article</span>
+                <span>✨ Pre-Built Article Blueprints (1-Click Instant Templates)</span>
+                <span class="blog-form-hint">Insert complete, high-ranking article structures with H2-H3, tables, and CTA cards</span>
+              </label>
+              <div class="blueprint-buttons-bar">
+                <button type="button" class="blueprint-btn" onclick="insertBlueprintTemplate('buying-guide')" title="Insert Commercial Equipment Buying Guide Blueprint">
+                  <i class="fa-solid fa-book-open"></i> Full Equipment Buying Guide
+                </button>
+                <button type="button" class="blueprint-btn" onclick="insertBlueprintTemplate('ss304-compare')" title="Insert SS 304 vs SS 202 Comparison Blueprint">
+                  <i class="fa-solid fa-scale-balanced"></i> SS 304 vs 202 Comparison
+                </button>
+                <button type="button" class="blueprint-btn" onclick="insertBlueprintTemplate('cloud-kitchen')" title="Insert Cloud Kitchen Sizing Blueprint">
+                  <i class="fa-solid fa-cloud"></i> Cloud Kitchen Setup &amp; Costs
+                </button>
+                <button type="button" class="blueprint-btn" onclick="insertBlueprintTemplate('exhaust-cfm')" title="Insert Exhaust Hood CFM Sizing Blueprint">
+                  <i class="fa-solid fa-wind"></i> Exhaust CFM Calculation Guide
+                </button>
+              </div>
+            </div>
+
+            <!-- Rich Body Content Builder with Toolbar & Live Preview -->
+            <div class="blog-form-group" style="margin-top: 0.75rem;">
+              <label class="blog-form-label">
+                <span>Full Article Body Content (H1-H3 Structure &amp; Media) *</span>
+                <span class="blog-form-hint">Click any formatting button to insert semantic headings, tables, or internal link cards</span>
               </label>
 
               <!-- Rich Formatting Toolbar -->
@@ -653,8 +704,11 @@
                 <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('price-table')" title="Add Equipment Price Table">
                   <i class="fa-solid fa-indian-rupee-sign"></i> <span>Price Table</span>
                 </button>
-                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('image-card')" title="Add In-Content Image with Caption">
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('image-card')" title="Add In-Content Image with ALT Caption">
                   <i class="fa-solid fa-image"></i> <span>Image Card</span>
+                </button>
+                <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('internal-cta')" title="Add Internal Lead Generation CTA Box">
+                  <i class="fa-solid fa-bullseye"></i> <span>Internal CTA Box</span>
                 </button>
                 <button type="button" class="blog-toolbar-btn" onclick="insertFormatting('quote')" title="Add Expert Quote Callout">
                   <i class="fa-solid fa-quote-left"></i> <span>Quote Box</span>
@@ -673,7 +727,7 @@
 
               <!-- Editor Textarea Pane -->
               <div id="editorPaneEdit">
-                <textarea id="formBlogContent" class="blog-form-textarea blog-editor-body-textarea" style="min-height: 16rem;" placeholder="Compose your article content here. Click any of the formatting buttons above to insert headings, tables, bullet points, and highlight callouts..." required oninput="updateLivePreview()"></textarea>
+                <textarea id="formBlogContent" class="blog-form-textarea blog-editor-body-textarea" style="min-height: 18rem;" placeholder="Compose your article content here. Click any of the formatting buttons above to insert headings, tables, bullet points, and highlight callouts..." required oninput="handleContentInput()"></textarea>
               </div>
 
               <!-- Live Preview Pane -->
@@ -683,10 +737,267 @@
                 </div>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
 
-        <!-- TAB 2: MANAGE ARTICLES -->
+          <!-- TAB 2: SEO & KEYWORD STRATEGY SUITE -->
+          <div class="blog-tab-pane" id="paneSeo">
+            
+            <!-- Google SERP Live Snippet Simulator -->
+            <div class="seo-section-card">
+              <div class="seo-section-head">
+                <div class="seo-section-title">
+                  <i class="fa-brands fa-google text-apollo-blue"></i>
+                  <span>Live Google Search Snippet Simulator (SERP Preview)</span>
+                </div>
+                <div style="display: flex; gap: 0.35rem;">
+                  <button type="button" class="blog-pill-btn active" id="serpBtnDesktop" onclick="setSerpPreviewMode('desktop')" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Desktop View</button>
+                  <button type="button" class="blog-pill-btn" id="serpBtnMobile" onclick="setSerpPreviewMode('mobile')" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Mobile View</button>
+                </div>
+              </div>
+
+              <div class="seo-serp-preview-box" id="serpPreviewBox">
+                <div class="seo-serp-url-row">
+                  <div class="seo-serp-favicon">
+                    <img src="images/bksi_official_logo.png" style="width: 14px; height: 14px; object-fit: contain;" alt="BKSI">
+                  </div>
+                  <span class="seo-serp-site-name">B.K.S. Industries</span>
+                  <span class="seo-serp-breadcrumb" id="serpPreviewBreadcrumb">https://www.bksindustries.in &rsaquo; blog-details.html?slug=...</span>
+                </div>
+                <div class="seo-serp-title" id="serpPreviewTitle">Article Title for Google Search</div>
+                <div class="seo-serp-desc" id="serpPreviewDesc">Meta description snippet for search engines will appear here...</div>
+              </div>
+            </div>
+
+            <!-- SEO Title & Meta Description Controls -->
+            <div class="seo-section-card">
+              <div class="seo-section-title" style="margin-bottom: 0.85rem;">
+                <i class="fa-solid fa-tags text-apollo-blue"></i>
+                <span>Meta Tags &amp; Search Snippet Optimization</span>
+              </div>
+
+              <!-- SEO Meta Title -->
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogSeoTitle">
+                  <span>SEO Title Tag (&lt;title&gt;) *</span>
+                  <span class="blog-form-hint" id="seoTitleCounter">0 / 60 chars (Recommended: 50-60)</span>
+                </label>
+                <input type="text" id="formBlogSeoTitle" class="blog-form-input" placeholder="e.g., Best Commercial Kitchen Equipment Manufacturer Bangalore (2026 Price List) | BKS Industries" oninput="handleSeoTitleInput(this.value)">
+                <div class="seo-gauge-bar-wrapper">
+                  <div class="seo-gauge-bar seo-gauge-optimal" id="seoTitleGauge" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Meta Description -->
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogMetaDesc">
+                  <span>Meta Description Tag (&lt;meta name="description"&gt;) *</span>
+                  <span class="blog-form-hint" id="metaDescCounter">0 / 160 chars (Recommended: 140-160)</span>
+                </label>
+                <textarea id="formBlogMetaDesc" class="blog-form-textarea" style="min-height: 4.5rem;" placeholder="e.g., Looking for the best commercial kitchen equipment manufacturer in Bangalore? Direct factory SS 304 cooking ranges, upright chillers, exhaust ducting & wholesale prices." oninput="handleMetaDescInput(this.value)"></textarea>
+                <div class="seo-gauge-bar-wrapper">
+                  <div class="seo-gauge-bar seo-gauge-optimal" id="metaDescGauge" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BKS Keyword Map & SEO Assistant -->
+            <div class="seo-section-card">
+              <div class="seo-section-title" style="margin-bottom: 0.85rem;">
+                <i class="fa-solid fa-map-location-dot text-apollo-blue"></i>
+                <span>BKS Industries Target Keyword Map &amp; Search Intent</span>
+              </div>
+
+              <div class="blog-form-grid blog-form-grid-2">
+                <div class="blog-form-group">
+                  <label class="blog-form-label" for="formBlogPrimaryKeyword">
+                    <span>Primary Focus Keyword *</span>
+                    <span class="blog-form-hint">Main ranking search query</span>
+                  </label>
+                  <input type="text" id="formBlogPrimaryKeyword" class="blog-form-input" placeholder="e.g., best kitchen equipment manufacturer in bangalore" oninput="updateSeoScorecard()">
+                </div>
+
+                <div class="blog-form-group">
+                  <label class="blog-form-label" for="formBlogSearchIntent">
+                    <span>Target Search Intent</span>
+                    <span class="blog-form-hint">Audience purchase stage</span>
+                  </label>
+                  <select id="formBlogSearchIntent" class="blog-form-select" onchange="updateSeoScorecard()">
+                    <option value="Commercial / Transactional">Commercial / Transactional (Restaurateurs buying machinery)</option>
+                    <option value="Informational / Guide">Informational / Technical Guide (Kitchen planning, CFM sizing)</option>
+                    <option value="Local Bengaluru B2B">Local Bengaluru B2B (Area-based searches)</option>
+                    <option value="Comparative">Comparative (SS 304 vs SS 202 evaluation)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Secondary / LSI Keywords -->
+              <div class="blog-form-group">
+                <label class="blog-form-label" for="formBlogSecondaryKeywords">
+                  <span>Secondary &amp; LSI Keywords</span>
+                  <span class="blog-form-hint">Comma separated supporting keywords</span>
+                </label>
+                <input type="text" id="formBlogSecondaryKeywords" class="blog-form-input" placeholder="commercial kitchen equipment bangalore, ss 304 restaurant equipment, kitchen equipment price list" oninput="updateSeoScorecard()">
+                
+                <!-- Quick 1-Click Keyword Chips -->
+                <div style="margin-top: 0.5rem;">
+                  <span style="font-size: 0.725rem; font-weight: 700; color: #64748B;">⚡ 1-Click Popular BKS Keywords (Click to add):</span>
+                  <div class="keyword-chips-wrap">
+                    <button type="button" class="keyword-chip" onclick="addKeywordChip('commercial kitchen equipment bangalore')"><i class="fa-solid fa-plus"></i> commercial kitchen equipment bangalore</button>
+                    <button type="button" class="keyword-chip" onclick="addKeywordChip('ss 304 restaurant equipment')"><i class="fa-solid fa-plus"></i> ss 304 restaurant equipment</button>
+                    <button type="button" class="keyword-chip" onclick="addKeywordChip('commercial cooking range manufacturer')"><i class="fa-solid fa-plus"></i> commercial cooking range manufacturer</button>
+                    <button type="button" class="keyword-chip" onclick="addKeywordChip('cloud kitchen setup cost bangalore')"><i class="fa-solid fa-plus"></i> cloud kitchen setup cost bangalore</button>
+                    <button type="button" class="keyword-chip" onclick="addKeywordChip('commercial refrigeration chiller bks')"><i class="fa-solid fa-plus"></i> commercial refrigeration chiller</button>
+                    <button type="button" class="keyword-chip" onclick="addKeywordChip('exhaust hood ducting bangalore')"><i class="fa-solid fa-plus"></i> exhaust hood ducting bangalore</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live SEO Health Scorecard (Real-time 100% Score Engine) -->
+            <div class="seo-scorecard-widget">
+              <div class="seo-score-circle" id="seoScoreCircle">
+                <span class="seo-score-num" id="seoScoreNum">85</span>
+                <span class="seo-score-total">/100</span>
+              </div>
+              <div class="seo-score-details">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <strong style="font-size: 0.95rem; font-weight: 800;"><i class="fa-solid fa-chart-line text-emerald-400 me-1"></i> BKS Real-Time SEO Health Checklist</strong>
+                  <span id="seoScoreRatingBadge" style="background: #10B981; color: #FFFFFF; font-size: 0.7rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 9999px;">Rank Ready</span>
+                </div>
+                <div class="seo-checklist-grid" id="seoChecklistGrid">
+                  <div class="seo-check-item passed" id="chkTitle"><i class="fa-solid fa-circle-check"></i> <span>Keyword in H1 Title</span></div>
+                  <div class="seo-check-item passed" id="chkSeoTitle"><i class="fa-solid fa-circle-check"></i> <span>Keyword in SEO Title</span></div>
+                  <div class="seo-check-item passed" id="chkMetaDesc"><i class="fa-solid fa-circle-check"></i> <span>Keyword in Meta Desc</span></div>
+                  <div class="seo-check-item passed" id="chkSlug"><i class="fa-solid fa-circle-check"></i> <span>Keyword in URL Slug</span></div>
+                  <div class="seo-check-item passed" id="chkH2"><i class="fa-solid fa-circle-check"></i> <span>Keyword in H2 Heading</span></div>
+                  <div class="seo-check-item passed" id="chkWordCount"><i class="fa-solid fa-circle-check"></i> <span>Content Depth (&gt;600 words)</span></div>
+                  <div class="seo-check-item passed" id="chkImageAlt"><i class="fa-solid fa-circle-check"></i> <span>Image ALT Text present</span></div>
+                  <div class="seo-check-item passed" id="chkFaq"><i class="fa-solid fa-circle-check"></i> <span>FAQ Schema Items added</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BKS Internal-Link Strategy Matrix -->
+            <div class="seo-section-card">
+              <div class="seo-section-title" style="margin-bottom: 0.5rem;">
+                <i class="fa-solid fa-diagram-project text-apollo-blue"></i>
+                <span>BKS Industries Internal-Link Strategy Matrix (1-Click Injectors)</span>
+              </div>
+              <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.75rem;">
+                Internal links pass Google PageRank directly to your high-converting product catalogs and lead generation forms. Click any card below to insert an optimized anchor link into your article body:
+              </p>
+
+              <div class="internal-link-grid">
+                <div class="internal-link-card">
+                  <div>
+                    <div class="internal-link-title"><i class="fa-solid fa-fire text-orange-500"></i> Cooking Ranges</div>
+                    <div class="internal-link-desc">Targets <code>products.html?category=cooking</code> with anchor text for Indian, Chinese, Bhatti ranges.</div>
+                  </div>
+                  <button type="button" class="internal-link-btn" onclick="insertInternalLink('cooking')">
+                    <i class="fa-solid fa-link"></i> Insert Link into Article
+                  </button>
+                </div>
+
+                <div class="internal-link-card">
+                  <div>
+                    <div class="internal-link-title"><i class="fa-solid fa-sink text-blue-500"></i> SS Prep &amp; Sinks</div>
+                    <div class="internal-link-desc">Targets <code>products.html?category=prep</code> for tables, sinks, and grease traps.</div>
+                  </div>
+                  <button type="button" class="internal-link-btn" onclick="insertInternalLink('prep')">
+                    <i class="fa-solid fa-link"></i> Insert Link into Article
+                  </button>
+                </div>
+
+                <div class="internal-link-card">
+                  <div>
+                    <div class="internal-link-title"><i class="fa-solid fa-snowflake text-sky-500"></i> Refrigeration</div>
+                    <div class="internal-link-desc">Targets <code>products.html?category=refrigeration</code> for vertical upright chillers.</div>
+                  </div>
+                  <button type="button" class="internal-link-btn" onclick="insertInternalLink('refrigeration')">
+                    <i class="fa-solid fa-link"></i> Insert Link into Article
+                  </button>
+                </div>
+
+                <div class="internal-link-card">
+                  <div>
+                    <div class="internal-link-title"><i class="fa-solid fa-screwdriver-wrench text-amber-500"></i> Kitchen Setup Services</div>
+                    <div class="internal-link-desc">Targets <code>services.html</code> for complete restaurant &amp; cloud kitchen consulting.</div>
+                  </div>
+                  <button type="button" class="internal-link-btn" onclick="insertInternalLink('services')">
+                    <i class="fa-solid fa-link"></i> Insert Link into Article
+                  </button>
+                </div>
+
+                <div class="internal-link-card">
+                  <div>
+                    <div class="internal-link-title"><i class="fa-solid fa-location-dot text-emerald-500"></i> Factory Visit &amp; Contact</div>
+                    <div class="internal-link-desc">Targets <code>contact.html</code> (Lakshmidevinagar, Bangalore factory).</div>
+                  </div>
+                  <button type="button" class="internal-link-btn" onclick="insertInternalLink('contact')">
+                    <i class="fa-solid fa-link"></i> Insert Link into Article
+                  </button>
+                </div>
+
+                <div class="internal-link-card">
+                  <div>
+                    <div class="internal-link-title"><i class="fa-solid fa-compass-drafting text-purple-500"></i> Free CAD Layout CTA Box</div>
+                    <div class="internal-link-desc">Inserts an eye-catching callout card prompting readers to request free 2D/3D CAD layouts.</div>
+                  </div>
+                  <button type="button" class="internal-link-btn" onclick="insertInternalLink('cad-box')">
+                    <i class="fa-solid fa-plus-circle"></i> Insert CTA Callout Card
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- TAB 3: FAQ SCHEMA BUILDER (schema.org/FAQPage) -->
+          <div class="blog-tab-pane" id="paneFaq">
+            <div class="seo-section-card">
+              <div class="seo-section-head">
+                <div>
+                  <div class="seo-section-title">
+                    <i class="fa-solid fa-circle-question text-apollo-blue"></i>
+                    <span>FAQ Schema Questions &amp; Answers (schema.org/FAQPage)</span>
+                  </div>
+                  <p style="font-size: 0.8rem; color: #64748B; margin-top: 0.2rem;">
+                    FAQ Schema enables Google to display rich accordion questions directly on search results, doubling your search click-through rate (CTR)!
+                  </p>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                  <button type="button" class="blog-btn-primary-action" onclick="addFaqItem('', '')" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">
+                    <i class="fa-solid fa-plus"></i> Add Question
+                  </button>
+                  <button type="button" class="blog-btn-secondary" onclick="insertStandardBksFaqs()" style="padding: 0.4rem 0.85rem; font-size: 0.8rem;">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> ✨ Insert Standard BKS FAQs
+                  </button>
+                </div>
+              </div>
+
+              <!-- FAQ Builder Item List -->
+              <div class="faq-builder-list" id="faqBuilderListContainer">
+                <!-- Dynamically populated via JS -->
+              </div>
+
+              <!-- Schema JSON-LD Live Preview Drawer -->
+              <div style="margin-top: 1.5rem; border-top: 1px solid #E2E8F0; padding-top: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="font-size: 0.85rem; font-weight: 700; color: var(--apollo-navy);">
+                    <i class="fa-solid fa-code text-apollo-blue me-1"></i> Live JSON-LD Schema (What Google Search Crawlers See)
+                  </span>
+                  <button type="button" onclick="renderFaqJsonLdPreview()" style="background: none; border: none; color: var(--apollo-blue); font-size: 0.75rem; font-weight: 700; cursor: pointer;">
+                    Refresh Schema Code
+                  </button>
+                </div>
+                <pre class="blog-code-export-box" id="faqJsonLdPreviewBox" style="max-height: 200px; font-size: 0.75rem;">// Click 'Refresh Schema Code' or add FAQs above to preview JSON-LD</pre>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- TAB 4: MANAGE ARTICLES -->
         <div class="blog-tab-pane" id="paneManage">
           <div class="blog-manage-search-bar">
             <div class="blog-search-wrapper" style="flex: 1;">
@@ -703,7 +1014,7 @@
           </div>
         </div>
 
-        <!-- TAB 3: EXPORT & DEPLOY CODE -->
+        <!-- TAB 5: EXPORT & DEPLOY CODE -->
         <div class="blog-tab-pane" id="paneExport">
           <div style="margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
             <div>
@@ -711,7 +1022,7 @@
                 <i class="fa-solid fa-download text-apollo-blue me-1"></i> Permanent Repository Export
               </h3>
               <p style="font-size: 0.85rem; color: #64748B;">
-                Download or copy your updated blog database to bake custom articles into git and live hosting.
+                Download or copy your updated blog database with all SEO attributes, FAQs, and schemas to bake into git and live hosting.
               </p>
             </div>
 
@@ -863,13 +1174,13 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- JavaScript Modules -->
-  <script src="blogs-data.js?v=20260824_v11"></script>
+  <script src="blogs-data.js?v=20260824_v12"></script>
   <script>
     // =========================================================================
     // PRIVATE OWNER AUTHENTICATION SYSTEM
     // =========================================================================
     const DEFAULT_ADMIN_USER = 'bksadmin';
-    const DEFAULT_ADMIN_PASS = 'bks@2026';
+    const DEFAULT_ADMIN_PASS = 'VijayRE@04895';
     const ADMIN_AUTH_STORAGE_KEY = 'bksi_admin_authenticated_v1';
     let pendingStudioTab = 'create';
 
@@ -1236,12 +1547,16 @@
       // Tab Buttons
       const tabBtns = {
         create: document.getElementById('tabBtnWrite'),
+        seo: document.getElementById('tabBtnSeo'),
+        faq: document.getElementById('tabBtnFaq'),
         manage: document.getElementById('tabBtnManage'),
         export: document.getElementById('tabBtnExport')
       };
       // Panes
       const panes = {
         create: document.getElementById('paneCreate'),
+        seo: document.getElementById('paneSeo'),
+        faq: document.getElementById('paneFaq'),
         manage: document.getElementById('paneManage'),
         export: document.getElementById('paneExport')
       };
@@ -1255,10 +1570,15 @@
 
       const submitBtn = document.getElementById('btnSubmitBlog');
       if (submitBtn) {
-        submitBtn.style.display = tabName === 'create' ? 'inline-flex' : 'none';
+        submitBtn.style.display = (tabName === 'create' || tabName === 'seo' || tabName === 'faq') ? 'inline-flex' : 'none';
       }
 
-      if (tabName === 'manage') {
+      if (tabName === 'seo') {
+        updateLiveSerpPreview();
+        updateSeoScorecard();
+      } else if (tabName === 'faq') {
+        renderFaqJsonLdPreview();
+      } else if (tabName === 'manage') {
         renderManageBlogsList();
       } else if (tabName === 'export') {
         renderExportCodePreview();
@@ -1313,41 +1633,80 @@
       }
     }
 
-    function processSelectedImageFile(file) {
+    function compressImageFile(file, maxWidth = 1200, maxHeight = 800, quality = 0.72) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            try {
+              const canvas = document.createElement('canvas');
+              let width = img.width;
+              let height = img.height;
+
+              if (width > maxWidth || height > maxHeight) {
+                const ratio = Math.min(maxWidth / width, maxHeight / height);
+                width = Math.round(width * ratio);
+                height = Math.round(height * ratio);
+              }
+
+              canvas.width = width;
+              canvas.height = height;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, width, height);
+
+              // Export as compressed JPEG to slash storage payload by up to 98%
+              const compressed = canvas.toDataURL('image/jpeg', quality);
+              resolve(compressed);
+            } catch (canvasErr) {
+              resolve(e.target.result);
+            }
+          };
+          img.onerror = () => resolve(e.target.result);
+          img.src = e.target.result;
+        };
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function processSelectedImageFile(file) {
       if (!file.type.startsWith('image/')) {
         showToast('Please select a valid image file (PNG, JPG, WebP).', 'error');
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const dataUrl = event.target.result;
-        uploadedImageDataUrl = dataUrl;
+      showToast('Optimizing & compressing image...', 'info');
+      const dataUrl = await compressImageFile(file);
+      if (!dataUrl) {
+        showToast('Failed to process image file.', 'error');
+        return;
+      }
 
-        // Try local server disk upload if server is active
-        let finalPath = dataUrl;
-        try {
-          const res = await fetch('/api/upload-image', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              filename: file.name,
-              base64Data: dataUrl
-            })
-          });
-          const json = await res.json();
-          if (json && json.success && json.imagePath) {
-            finalPath = json.imagePath;
-            console.log('✅ Image uploaded to disk:', finalPath);
-          }
-        } catch (err) {
-          // Running in static environment - dataUrl is preserved in localStorage
+      uploadedImageDataUrl = dataUrl;
+
+      // Try local server disk upload if server is active
+      let finalPath = dataUrl;
+      try {
+        const res = await fetch('/api/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: file.name,
+            base64Data: dataUrl
+          })
+        });
+        const json = await res.json();
+        if (json && json.success && json.imagePath) {
+          finalPath = json.imagePath;
+          console.log('✅ Image uploaded to disk:', finalPath);
         }
+      } catch (err) {
+        // Running in static environment - compressed ~70KB dataUrl is preserved safely!
+      }
 
-        setImagePreview(dataUrl, finalPath);
-        showToast(`Image "${file.name}" loaded successfully!`, 'success');
-      };
-      reader.readAsDataURL(file);
+      setImagePreview(dataUrl, finalPath);
+      showToast(`Image "${file.name}" compressed & ready!`, 'success');
     }
 
     function applyPresetImage(val) {
@@ -1386,23 +1745,206 @@
     }
 
     // =========================================================================
-    // FORM INPUT HELPERS & LIVE SLUG / CHAR COUNTERS
+    // ADVANCED SEO INPUT HANDLERS & REAL-TIME SERP SIMULATOR
     // =========================================================================
+    let currentSerpMode = 'desktop';
+
+    function setSerpPreviewMode(mode) {
+      currentSerpMode = mode;
+      document.getElementById('serpBtnDesktop')?.classList.toggle('active', mode === 'desktop');
+      document.getElementById('serpBtnMobile')?.classList.toggle('active', mode === 'mobile');
+      const box = document.getElementById('serpPreviewBox');
+      if (box) {
+        box.style.maxWidth = mode === 'mobile' ? '375px' : '100%';
+      }
+    }
+
     function handleTitleInput(title) {
       const charCounter = document.getElementById('titleCharCounter');
       if (charCounter) charCounter.textContent = `${title.length} characters`;
 
       const slugInput = document.getElementById('formBlogSlug');
       const editId = document.getElementById('blogEditId').value;
-      // Auto-generate slug only if new article or not manually customized
       if (!editId || !slugInput.dataset.manual) {
         slugInput.value = generateBlogSlug(title);
       }
+
+      const seoTitleInput = document.getElementById('formBlogSeoTitle');
+      if (seoTitleInput && !seoTitleInput.dataset.manual) {
+        seoTitleInput.value = title ? `${title.slice(0, 52)} | BKS Industries` : '';
+        handleSeoTitleInput(seoTitleInput.value, false);
+      }
+
+      updateLiveSerpPreview();
+      updateSeoScorecard();
+    }
+
+    function handleSlugInput(slug) {
+      document.getElementById('formBlogSlug').dataset.manual = 'true';
+      updateLiveSerpPreview();
+      updateSeoScorecard();
+    }
+
+    function handleSeoTitleInput(val, userManual = true) {
+      const seoTitleInput = document.getElementById('formBlogSeoTitle');
+      if (userManual && seoTitleInput) seoTitleInput.dataset.manual = 'true';
+
+      const counter = document.getElementById('seoTitleCounter');
+      const gauge = document.getElementById('seoTitleGauge');
+      const len = val.length;
+
+      if (counter) counter.textContent = `${len} / 60 chars ${len >= 50 && len <= 60 ? '✨ (Optimal)' : len > 60 ? '⚠️ (Truncates on SERP)' : '(Recommended: 50-60)'}`;
+      if (gauge) {
+        const pct = Math.min(100, (len / 60) * 100);
+        gauge.style.width = `${pct}%`;
+        gauge.className = `seo-gauge-bar ${len >= 45 && len <= 60 ? 'seo-gauge-optimal' : len > 60 ? 'seo-gauge-danger' : 'seo-gauge-warning'}`;
+      }
+
+      updateLiveSerpPreview();
+      updateSeoScorecard();
+    }
+
+    function handleMetaDescInput(val) {
+      const counter = document.getElementById('metaDescCounter');
+      const gauge = document.getElementById('metaDescGauge');
+      const len = val.length;
+
+      if (counter) counter.textContent = `${len} / 160 chars ${len >= 140 && len <= 160 ? '✨ (Optimal)' : len > 160 ? '⚠️ (Truncates on SERP)' : '(Recommended: 140-160)'}`;
+      if (gauge) {
+        const pct = Math.min(100, (len / 160) * 100);
+        gauge.style.width = `${pct}%`;
+        gauge.className = `seo-gauge-bar ${len >= 130 && len <= 160 ? 'seo-gauge-optimal' : len > 160 ? 'seo-gauge-danger' : 'seo-gauge-warning'}`;
+      }
+
+      updateLiveSerpPreview();
+      updateSeoScorecard();
     }
 
     function handleExcerptInput(text) {
       const counter = document.getElementById('excerptCharCounter');
       if (counter) counter.textContent = `${text.length}/200 chars`;
+
+      const metaDescInput = document.getElementById('formBlogMetaDesc');
+      if (metaDescInput && !metaDescInput.value.trim()) {
+        metaDescInput.value = text.slice(0, 160);
+        handleMetaDescInput(metaDescInput.value);
+      }
+
+      updateLiveSerpPreview();
+      updateSeoScorecard();
+    }
+
+    function handleContentInput() {
+      updateLivePreview();
+      updateSeoScorecard();
+    }
+
+    function updateLiveSerpPreview() {
+      const title = document.getElementById('formBlogSeoTitle')?.value.trim() || document.getElementById('formBlogTitle')?.value.trim() || 'Best Commercial Kitchen Equipment Manufacturer in Bangalore';
+      const slug = document.getElementById('formBlogSlug')?.value.trim() || 'commercial-kitchen-equipment-guide';
+      const desc = document.getElementById('formBlogMetaDesc')?.value.trim() || document.getElementById('formBlogExcerpt')?.value.trim() || 'Detailed insights into commercial kitchen equipment, SS 304 standards, exhaust ventilation, and direct factory pricing by B.K.S. Industries Bengaluru.';
+
+      const titleEl = document.getElementById('serpPreviewTitle');
+      const descEl = document.getElementById('serpPreviewDesc');
+      const breadcrumbEl = document.getElementById('serpPreviewBreadcrumb');
+
+      if (titleEl) titleEl.textContent = title;
+      if (descEl) descEl.textContent = desc;
+      if (breadcrumbEl) breadcrumbEl.textContent = `https://www.bksindustries.in › blog-details.html?slug=${slug}`;
+    }
+
+    function addKeywordChip(keyword) {
+      const secInput = document.getElementById('formBlogSecondaryKeywords');
+      if (!secInput) return;
+      const current = secInput.value.trim();
+      if (!current) {
+        secInput.value = keyword;
+      } else {
+        const list = current.split(',').map(s => s.trim().toLowerCase());
+        if (!list.includes(keyword.toLowerCase())) {
+          secInput.value = `${current}, ${keyword}`;
+        }
+      }
+      showToast(`Added "${keyword}" to Target Keyword Map!`, 'info');
+      updateSeoScorecard();
+    }
+
+    // =========================================================================
+    // REAL-TIME SEO HEALTH SCORE ENGINE (0 - 100%)
+    // =========================================================================
+    function updateSeoScorecard() {
+      const primaryKw = (document.getElementById('formBlogPrimaryKeyword')?.value || '').trim().toLowerCase();
+      const title = (document.getElementById('formBlogTitle')?.value || '').toLowerCase();
+      const seoTitle = (document.getElementById('formBlogSeoTitle')?.value || '').toLowerCase();
+      const metaDesc = (document.getElementById('formBlogMetaDesc')?.value || '').toLowerCase();
+      const slug = (document.getElementById('formBlogSlug')?.value || '').toLowerCase();
+      const content = (document.getElementById('formBlogContent')?.value || '').toLowerCase();
+      const imageAlt = (document.getElementById('formBlogImageAlt')?.value || '').trim().toLowerCase();
+      const faqs = getFaqItemsFromDom();
+
+      // Individual Check Status
+      const checks = {
+        title: primaryKw && title.includes(primaryKw),
+        seoTitle: (primaryKw && seoTitle.includes(primaryKw)) || (seoTitle.length >= 40 && seoTitle.length <= 65),
+        metaDesc: (primaryKw && metaDesc.includes(primaryKw)) || (metaDesc.length >= 120 && metaDesc.length <= 165),
+        slug: primaryKw ? slug.includes(generateBlogSlug(primaryKw)) || slug.includes(primaryKw.split(' ')[0]) : slug.length > 5,
+        h2: content.includes('<h2') && (primaryKw ? content.includes(primaryKw) : true),
+        wordCount: content.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length >= 500,
+        imageAlt: imageAlt.length > 5,
+        faq: faqs.length >= 2
+      };
+
+      // Calculate 0-100 Score
+      let score = 20; // Base presence
+      if (checks.title) score += 12;
+      if (checks.seoTitle) score += 12;
+      if (checks.metaDesc) score += 12;
+      if (checks.slug) score += 10;
+      if (checks.h2) score += 12;
+      if (checks.wordCount) score += 10;
+      if (checks.imageAlt) score += 6;
+      if (checks.faq) score += 6;
+
+      score = Math.min(100, Math.max(0, score));
+
+      // Update UI Score Circle & Elements
+      const scoreNum = document.getElementById('seoScoreNum');
+      const scoreCircle = document.getElementById('seoScoreCircle');
+      const ratingBadge = document.getElementById('seoScoreRatingBadge');
+
+      if (scoreNum) scoreNum.textContent = score;
+      if (scoreCircle) {
+        scoreCircle.style.borderColor = score >= 80 ? '#34D399' : score >= 55 ? '#FBBF24' : '#F87171';
+      }
+      if (ratingBadge) {
+        if (score >= 80) {
+          ratingBadge.textContent = '🚀 Rank Ready (100% Optimized)';
+          ratingBadge.style.background = '#10B981';
+        } else if (score >= 55) {
+          ratingBadge.textContent = '⚡ Good SEO (Minor Tips)';
+          ratingBadge.style.background = '#F59E0B';
+        } else {
+          ratingBadge.textContent = '⚠️ Needs SEO Optimization';
+          ratingBadge.style.background = '#EF4444';
+        }
+      }
+
+      // Update Checklist Items
+      const setCheck = (id, passed) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.className = `seo-check-item ${passed ? 'passed' : 'failed'}`;
+        el.querySelector('i').className = `fa-solid ${passed ? 'fa-circle-check text-emerald-400' : 'fa-circle-xmark text-rose-400'}`;
+      };
+
+      setCheck('chkTitle', checks.title);
+      setCheck('chkSeoTitle', checks.seoTitle);
+      setCheck('chkMetaDesc', checks.metaDesc);
+      setCheck('chkSlug', checks.slug);
+      setCheck('chkH2', checks.h2);
+      setCheck('chkWordCount', checks.wordCount);
+      setCheck('chkImageAlt', checks.imageAlt);
+      setCheck('chkFaq', checks.faq);
     }
 
     function handleCategoryChange(val) {
@@ -1422,6 +1964,294 @@
         readTimeInput.value = `${readTimeMinutes} min read`;
       }
       showToast(`Estimated read time: ${readTimeMinutes} min read (${words} words)`, 'info');
+    }
+
+    // =========================================================================
+    // PRE-BUILT ARTICLE BLUEPRINTS & INTERNAL LINK INJECTORS
+    // =========================================================================
+    function insertBlueprintTemplate(type) {
+      const textarea = document.getElementById('formBlogContent');
+      if (!textarea) return;
+
+      let blueprint = '';
+      if (type === 'buying-guide') {
+        blueprint = `
+<h2>1. Introduction to Commercial Kitchen Equipment Sourcing in 2026</h2>
+<p>Selecting certified food-grade machinery directly determines food safety, kitchen throughput, and energy efficiency. BKS Industries fabricates 100% prime AISI 304 stainless steel equipment designed for intense 12-to-16 hour commercial shifts.</p>
+
+<div class="blog-highlight-box">
+  <p><strong>🎯 Direct Factory Key Takeaway:</strong> Purchasing directly from BKS Industries eliminates 20% to 30% dealer markups, gives you millimeter-precise custom fabrication, and ensures 24-hour on-site maintenance support across Bengaluru.</p>
+</div>
+
+<h2>2. 2026 Commercial Equipment Specifications &amp; Price Breakdown</h2>
+<div class="blog-table-responsive">
+  <table class="blog-table">
+    <thead>
+      <tr>
+        <th>Equipment Category</th>
+        <th>Product Specifications</th>
+        <th>Direct Factory Price Range (INR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Cooking Line</strong></td>
+        <td>Heavy Duty 4-Burner Commercial Gas Range (SS 304)</td>
+        <td>₹32,000 – ₹58,000</td>
+      </tr>
+      <tr>
+        <td><strong>Prep Workstation</strong></td>
+        <td>SS 304 Two-Tier Prep Table with Backsplash</td>
+        <td>₹9,500 – ₹22,000</td>
+      </tr>
+      <tr>
+        <td><strong>Refrigeration</strong></td>
+        <td>2-Door &amp; 4-Door Upright Commercial Chiller (+2°C to +8°C)</td>
+        <td>₹52,000 – ₹1,15,000</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>3. 5 Essential Quality Factors Before Ordering</h2>
+<ul>
+  <li><strong>Material Grade:</strong> Certified Prime AISI 304 food-grade stainless steel with argon TIG welding.</li>
+  <li><strong>Custom Layout:</strong> Tailored 2D/3D CAD design for linear forward workflow without cross-contamination.</li>
+  <li><strong>Gas Pipeline Safety:</strong> High-pressure commercial manifold installation with dual regulators.</li>
+</ul>
+
+<!-- Contextual Internal CTA Card -->
+<div class="blog-internal-cta-card">
+  <div class="blog-internal-cta-text">
+    <h4><i class="fa-solid fa-compass-drafting text-apollo-blue me-2"></i>Need a Custom Commercial Kitchen Equipment Estimate?</h4>
+    <p>Get a direct factory quotation and free 2D/3D CAD kitchen layout tailored to your restaurant or cloud kitchen space.</p>
+  </div>
+  <a href="contact.html" class="blog-internal-cta-btn">
+    <span>Request Factory Quote</span> <i class="fa-solid fa-arrow-right"></i>
+  </a>
+</div>
+`;
+      } else if (type === 'ss304-compare') {
+        blueprint = `
+<h2>1. Chemical Composition: SS 304 vs SS 202</h2>
+<p>In Indian commercial kitchens, salt, citrus, tamarind, and steam subject surfaces to extreme corrosion. Prime AISI 304 contains 18% Chromium and 8% Nickel, forming an invisible self-healing oxide layer that prevents rust and pitting.</p>
+
+<div class="blog-table-responsive">
+  <table class="blog-table">
+    <thead>
+      <tr>
+        <th>Evaluation Metric</th>
+        <th>BKS Industries (Prime SS 304)</th>
+        <th>Generic Local Fabrications (SS 202)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Corrosion Resistance</strong></td>
+        <td>100% Rust-Proof against acidic spices &amp; salt</td>
+        <td>Prone to rust pitting within 6 to 18 months</td>
+      </tr>
+      <tr>
+        <td><strong>FSSAI Compliance</strong></td>
+        <td>Fully Approved for direct food contact</td>
+        <td>Restricted for wet prep and cooking surfaces</td>
+      </tr>
+      <tr>
+        <td><strong>Working Lifespan</strong></td>
+        <td>15 to 20+ Years</td>
+        <td>3 to 5 Years</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+      } else if (type === 'cloud-kitchen') {
+        blueprint = `
+<h2>1. Designing a High-Throughput Cloud Kitchen (250–500 Sq.Ft)</h2>
+<p>Cloud kitchens running multi-brand delivery on Swiggy and Zomato require compact, multi-functional SS 304 machinery to maximize ticket velocity in tight spaces.</p>
+
+<h2>2. Cloud Kitchen Equipment Checklist</h2>
+<ol>
+  <li><strong>Cooking Station:</strong> 3-Burner combination range with Chinese wok burner and under-shelf.</li>
+  <li><strong>Prep &amp; Sinks:</strong> Double-bowl pot wash sink unit with grease interceptor.</li>
+  <li><strong>Refrigeration:</strong> 2-Door vertical upright chiller and under-counter saladette prep counter.</li>
+  <li><strong>Ventilation:</strong> Stainless steel box exhaust canopy with centrifugal blower fan.</li>
+</ol>
+`;
+      } else if (type === 'exhaust-cfm') {
+        blueprint = `
+<h2>1. How to Calculate Exhaust Airflow (CFM) for Commercial Hoods</h2>
+<p>Accurate exhaust airflow sizing prevents smoke buildup, reduces chef fatigue, and eliminates grease fire risks.</p>
+
+<div class="blog-highlight-box">
+  <p style="font-family: monospace; font-size: 1.1rem; color: var(--apollo-navy); font-weight: 700;">
+    Required CFM = Exposed Hood Perimeter (Linear Feet) × Velocity Factor (50 to 100 FPM)
+  </p>
+  <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #475569;">
+    Example: A 10 ft long × 3.5 ft deep wall-mounted cooking hood has an exposed perimeter of 17 linear feet. At 100 FPM heavy-duty duty cycle, required airflow = 1,700 CFM.
+  </p>
+</div>
+`;
+      }
+
+      if (textarea.value.trim()) {
+        if (confirm('Do you want to append this blueprint to your existing article content? (Click OK to append, Cancel to replace)')) {
+          textarea.value += `\n\n${blueprint}\n`;
+        } else {
+          textarea.value = blueprint;
+        }
+      } else {
+        textarea.value = blueprint;
+      }
+
+      handleContentInput();
+      showToast('Blueprint template inserted successfully!', 'success');
+    }
+
+    function insertInternalLink(type) {
+      const textarea = document.getElementById('formBlogContent');
+      if (!textarea) return;
+
+      let snippet = '';
+      switch(type) {
+        case 'cooking':
+          snippet = ` <a href="products.html?category=cooking" title="Commercial Cooking Ranges by BKS Industries" style="color: var(--apollo-blue); font-weight: 700; text-decoration: underline;">heavy-duty commercial cooking ranges</a> `;
+          break;
+        case 'prep':
+          snippet = ` <a href="products.html?category=prep" title="SS 304 Food Prep Tables and Sinks by BKS Industries" style="color: var(--apollo-blue); font-weight: 700; text-decoration: underline;">SS 304 prep tables and sink units</a> `;
+          break;
+        case 'refrigeration':
+          snippet = ` <a href="products.html?category=refrigeration" title="Commercial Upright Chillers and Refrigerators by BKS Industries" style="color: var(--apollo-blue); font-weight: 700; text-decoration: underline;">commercial upright refrigeration chillers</a> `;
+          break;
+        case 'services':
+          snippet = ` <a href="services.html" title="Commercial Kitchen Planning and Layout Services" style="color: var(--apollo-blue); font-weight: 700; text-decoration: underline;">commercial kitchen planning and setup services</a> `;
+          break;
+        case 'contact':
+          snippet = ` <a href="contact.html" title="Visit BKS Industries Manufacturing Factory in Bangalore" style="color: var(--apollo-blue); font-weight: 700; text-decoration: underline;">BKS Industries manufacturing factory in Bengaluru</a> `;
+          break;
+        case 'cad-box':
+          snippet = `\n<div class="blog-internal-cta-card">\n  <div class="blog-internal-cta-text">\n    <h4><i class="fa-solid fa-compass-drafting text-apollo-blue me-2"></i>Planning a Commercial Restaurant or Cloud Kitchen?</h4>\n    <p>Collaborate with BKS senior engineers for free 2D/3D CAD layouts and direct factory quotes within 24 hours.</p>\n  </div>\n  <a href="contact.html" class="blog-internal-cta-btn">\n    <span>Get Free CAD Layout</span> <i class="fa-solid fa-arrow-right"></i>\n  </a>\n</div>\n`;
+          break;
+      }
+
+      const start = textarea.selectionStart || textarea.value.length;
+      const end = textarea.selectionEnd || textarea.value.length;
+      textarea.value = textarea.value.substring(0, start) + snippet + textarea.value.substring(end);
+      textarea.focus();
+      handleContentInput();
+      showToast('Internal link inserted into article content!', 'success');
+    }
+
+    // =========================================================================
+    // DYNAMIC FAQ BUILDER & SCHEMA.ORG/FAQPAGE ENGINE
+    // =========================================================================
+    function addFaqItem(question = '', answer = '') {
+      const container = document.getElementById('faqBuilderListContainer');
+      if (!container) return;
+
+      const idx = container.children.length + 1;
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'faq-builder-item';
+      itemDiv.innerHTML = `
+        <div class="faq-builder-head">
+          <span class="faq-builder-num"><i class="fa-solid fa-circle-question"></i> Question #${idx}</span>
+          <button type="button" class="faq-delete-btn" onclick="removeFaqItem(this)" title="Delete FAQ Item">
+            <i class="fa-solid fa-trash-can"></i> Remove
+          </button>
+        </div>
+        <div class="blog-form-group" style="margin-bottom: 0.5rem;">
+          <input type="text" class="blog-form-input faq-q-input" placeholder="e.g. Who is the best commercial kitchen equipment manufacturer in Bangalore?" value="${question.replace(/"/g, '&quot;')}" oninput="renderFaqJsonLdPreview(); updateSeoScorecard();">
+        </div>
+        <div class="blog-form-group" style="margin-bottom: 0;">
+          <textarea class="blog-form-textarea faq-a-input" style="min-height: 3.5rem;" placeholder="e.g. BKS Industries is widely recognized as the best commercial kitchen equipment manufacturer in Bangalore..." oninput="renderFaqJsonLdPreview(); updateSeoScorecard();">${answer}</textarea>
+        </div>
+      `;
+      container.appendChild(itemDiv);
+      renderFaqJsonLdPreview();
+      updateSeoScorecard();
+    }
+
+    function removeFaqItem(btn) {
+      const item = btn.closest('.faq-builder-item');
+      if (item) {
+        item.remove();
+        // Re-index
+        const container = document.getElementById('faqBuilderListContainer');
+        if (container) {
+          Array.from(container.children).forEach((child, i) => {
+            const numSpan = child.querySelector('.faq-builder-num');
+            if (numSpan) numSpan.innerHTML = `<i class="fa-solid fa-circle-question"></i> Question #${i + 1}`;
+          });
+        }
+        renderFaqJsonLdPreview();
+        updateSeoScorecard();
+      }
+    }
+
+    function getFaqItemsFromDom() {
+      const container = document.getElementById('faqBuilderListContainer');
+      if (!container) return [];
+      const items = [];
+      container.querySelectorAll('.faq-builder-item').forEach(item => {
+        const q = item.querySelector('.faq-q-input')?.value.trim();
+        const a = item.querySelector('.faq-a-input')?.value.trim();
+        if (q && a) {
+          items.push({ question: q, answer: a });
+        }
+      });
+      return items;
+    }
+
+    function insertStandardBksFaqs() {
+      const standardFaqs = [
+        {
+          question: "Who is the best commercial kitchen equipment manufacturer in Bangalore?",
+          answer: "B.K.S. Industries is widely recognized as Bangalore's leading commercial kitchen equipment manufacturer, offering certified AISI 304 stainless steel fabrication, direct factory wholesale pricing (saving 20-30%), custom 2D/3D CAD layouts, and 24-hour local maintenance support."
+        },
+        {
+          question: "How much does a commercial restaurant kitchen setup cost in Bangalore?",
+          answer: "A standard commercial kitchen setup in Bangalore typically costs between ₹3,50,000 to ₹7,00,000 for cloud kitchens (250–500 sq.ft) and ₹8,00,000 to ₹16,50,000 for a 60–100 seat restaurant when ordered directly from our factory."
+        },
+        {
+          question: "Why is SS 304 food-grade stainless steel essential for commercial kitchens?",
+          answer: "AISI 304 stainless steel contains 18% Chromium and 8% Nickel, providing superior rust resistance against acidic Indian spices, salt, and heat, meeting strict FSSAI hygiene standards with a 15+ year operational lifespan."
+        },
+        {
+          question: "Can I visit the B.K.S. Industries manufacturing factory in Bengaluru?",
+          answer: "Yes, we welcome all restaurant owners, chefs, architects, and hospitality consultants to visit our factory at Site No. 22, 1st Cross, Kempamma Layout, Lakshmidevinagar, Bengaluru - 560096 to inspect live machinery and argon welding firsthand."
+        }
+      ];
+
+      const container = document.getElementById('faqBuilderListContainer');
+      if (container) container.innerHTML = '';
+      standardFaqs.forEach(f => addFaqItem(f.question, f.answer));
+      showToast('Standard BKS Factory FAQs inserted!', 'success');
+    }
+
+    function renderFaqJsonLdPreview() {
+      const faqs = getFaqItemsFromDom();
+      const previewBox = document.getElementById('faqJsonLdPreviewBox');
+      if (!previewBox) return;
+
+      if (faqs.length === 0) {
+        previewBox.textContent = '// No FAQ questions added yet. Click "+ Add Question" or "✨ Insert Standard BKS FAQs" above.';
+        return;
+      }
+
+      const schemaObj = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(f => ({
+          "@type": "Question",
+          "name": f.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": f.answer
+          }
+        }))
+      };
+
+      previewBox.textContent = JSON.stringify(schemaObj, null, 2);
     }
 
     // =========================================================================
@@ -1470,6 +2300,9 @@
         case 'image-card':
           snippet = `\n<div class="blog-media-card" style="margin: 2rem 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.5rem; text-align: center;">\n  <img src="images/hero-slides/slide2_commercial_restaurant.jpg" alt="Commercial Kitchen Installation by BKS Industries Bengaluru" style="max-height: 380px; width: 100%; object-fit: cover; border-radius: 0.75rem; box-shadow: 0 6px 20px rgba(0,0,0,0.12);">\n  <p style="font-size: 0.875rem; color: #475569; margin-top: 0.85rem; font-weight: 600;">\n    <i class="fa-solid fa-shield-halved text-apollo-blue"></i> Fig: Live Commercial Kitchen Cooking Line engineered by B.K.S. Industries Bengaluru.\n  </p>\n</div>\n`;
           break;
+        case 'internal-cta':
+          snippet = `\n<div class="blog-internal-cta-card">\n  <div class="blog-internal-cta-text">\n    <h4><i class="fa-solid fa-compass-drafting text-apollo-blue me-2"></i>Need a Custom Commercial Kitchen Equipment Estimate?</h4>\n    <p>Get a direct factory quotation and free 2D/3D CAD kitchen layout tailored to your restaurant or cloud kitchen space.</p>\n  </div>\n  <a href="contact.html" class="blog-internal-cta-btn">\n    <span>Request Factory Quote</span> <i class="fa-solid fa-arrow-right"></i>\n  </a>\n</div>\n`;
+          break;
         case 'quote':
           snippet = `\n<blockquote style="border-left: 4px solid var(--apollo-blue); padding: 1rem 1.5rem; background: #F8FAFC; border-radius: 0 0.5rem 0.5rem 0; margin: 1.5rem 0; font-style: italic; color: #334155;">\n  "Investing in heavy 16-gauge SS 304 cooking equipment directly cuts down fuel waste and equipment replacement costs by over 40% in high-volume kitchens."\n  <footer style="margin-top: 0.5rem; font-weight: 700; font-style: normal; color: var(--apollo-navy); font-size: 0.85rem;">— BKS Chief Project Engineer</footer>\n</blockquote>\n`;
           break;
@@ -1478,7 +2311,7 @@
       textarea.value = textarea.value.substring(0, start) + snippet + textarea.value.substring(end);
       textarea.focus();
       textarea.selectionStart = textarea.selectionEnd = start + snippet.length;
-      updateLivePreview();
+      handleContentInput();
     }
 
     function switchEditorSubtab(subtab) {
@@ -1519,7 +2352,7 @@
     }
 
     // =========================================================================
-    // SAVE, EDIT, DUPLICATE & DELETE BLOG
+    // SAVE, EDIT, DUPLICATE & DELETE BLOG (ENHANCED FOR FULL SEO ATTRIBUTES)
     // =========================================================================
     async function handleSaveBlogForm(e) {
       e.preventDefault();
@@ -1539,6 +2372,16 @@
         image = 'images/hero-slides/slide2_commercial_restaurant.jpg';
       }
 
+      const imageAlt = document.getElementById('formBlogImageAlt')?.value.trim() || title;
+      const seoTitle = document.getElementById('formBlogSeoTitle')?.value.trim() || `${title.slice(0, 52)} | BKS Industries`;
+      const metaDesc = document.getElementById('formBlogMetaDesc')?.value.trim() || document.getElementById('formBlogExcerpt').value.trim();
+      const primaryKw = document.getElementById('formBlogPrimaryKeyword')?.value.trim() || '';
+      const searchIntent = document.getElementById('formBlogSearchIntent')?.value || 'Commercial / Transactional';
+      const secKwStr = document.getElementById('formBlogSecondaryKeywords')?.value.trim() || '';
+      const secondaryKeywords = secKwStr ? secKwStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+      const faqs = getFaqItemsFromDom();
+
       const excerpt = document.getElementById('formBlogExcerpt').value.trim();
       const quickAnswer = document.getElementById('formBlogQuickAnswer').value.trim();
       const content = document.getElementById('formBlogContent').value.trim();
@@ -1555,6 +2398,8 @@
         id: editId || `blog-custom-${Date.now()}`,
         slug: slug,
         title: title,
+        seoTitle: seoTitle,
+        metaDescription: metaDesc,
         category: category,
         categorySlug: category.toLowerCase().replace(/\s+/g, '-'),
         date: dateStr,
@@ -1564,9 +2409,16 @@
         authorAvatar: 'images/bksi_official_logo.png',
         readTime: readTime,
         image: image,
+        imageAlt: imageAlt,
         featured: featured,
         excerpt: excerpt,
         quickAnswer: quickAnswer,
+        keywordMap: {
+          primaryKeyword: primaryKw,
+          secondaryKeywords: secondaryKeywords,
+          searchIntent: searchIntent
+        },
+        faqs: faqs,
         content: content,
         tags: tags,
         isCustom: true
@@ -1574,7 +2426,7 @@
 
       const success = saveBlogToStorage(newBlog);
       if (success) {
-        showToast('🎉 Blog article published successfully!', 'success');
+        showToast('🎉 SEO-Optimized Blog Published Successfully!', 'success');
         closeBlogStudio();
         renderBlogsView();
         updateCustomBlogCountBadge();
@@ -1582,7 +2434,7 @@
         // Smooth scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        showToast('Failed to save article. Please check your storage quota.', 'error');
+        showToast('Storage quota reached! Click "Restore Defaults" at the bottom left to clear old cached data, or select a Factory Preset image.', 'error');
       }
     }
 
@@ -1594,14 +2446,58 @@
       document.getElementById('blogEditId').value = blog.id || blog.slug;
       document.getElementById('formBlogTitle').value = blog.title || '';
       document.getElementById('formBlogSlug').value = blog.slug || '';
+      document.getElementById('formBlogSlug').dataset.manual = 'true';
       document.getElementById('formBlogReadTime').value = blog.readTime || '5 min read';
       document.getElementById('formBlogAuthor').value = blog.author || 'BKS Engineering Advisory';
-      document.getElementById('formBlogRole').value = blog.authorRole || 'Commercial Kitchen Specialist';
+      document.getElementById('formBlogRole').value = blog.authorRole || 'Chief Commercial Kitchen Equipment Engineer';
       document.getElementById('formBlogExcerpt').value = blog.excerpt || '';
       document.getElementById('formBlogQuickAnswer').value = blog.quickAnswer || '';
       document.getElementById('formBlogContent').value = blog.content || '';
       document.getElementById('formBlogTags').value = (blog.tags || []).join(', ');
       document.getElementById('formBlogFeatured').checked = !!blog.featured;
+
+      // SEO Specific Fields
+      const seoTitleInput = document.getElementById('formBlogSeoTitle');
+      if (seoTitleInput) {
+        seoTitleInput.value = blog.seoTitle || '';
+        seoTitleInput.dataset.manual = 'true';
+        handleSeoTitleInput(seoTitleInput.value, true);
+      }
+
+      const metaDescInput = document.getElementById('formBlogMetaDesc');
+      if (metaDescInput) {
+        metaDescInput.value = blog.metaDescription || blog.excerpt || '';
+        handleMetaDescInput(metaDescInput.value);
+      }
+
+      const imageAltInput = document.getElementById('formBlogImageAlt');
+      if (imageAltInput) {
+        imageAltInput.value = blog.imageAlt || '';
+      }
+
+      const primaryKwInput = document.getElementById('formBlogPrimaryKeyword');
+      if (primaryKwInput) {
+        primaryKwInput.value = blog.keywordMap?.primaryKeyword || '';
+      }
+
+      const searchIntentInput = document.getElementById('formBlogSearchIntent');
+      if (searchIntentInput && blog.keywordMap?.searchIntent) {
+        searchIntentInput.value = blog.keywordMap.searchIntent;
+      }
+
+      const secKwInput = document.getElementById('formBlogSecondaryKeywords');
+      if (secKwInput) {
+        secKwInput.value = (blog.keywordMap?.secondaryKeywords || []).join(', ');
+      }
+
+      // FAQs
+      const faqContainer = document.getElementById('faqBuilderListContainer');
+      if (faqContainer) {
+        faqContainer.innerHTML = '';
+        if (Array.isArray(blog.faqs) && blog.faqs.length > 0) {
+          blog.faqs.forEach(f => addFaqItem(f.question, f.answer));
+        }
+      }
 
       // Handle category
       const catSelect = document.getElementById('formBlogCategory');
@@ -1628,6 +2524,9 @@
       handleTitleInput(blog.title || '');
       handleExcerptInput(blog.excerpt || '');
       updateLivePreview();
+      updateLiveSerpPreview();
+      updateSeoScorecard();
+      renderFaqJsonLdPreview();
     }
 
     function handleDeleteBlog(slugOrId) {

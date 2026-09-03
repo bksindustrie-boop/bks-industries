@@ -9,13 +9,25 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" id="pageCanonical" href="https://www.bksindustries.in/blog-details.html">
 
+  <!-- Geographic Meta Tags (GEO / Local SEO) -->
+  <meta name="geo.region" content="IN-KA">
+  <meta name="geo.placename" content="Bengaluru">
+  <meta name="geo.position" content="13.0298;77.5255">
+  <meta name="ICBM" content="13.0298, 77.5255">
+
   <!-- OpenGraph / Social Meta Tags -->
   <meta property="og:type" content="article">
   <meta property="og:title" id="ogTitle" content="Commercial Kitchen Guide | B.K.S. Industries">
   <meta property="og:description" id="ogDesc" content="Expert insights on commercial kitchen equipment, SS 304 fabrication, and restaurant planning.">
-  <meta property="og:image" id="ogImage" content="images/hero-slides/slide2_commercial_restaurant.jpg">
+  <meta property="og:image" id="ogImage" content="https://www.bksindustries.in/images/hero-slides/slide2_commercial_restaurant.jpg">
   <meta property="og:url" id="ogUrl" content="https://www.bksindustries.in/blog-details.html">
   <meta property="og:site_name" content="B.K.S. Industries">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="twTitle" content="Commercial Kitchen Guide | B.K.S. Industries">
+  <meta name="twitter:description" id="twDesc" content="Expert insights on commercial kitchen equipment, SS 304 fabrication, and restaurant planning.">
+  <meta name="twitter:image" id="twImage" content="https://www.bksindustries.in/images/hero-slides/slide2_commercial_restaurant.jpg">
 
   <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +74,7 @@
         <div class="apollo-topbar-socials">
           <a href="https://wa.me/918123939433" target="_blank" rel="noopener" class="apollo-social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           <a href="#" class="apollo-social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" class="apollo-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.instagram.com/bks_industries04/" target="_blank" rel="noopener" class="apollo-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="#" class="apollo-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
           <a href="#" class="apollo-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
@@ -289,6 +301,17 @@
         <!-- Article Body -->
         <div class="blog-article-body" id="articleBodyContent">
           <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- FAQ Accordion Section (Rich Google Search Results & FAQ Schema) -->
+        <div class="blog-faq-section" id="articleFaqContainer" style="display: none;">
+          <div class="blog-faq-title">
+            <i class="fa-solid fa-circle-question text-apollo-blue"></i>
+            <span>Frequently Asked Questions</span>
+          </div>
+          <div class="blog-faq-accordion" id="articleFaqAccordionList">
+            <!-- Dynamically injected via JS -->
+          </div>
         </div>
 
         <!-- Article Tags -->
@@ -527,7 +550,7 @@
   </a>
 
   <!-- JavaScript Modules -->
-  <script src="blogs-data.js?v=20260824_v11"></script>
+  <script src="blogs-data.js?v=20260824_v12"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Get slug from URL parameter
@@ -564,14 +587,33 @@
         return;
       }
 
-      // Update Meta Tags & Document Title
-      document.title = `${article.title} | B.K.S. Industries`;
-      const metaDesc = document.getElementById('pageMetaDesc');
-      if (metaDesc) metaDesc.content = article.excerpt;
-      const canonical = document.getElementById('pageCanonical');
-      if (canonical) canonical.href = `https://www.bksindustries.in/blog-details.html?slug=${article.slug}`;
+      // 1. Update Document Title & SEO Meta Tags
+      const pageTitle = article.seoTitle || `${article.title} | B.K.S. Industries`;
+      const metaDescription = article.metaDescription || article.excerpt;
+      const canonicalUrl = `https://www.bksindustries.in/blog-details.html?slug=${article.slug}`;
 
-      // Update Breadcrumb & Header Elements
+      document.title = pageTitle;
+
+      const metaDesc = document.getElementById('pageMetaDesc');
+      if (metaDesc) metaDesc.content = metaDescription;
+
+      const canonical = document.getElementById('pageCanonical');
+      if (canonical) canonical.href = canonicalUrl;
+
+      // Update OpenGraph / Social Meta Tags
+      const ogTitle = document.getElementById('ogTitle');
+      if (ogTitle) ogTitle.content = pageTitle;
+      const ogDesc = document.getElementById('ogDesc');
+      if (ogDesc) ogDesc.content = metaDescription;
+      const ogImage = document.getElementById('ogImage');
+      if (ogImage) ogImage.content = article.image;
+      const ogUrl = document.getElementById('ogUrl');
+      if (ogUrl) ogUrl.content = canonicalUrl;
+
+      // 2. Inject Dynamic Structured Data JSON-LD Schemas (Article, Breadcrumbs & FAQPage)
+      injectStructuredDataSchemas(article);
+
+      // 3. Update Breadcrumb & Header Elements
       document.getElementById('breadcrumbArticleTitle').textContent = article.title;
       document.getElementById('articleCategoryTag').textContent = article.category;
       document.getElementById('articleDate').innerHTML = `<i class="fa-regular fa-calendar me-1"></i> ${article.date}`;
@@ -605,12 +647,12 @@
         }
       }
 
-      // Hero Image
+      // Hero Image with SEO Image ALT text
       const heroImg = document.getElementById('articleHeroImage');
       heroImg.src = article.image;
-      heroImg.alt = article.title;
+      heroImg.alt = article.imageAlt || article.title;
 
-      // Quick Answer Box
+      // Quick Answer Box (Featured Snippet)
       const quickBox = document.getElementById('articleQuickAnswerBox');
       const quickText = document.getElementById('articleQuickAnswerText');
       if (article.quickAnswer) {
@@ -622,6 +664,9 @@
 
       // Article Body
       document.getElementById('articleBodyContent').innerHTML = article.content;
+
+      // Render Interactive FAQ Accordion
+      renderArticleFaqs(article.faqs);
 
       // Tags
       const tagsBar = document.getElementById('articleTagsBar');
@@ -644,6 +689,149 @@
 
       // Render Related Articles Grid
       renderRelatedGrid(article.slug);
+    }
+
+    // =========================================================================
+    // DYNAMIC JSON-LD STRUCTURED DATA SCHEMAS
+    // =========================================================================
+    function injectStructuredDataSchemas(article) {
+      // Remove previous injected schemas
+      document.querySelectorAll('script[data-bksi-schema="true"]').forEach(el => el.remove());
+
+      const canonicalUrl = `https://www.bksindustries.in/blog-details.html?slug=${article.slug}`;
+
+      // 1. Article Schema
+      const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": article.seoTitle || article.title,
+        "description": article.metaDescription || article.excerpt,
+        "image": [article.image],
+        "datePublished": article.isoDate || new Date().toISOString().slice(0, 10),
+        "dateModified": article.isoDate || new Date().toISOString().slice(0, 10),
+        "author": {
+          "@type": "Organization",
+          "name": article.author || "B.K.S. Industries Engineering Advisory",
+          "url": "https://www.bksindustries.in"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "B.K.S. Industries",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.bksindustries.in/images/bksi_official_logo.png"
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": canonicalUrl
+        }
+      };
+
+      const scriptArticle = document.createElement('script');
+      scriptArticle.type = 'application/ld+json';
+      scriptArticle.dataset.bksiSchema = 'true';
+      scriptArticle.textContent = JSON.stringify(articleSchema, null, 2);
+      document.head.appendChild(scriptArticle);
+
+      // 2. BreadcrumbList Schema
+      const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.bksindustries.in"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Commercial Kitchen Guides",
+            "item": "https://www.bksindustries.in/blogs.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": article.title,
+            "item": canonicalUrl
+          }
+        ]
+      };
+
+      const scriptBreadcrumb = document.createElement('script');
+      scriptBreadcrumb.type = 'application/ld+json';
+      scriptBreadcrumb.dataset.bksiSchema = 'true';
+      scriptBreadcrumb.textContent = JSON.stringify(breadcrumbSchema, null, 2);
+      document.head.appendChild(scriptBreadcrumb);
+
+      // 3. FAQPage Schema (if FAQs exist)
+      if (Array.isArray(article.faqs) && article.faqs.length > 0) {
+        const faqSchema = {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": article.faqs.map(f => ({
+            "@type": "Question",
+            "name": f.question,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": f.answer
+            }
+          }))
+        };
+
+        const scriptFaq = document.createElement('script');
+        scriptFaq.type = 'application/ld+json';
+        scriptFaq.dataset.bksiSchema = 'true';
+        scriptFaq.textContent = JSON.stringify(faqSchema, null, 2);
+        document.head.appendChild(scriptFaq);
+      }
+    }
+
+    // =========================================================================
+    // INTERACTIVE FAQ ACCORDION RENDERING
+    // =========================================================================
+    function renderArticleFaqs(faqs) {
+      const container = document.getElementById('articleFaqContainer');
+      const list = document.getElementById('articleFaqAccordionList');
+      if (!container || !list) return;
+
+      if (!faqs || !Array.isArray(faqs) || faqs.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'block';
+      list.innerHTML = faqs.map((f, idx) => `
+        <div class="blog-faq-accordion-item ${idx === 0 ? 'active' : ''}">
+          <button type="button" class="blog-faq-accordion-btn ${idx === 0 ? 'active' : ''}" onclick="toggleFaqAccordion(this)" aria-expanded="${idx === 0 ? 'true' : 'false'}">
+            <span>${f.question}</span>
+            <i class="fa-solid fa-chevron-down blog-faq-accordion-icon"></i>
+          </button>
+          <div class="blog-faq-accordion-content" style="${idx === 0 ? 'display: block;' : 'display: none;'}">
+            <p>${f.answer}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleFaqAccordion(btn) {
+      const item = btn.closest('.blog-faq-accordion-item');
+      const content = item.querySelector('.blog-faq-accordion-content');
+      const isExpanded = btn.classList.contains('active');
+
+      if (isExpanded) {
+        btn.classList.remove('active');
+        item.classList.remove('active');
+        btn.setAttribute('aria-expanded', 'false');
+        content.style.display = 'none';
+      } else {
+        btn.classList.add('active');
+        item.classList.add('active');
+        btn.setAttribute('aria-expanded', 'true');
+        content.style.display = 'block';
+      }
     }
 
     function renderSidebarRecent(currentSlug) {

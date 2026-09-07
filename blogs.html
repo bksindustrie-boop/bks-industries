@@ -114,11 +114,6 @@
           <a href="#" class="apollo-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
         <div class="apollo-v-divider"></div>
-        <a href="javascript:void(0)" onclick="handleAdminEntryClick()" class="apollo-topbar-pill" style="color: #F59E0B; font-weight: 700; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.25rem 0.65rem; border-radius: 9999px;" title="BKS Owner Portal Login">
-          <i class="fa-solid fa-lock"></i>
-          <span id="topbarAdminLockText">Owner Login</span>
-        </a>
-        <div class="apollo-v-divider"></div>
         <a href="tel:+918123939433" class="apollo-help-btn">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
           <span>Need Help?</span>
@@ -251,12 +246,6 @@
           <span><i class="fa-solid fa-envelope nav-icon"></i> Contact Us</span>
         </a>
       </li>
-
-      <li style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem; padding-top: 0.5rem;">
-        <a href="javascript:void(0)" onclick="closeMobileMenu(); openAdminLoginModal('create');" class="apollo-mobile-nav-link" style="color: #F59E0B; font-weight: 700;">
-          <span><i class="fa-solid fa-lock nav-icon" style="color: #F59E0B;"></i> 👑 Owner Portal Login</span>
-        </a>
-      </li>
     </ul>
 
     <div class="apollo-mobile-drawer-foot">
@@ -376,61 +365,7 @@
     </section>
   </main>
 
-  <!-- =========================================================================
-       6.5 ADMIN AUTHENTICATION LOGIN MODAL (OWNER ACCESS)
-       ========================================================================= -->
-  <div class="admin-login-modal" id="adminLoginModal" onclick="handleLoginBackdropClick(event)">
-    <div class="admin-login-card">
-      <div class="admin-login-head">
-        <div class="admin-login-head-icon">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        <h3>BKS Owner Portal</h3>
-        <p>Private upload &amp; article management access</p>
-      </div>
 
-      <div class="admin-login-body">
-        <form id="adminLoginForm" onsubmit="handleAdminLoginSubmit(event)">
-          <div id="adminLoginError" style="display: none; background: #FEE2E2; border: 1px solid #FCA5A5; color: #DC2626; padding: 0.65rem 0.85rem; border-radius: 0.5rem; font-size: 0.825rem; margin-bottom: 1rem; align-items: center; gap: 0.5rem;">
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <span id="adminLoginErrorText">Invalid User ID or Password.</span>
-          </div>
-
-          <div class="blog-form-group">
-            <label class="blog-form-label" for="loginUserId">Owner User ID</label>
-            <input type="text" id="loginUserId" class="blog-form-input" required autocomplete="username">
-          </div>
-
-          <div class="blog-form-group">
-            <label class="blog-form-label" for="loginPassword" style="display: flex; justify-content: space-between; align-items: center;">
-              <span>Password / Security Key</span>
-              <button type="button" onclick="togglePasswordVisibility()" style="background: none; border: none; color: var(--apollo-blue); font-size: 0.75rem; font-weight: 700; cursor: pointer;">
-                <span id="pwdToggleLabel">Show</span>
-              </button>
-            </label>
-            <input type="password" id="loginPassword" class="blog-form-input" placeholder="Enter Password" required autocomplete="current-password">
-          </div>
-
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
-            <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: #475569; cursor: pointer;">
-              <input type="checkbox" id="rememberMeCheckbox" checked style="cursor: pointer;">
-              <span>Remember this browser</span>
-            </label>
-            <span style="font-size: 0.75rem; color: #94A3B8;"><i class="fa-solid fa-lock"></i> Protected</span>
-          </div>
-
-          <button type="submit" class="bksi-lead-submit-btn" style="border-radius: 0.65rem; width: 100%; justify-content: center;">
-            <i class="fa-solid fa-lock-open me-2"></i> Unlock Creator Studio
-          </button>
-        </form>
-      </div>
-
-      <div class="admin-login-foot">
-        <span style="font-size: 0.75rem; color: #64748B;"><i class="fa-solid fa-shield"></i> Factory Admin Portal</span>
-        <button type="button" class="blog-btn-secondary" onclick="closeAdminLoginModal()" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">Cancel</button>
-      </div>
-    </div>
-  </div>
 
   <!-- =========================================================================
        7. BLOG CREATOR & MANAGEMENT STUDIO MODAL
@@ -1159,11 +1094,8 @@
 
       <div class="apollo-footer-bottom" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
         <p>&copy; 2026 B.K.S. Industries (Bengaluru). All Rights Reserved.</p>
-        <p style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <p>
           <span>Commercial Kitchen Equipment Manufacturer &bull; Direct Factory Bengaluru</span>
-          <a href="javascript:void(0)" onclick="handleAdminEntryClick()" class="footer-admin-lock-link" id="footerAdminLockBtn" title="BKS Owner Portal">
-            <i class="fa-solid fa-lock"></i> <span id="footerAdminLockText">Owner Access</span>
-          </a>
         </p>
       </div>
     </div>

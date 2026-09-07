@@ -142,11 +142,15 @@
         </ul>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 0.65rem;">
+      <div class="apollo-header-actions">
+        <a href="admin.html" class="apollo-owner-nav-btn" title="Owner Backend Login">
+          <i class="fa-solid fa-lock"></i>
+          <span>Owner Login</span>
+        </a>
         <button type="button" class="apollo-btn-enquiry" onclick="openEnquiryModal()" style="cursor: pointer; border: none;">
           <span>Enquiry</span>
         </button>
-        <button class="apollo-hamburger" id="apolloHamburger" aria-label="Toggle Navigation Menu" onclick="toggleMobileMenu()">
+        <button class="apollo-hamburger" id="apolloHamburger" aria-label="Toggle Navigation Menu Board" onclick="toggleMobileMenu()">
           <span></span>
           <span></span>
           <span></span>
@@ -157,13 +161,13 @@
 
   <!-- Mobile Navigation Drawer & Backdrop -->
   <div class="apollo-mobile-backdrop" id="apolloMobileBackdrop" onclick="closeMobileMenu()"></div>
-  <aside class="apollo-mobile-drawer" id="apolloMobileDrawer" aria-label="Mobile Navigation">
+  <aside class="apollo-mobile-drawer" id="apolloMobileDrawer" aria-label="Mobile Navigation Menu Board">
     <div class="apollo-mobile-drawer-head">
       <a href="index.html" class="apollo-brand" onclick="closeMobileMenu()">
         <img src="images/bksi_official_logo.png" alt="BKSI Logo" class="apollo-brand-logo" width="38" height="38">
         <div class="apollo-brand-text">
           <span class="apollo-brand-name">B.K.S. <span>INDUSTRIES</span></span>
-          <span class="apollo-brand-sub">Commercial Kitchen Equipments</span>
+          <span class="apollo-brand-sub" style="font-size: 0.65rem; color: #0082CA; font-weight: 700; letter-spacing: 0.05em;">MENU BOARD</span>
         </div>
       </a>
       <button class="apollo-mobile-close" id="apolloMobileClose" aria-label="Close navigation" onclick="closeMobileMenu()">
@@ -183,14 +187,70 @@
     </div>
 
     <ul class="apollo-mobile-nav-list">
-      <li><a href="index.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()"><span><i class="fa-solid fa-house nav-icon"></i> Home</span></a></li>
-      <li><a href="about.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()"><span><i class="fa-solid fa-building nav-icon"></i> About Us</span></a></li>
-      <li><a href="products.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()"><span><i class="fa-solid fa-utensils nav-icon"></i> Our Products (50+)</span></a></li>
-      <li><a href="services.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()"><span><i class="fa-solid fa-gears nav-icon"></i> Kitchen Setup &amp; Services</span></a></li>
-      <li><a href="projects.html" class="apollo-mobile-nav-link active" onclick="closeMobileMenu()" style="color: var(--apollo-blue); font-weight: 800;"><span><i class="fa-solid fa-camera-retro nav-icon"></i> Projects Gallery</span></a></li>
-      <li><a href="blogs.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()"><span><i class="fa-solid fa-newspaper nav-icon"></i> Blogs &amp; Guides</span></a></li>
-      <li><a href="contact.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()"><span><i class="fa-solid fa-envelope nav-icon"></i> Contact Us</span></a></li>
-      <li style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.5rem; padding-top: 0.5rem;"><a href="admin.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()" style="color: #F59E0B; font-weight: 700;"><span><i class="fa-solid fa-lock nav-icon" style="color: #F59E0B;"></i> 🔒 Owner Portal</span></a></li>
+      <li>
+        <a href="index.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()">
+          <span><i class="fa-solid fa-house nav-icon"></i> Home</span>
+        </a>
+      </li>
+
+      <!-- Products Accordion -->
+      <li class="apollo-mobile-nav-item">
+        <button type="button" class="apollo-mobile-nav-link apollo-mobile-accordion-btn" onclick="toggleMobileAccordion('mobileProductsMenu', this)">
+          <span><i class="fa-solid fa-utensils nav-icon"></i> Our Products (50+)</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="apollo-mobile-accordion-content" id="mobileProductsMenu">
+          <a href="products.html" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-layer-group"></i> All 50+ Products Catalog</a>
+          <a href="products.html?category=cooking" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-fire"></i> Commercial Cooking Ranges</a>
+          <a href="products.html?category=prep" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-sink"></i> SS Prep Tables &amp; Sinks</a>
+          <a href="products.html?category=refrigeration" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-snowflake"></i> Commercial Refrigeration</a>
+          <a href="products.html?category=servery" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-temperature-arrow-up"></i> Bain Marie &amp; Servery</a>
+          <a href="products.html?category=storage" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-boxes-stacked"></i> Storage &amp; Trolleys</a>
+        </div>
+      </li>
+
+      <!-- About Us Accordion -->
+      <li class="apollo-mobile-nav-item">
+        <button type="button" class="apollo-mobile-nav-link apollo-mobile-accordion-btn" onclick="toggleMobileAccordion('mobileAboutMenu', this)">
+          <span><i class="fa-solid fa-building nav-icon"></i> About &amp; Setup</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="apollo-mobile-accordion-content" id="mobileAboutMenu">
+          <a href="about.html" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-award"></i> About BKS Industries</a>
+          <a href="services.html" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-screwdriver-wrench"></i> Commercial Kitchen Setup</a>
+          <a href="about.html#why-us" class="apollo-mobile-sublink" onclick="closeMobileMenu()"><i class="fa-solid fa-shield-halved"></i> Why Choose Us</a>
+        </div>
+      </li>
+
+      <li>
+        <a href="services.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()">
+          <span><i class="fa-solid fa-gears nav-icon"></i> Turnkey Services</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="projects.html" class="apollo-mobile-nav-link active" onclick="closeMobileMenu()" style="color: var(--apollo-blue); font-weight: 800;">
+          <span><i class="fa-solid fa-camera-retro nav-icon"></i> Projects &amp; Gallery</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="blogs.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()">
+          <span><i class="fa-solid fa-newspaper nav-icon"></i> Blogs &amp; Guides</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="contact.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()">
+          <span><i class="fa-solid fa-envelope nav-icon"></i> Contact Us</span>
+        </a>
+      </li>
+
+      <li style="border-top: 1px solid rgba(0,130,202,0.15); margin-top: 0.5rem; padding-top: 0.5rem;">
+        <a href="admin.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()" style="color: #F59E0B; font-weight: 700; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px;">
+          <span><i class="fa-solid fa-lock nav-icon" style="color: #F59E0B;"></i> 🔒 Owner Portal (Backend Access)</span>
+        </a>
+      </li>
     </ul>
 
     <div class="apollo-mobile-drawer-foot">

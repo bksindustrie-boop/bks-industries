@@ -1126,8 +1126,7 @@
     const AUTH_KEY = 'bksi_admin_auth_v2';
 
     function isOwnerLoggedIn() {
-      const isAuth = sessionStorage.getItem(AUTH_KEY) === 'authenticated' || localStorage.getItem(AUTH_KEY) === 'authenticated';
-      return isAuth === true;
+      return sessionStorage.getItem(AUTH_KEY) === 'authenticated' || localStorage.getItem(AUTH_KEY) === 'authenticated';
     }
 
     function checkAuth() {

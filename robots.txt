@@ -1,6 +1,10 @@
 # Search Engine & AI Agent Access Permissions (SEO & GEO)
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /owner
+Disallow: /portal
 
 # Google Search & Google Extended (Gemini AI)
 User-agent: Googlebot

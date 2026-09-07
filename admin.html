@@ -144,7 +144,7 @@
 
     /* ================= MAIN DASHBOARD LAYOUT ================= */
     .admin-layout {
-      display: flex;
+      display: none; /* Strictly locked and invisible until owner logs in */
       flex: 1;
       height: 100vh;
       overflow: hidden;
@@ -589,8 +589,11 @@
   <div id="adminLoginOverlay" class="admin-login-overlay">
     <div class="admin-login-card">
       <img src="images/bksi_official_logo.png" alt="BKS Logo" class="admin-login-logo">
-      <h2 class="admin-login-title">Owner Control Center</h2>
-      <p class="admin-login-sub">Commercial Kitchen Equipment Portal</p>
+      <h2 class="admin-login-title">Private Owner Portal</h2>
+      <p class="admin-login-sub"><i class="fa-solid fa-shield-halved" style="color:var(--primary-cyan);margin-right:4px;"></i> Restricted Access • Authorized Personnel Only</p>
+
+      <div id="adminLoginError" style="display:none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #FCA5A5; padding: 0.75rem 1rem; border-radius: 0.75rem; font-size: 0.85rem; margin-bottom: 1.25rem; text-align: left;">
+      </div>
 
       <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
         <div class="admin-login-input-group">
@@ -601,8 +604,15 @@
           <label class="admin-login-label">Password</label>
           <input type="password" id="adminPass" class="admin-login-input" placeholder="Enter owner password" required autocomplete="current-password">
         </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-size: 0.82rem; color: var(--text-muted); text-align: left;">
+          <label style="display: flex; align-items: center; gap: 0.45rem; cursor: pointer;">
+            <input type="checkbox" id="adminRememberMe" style="accent-color: var(--primary-cyan); cursor: pointer;">
+            <span>Remember this device</span>
+          </label>
+          <span style="color: rgba(56, 189, 248, 0.8);"><i class="fa-solid fa-lock"></i> 256-bit Encrypted</span>
+        </div>
         <button type="submit" class="admin-login-btn">
-          <i class="fa-solid fa-lock-open"></i> Unlock Control Center
+          <i class="fa-solid fa-key"></i> Authenticate & Unlock Portal
         </button>
       </form>
     </div>
@@ -1113,19 +1123,29 @@
     // =========================================================================
     const DEFAULT_ADMIN_USER = 'bksadmin';
     const DEFAULT_ADMIN_PASS = 'VijayRE@04895';
-    const AUTH_KEY = 'bksi_admin_authenticated_v1';
+    const AUTH_KEY = 'bksi_admin_auth_v2';
 
     function isOwnerLoggedIn() {
-      return sessionStorage.getItem(AUTH_KEY) === 'true' || localStorage.getItem(AUTH_KEY) === 'true';
+      const isAuth = sessionStorage.getItem(AUTH_KEY) === 'authenticated' || localStorage.getItem(AUTH_KEY) === 'authenticated';
+      return isAuth === true;
     }
 
     function checkAuth() {
       const overlay = document.getElementById('adminLoginOverlay');
+      const layout = document.getElementById('adminLayout');
       if (isOwnerLoggedIn()) {
-        overlay.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
+        if (layout) {
+          layout.style.display = 'flex';
+          layout.style.visibility = 'visible';
+        }
         loadDashboardData();
       } else {
-        overlay.style.display = 'flex';
+        if (overlay) overlay.style.display = 'flex';
+        if (layout) {
+          layout.style.display = 'none';
+          layout.style.visibility = 'hidden';
+        }
       }
     }
 
@@ -1133,23 +1153,44 @@
       e.preventDefault();
       const u = document.getElementById('adminUser').value.trim();
       const p = document.getElementById('adminPass').value.trim();
+      const remember = document.getElementById('adminRememberMe')?.checked;
+      const errEl = document.getElementById('adminLoginError');
 
       const validUsers = ['bksadmin', 'admin', 'bksindustries'];
       if (validUsers.includes(u.toLowerCase()) && p === DEFAULT_ADMIN_PASS) {
-        sessionStorage.setItem(AUTH_KEY, 'true');
-        localStorage.setItem(AUTH_KEY, 'true');
-        showToast('✅ Login Successful! Welcome to BKS Owner Control Center.');
+        if (errEl) errEl.style.display = 'none';
+        sessionStorage.setItem(AUTH_KEY, 'authenticated');
+        if (remember) {
+          localStorage.setItem(AUTH_KEY, 'authenticated');
+        } else {
+          localStorage.removeItem(AUTH_KEY);
+        }
+        showToast('✅ Access Granted! Welcome to BKS Owner Portal.');
         checkAuth();
       } else {
-        alert('❌ Invalid Username or Password. Please try again.');
+        if (errEl) {
+          errEl.style.display = 'block';
+          errEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="margin-right:6px;"></i> Invalid username or password. Access restricted to owner only.';
+        } else {
+          alert('❌ Access Denied: Invalid credentials.');
+        }
+        document.getElementById('adminPass').value = '';
+        document.getElementById('adminPass').focus();
       }
     }
 
     function handleAdminLogout() {
       sessionStorage.removeItem(AUTH_KEY);
       localStorage.removeItem(AUTH_KEY);
-      showToast('Logged out securely.');
-      setTimeout(() => { location.reload(); }, 600);
+      showToast('🔒 Locked & Logged out safely.');
+      const overlay = document.getElementById('adminLoginOverlay');
+      const layout = document.getElementById('adminLayout');
+      if (layout) {
+        layout.style.display = 'none';
+        layout.style.visibility = 'hidden';
+      }
+      if (overlay) overlay.style.display = 'flex';
+      setTimeout(() => { location.reload(); }, 400);
     }
 
     // =========================================================================

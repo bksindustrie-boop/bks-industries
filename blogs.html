@@ -295,37 +295,7 @@
           </p>
         </div>
 
-        <!-- Public / Logged Out Quick Owner Login Trigger Button -->
-        <div id="headerOwnerLoginWrap" style="display: flex; align-items: center; gap: 0.75rem;">
-          <button type="button" id="headerOwnerLoginBtn" class="blog-btn-primary-action" onclick="openAdminLoginModal('create')" style="padding: 0.65rem 1.35rem; font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 9999px; background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%); border: 1.5px solid #38BDF8; color: #FFFFFF; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.2);" title="BKS Owner Portal Login">
-            <i class="fa-solid fa-lock" style="color: #F59E0B;"></i>
-            <span>Owner Login / Upload Blogs</span>
-          </button>
-        </div>
 
-        <!-- Header Action Controls for Blog Upload & Management (Admin Only) -->
-        <div class="blog-header-actions" id="blogHeaderAdminActions" style="display: none;">
-          <div class="admin-status-pill">
-            <i class="fa-solid fa-crown" style="color: #F59E0B;"></i>
-            <span>Owner Portal</span>
-            <button type="button" class="admin-logout-btn" onclick="handleAdminLogout()" title="Log out of Admin Mode">
-              <i class="fa-solid fa-right-from-bracket"></i> Logout
-            </button>
-          </div>
-          <button type="button" class="blog-btn-upload-trigger" onclick="openBlogStudio('create')">
-            <i class="fa-solid fa-plus-circle"></i> Upload / Write Blog
-          </button>
-          <button type="button" class="blog-btn-manage-trigger" onclick="openBlogStudio('manage')">
-            <i class="fa-solid fa-list-check"></i> Manage Articles
-            <span id="customBlogCountBadge" class="blog-badge-custom" style="display: inline-block; margin-left: 0.35rem;">0</span>
-          </button>
-          <button type="button" class="blog-btn-manage-trigger" onclick="openBlogStudio('export')">
-            <i class="fa-solid fa-code"></i> Export Code
-          </button>
-          <a href="admin.html" class="blog-btn-manage-trigger" style="text-decoration: none;" title="Open BKS Website Control Center">
-            <i class="fa-solid fa-gauge-high" style="color: #38BDF8;"></i> Full Control Center
-          </a>
-        </div>
       </div>
     </section>
 
@@ -1155,7 +1125,6 @@
             <li><a href="blogs.html" style="color: var(--apollo-blue); font-weight: 600;">Blogs &amp; Equipment Guides</a></li>
             <li><a href="index.html#why-us">Why Choose Us</a></li>
             <li><a href="index.html#contact">Contact &amp; Factory Details</a></li>
-            <li><a href="admin.html" style="color: #F59E0B; font-weight: 700;"><i class="fa-solid fa-lock me-1" style="font-size: 0.75rem; color: #F59E0B;"></i> Owner Portal (Backend)</a></li>
           </ul>
         </div>
 

@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KHRKRLWRJD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-KHRKRLWRJD');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="pageTitle">Commercial Kitchen Guide | B.K.S. Industries</title>
@@ -41,7 +50,7 @@
   <link rel="icon" type="image/png" href="images/bksi_official_logo.png">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=20260903_v14">
+  <link rel="stylesheet" href="style.css?v=20260903_v15">
 </head>
 <body>
   <!-- Scroll Progress Indicator -->
@@ -75,9 +84,9 @@
           <a href="#" class="apollo-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
         <div class="apollo-v-divider"></div>
-        <a href="blogs.html?admin=login" class="apollo-topbar-pill" style="color: #F59E0B; font-weight: 700; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.25rem 0.65rem; border-radius: 9999px;" title="BKS Owner Portal Login">
+        <a href="admin.html" class="apollo-topbar-pill" style="color: #F59E0B; font-weight: 700; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.25rem 0.65rem; border-radius: 9999px;" title="BKS Owner Portal Login">
           <i class="fa-solid fa-lock"></i>
-          <span>Owner Login</span>
+          <span>Owner Portal</span>
         </a>
         <div class="apollo-v-divider"></div>
         <a href="tel:+918123939433" class="apollo-help-btn">
@@ -210,6 +219,11 @@
       <li>
         <a href="contact.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()">
           <span><i class="fa-solid fa-envelope nav-icon"></i> Contact Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="admin.html" class="apollo-mobile-nav-link" onclick="closeMobileMenu()" style="color: #F59E0B; font-weight: 700;">
+          <span><i class="fa-solid fa-lock nav-icon" style="color: #F59E0B;"></i> Owner Portal / Backend</span>
         </a>
       </li>
     </ul>
@@ -484,6 +498,7 @@
             <li><a href="blogs.html" style="color: var(--apollo-blue); font-weight: 600;">Blogs &amp; Equipment Guides</a></li>
             <li><a href="index.html#why-us">Why Choose Us</a></li>
             <li><a href="index.html#contact">Contact &amp; Factory Details</a></li>
+            <li><a href="admin.html" style="color: #F59E0B; font-weight: 700;"><i class="fa-solid fa-lock me-1" style="font-size: 0.75rem; color: #F59E0B;"></i> Owner Portal (Backend)</a></li>
           </ul>
         </div>
 
@@ -542,6 +557,7 @@
   </a>
 
   <!-- JavaScript Modules -->
+  <script src="site-settings.js?v=20260906_v1"></script>
   <script src="blogs-data.js?v=20260903_v14"></script>
   <script>
     // Automatically purge legacy August local storage caches
@@ -714,7 +730,9 @@
         },
         "publisher": {
           "@type": "Organization",
+          "@id": "https://www.bksindustries.in/#organization",
           "name": "B.K.S. Industries",
+          "url": "https://www.bksindustries.in",
           "logo": {
             "@type": "ImageObject",
             "url": "https://www.bksindustries.in/images/bksi_official_logo.png"

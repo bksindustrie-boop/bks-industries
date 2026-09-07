@@ -1,6 +1,11 @@
 {
   "framework": null,
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/owner", "destination": "/admin.html" },
+    { "source": "/portal", "destination": "/admin.html" }
+  ],
   "headers": [
     {
       "source": "/sitemap.xml",

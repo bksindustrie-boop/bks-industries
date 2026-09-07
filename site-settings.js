@@ -61,3 +61,66 @@ function saveSiteSettings(settingsObj) {
 if (typeof window !== 'undefined') {
   window.bksiSiteSettings = getSiteSettings();
 }
+
+function applyGlobalSiteSettings() {
+  if (typeof document === 'undefined') return;
+  const s = getSiteSettings();
+  
+  // 1. Phone numbers
+  if (s.primaryPhone) {
+    const rawPhone = s.primaryPhone.replace(/\D/g, '');
+    document.querySelectorAll('.apollo-topbar-phone span, .topbar-phone-text, .bksi-phone-text').forEach(el => {
+      el.textContent = s.primaryPhone;
+    });
+    document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+      if (a.classList.contains('apollo-topbar-phone') || a.classList.contains('call-btn') || a.closest('.apollo-footer') || a.closest('.apollo-topbar')) {
+        a.href = `tel:+${rawPhone}`;
+      }
+    });
+  }
+
+  // 2. Email addresses
+  if (s.primaryEmail) {
+    document.querySelectorAll('.pill-icon-mail + span, .bksi-email-text').forEach(el => {
+      el.textContent = s.primaryEmail;
+    });
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+      a.href = `mailto:${s.primaryEmail}`;
+      if (a.querySelector('span')) a.querySelector('span').textContent = s.primaryEmail;
+    });
+  }
+
+  // 3. Factory address
+  if (s.factoryAddress) {
+    document.querySelectorAll('.bksi-address-text').forEach(el => {
+      el.textContent = s.factoryAddress;
+    });
+  }
+
+  // 4. WhatsApp links
+  if (s.whatsappNumber) {
+    const cleanWa = s.whatsappNumber.replace(/\D/g, '');
+    const waUrl = `https://wa.me/${cleanWa}?text=${encodeURIComponent(s.whatsappDefaultMsg || 'Hello BKSI, I am interested in commercial kitchen equipment.')}`;
+    document.querySelectorAll('a.apollo-whatsapp-floating, a[aria-label="WhatsApp"], a.wa-btn').forEach(a => {
+      if (!a.dataset.customText) {
+        a.href = waUrl;
+      }
+    });
+  }
+
+  // 5. Working hours
+  if (s.workingHours) {
+    document.querySelectorAll('.bksi-hours-text').forEach(el => {
+      el.textContent = s.workingHours;
+    });
+  }
+}
+
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyGlobalSiteSettings);
+  } else {
+    applyGlobalSiteSettings();
+  }
+}
+

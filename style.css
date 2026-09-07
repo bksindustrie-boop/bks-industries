@@ -2917,7 +2917,8 @@ button, input, select, textarea {
   .gmb-gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .apollo-catalog-grid { grid-template-columns: repeat(2, 1fr); }
   .apollo-footer-grid { grid-template-columns: repeat(2, 1fr); }
-  .apollo-calc-grid { grid-template-columns: 1fr; }
+  .apollo-calc-grid,
+  .apollo-contact-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -2933,6 +2934,8 @@ button, input, select, textarea {
   .gmb-gallery-grid { grid-template-columns: 1fr; }
   .apollo-catalog-grid { grid-template-columns: 1fr; }
   .apollo-footer-grid { grid-template-columns: 1fr; }
+  .apollo-calc-grid,
+  .apollo-contact-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
   .apollo-grid-2 { grid-template-columns: 1fr; }
 }
 
@@ -5659,6 +5662,49 @@ button, input, select, textarea {
 
   .apollo-calc-slider-wrap {
     width: 100% !important;
+  }
+
+  /* Contact Section Mobile Responsive Polish */
+  .apollo-contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .apollo-contact-info-card,
+  .apollo-inquiry-card {
+    padding: 1.5rem 1.15rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: var(--radius-xl) !important;
+  }
+
+  .apollo-contact-badges-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+
+  .apollo-contact-badge-pill {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    box-sizing: border-box !important;
+    font-size: 0.76rem !important;
+    padding: 0.45rem 0.75rem !important;
+  }
+
+  .apollo-contact-item-row {
+    gap: 0.75rem !important;
+  }
+
+  .apollo-contact-item-text p,
+  .apollo-contact-item-text a {
+    word-break: break-word !important;
   }
 
   /* Floating Action Buttons Responsive Coordination */

@@ -119,6 +119,69 @@ function deleteBlogFromDisk(slugOrId) {
   }
 }
 
+// Helper: save or update products in products-data.js on disk
+function saveProductsToDisk(productsArray) {
+  try {
+    const filePath = path.join(PUBLIC_DIR, 'products-data.js');
+    if (!fs.existsSync(filePath)) return false;
+    let content = fs.readFileSync(filePath, 'utf-8');
+    const marker = 'const DEFAULT_PRODUCTS_DATA = ';
+    const startIdx = content.indexOf(marker);
+    const helperIdx = content.indexOf('const PRODUCT_STORAGE_KEY');
+    if (startIdx === -1 || helperIdx === -1) return false;
+
+    const updatedArrayStr = JSON.stringify(productsArray, null, 2);
+    const updatedContent = content.substring(0, startIdx + marker.length) + updatedArrayStr + ';\n\n' + content.substring(helperIdx);
+    fs.writeFileSync(filePath, updatedContent, 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error saving products to disk:', err);
+    return false;
+  }
+}
+
+// Helper: save or update projects in projects-data.js on disk
+function saveProjectsToDisk(projectsArray) {
+  try {
+    const filePath = path.join(PUBLIC_DIR, 'projects-data.js');
+    if (!fs.existsSync(filePath)) return false;
+    let content = fs.readFileSync(filePath, 'utf-8');
+    const marker = 'const DEFAULT_PROJECTS_DATA = ';
+    const startIdx = content.indexOf(marker);
+    const helperIdx = content.indexOf('const PROJECT_STORAGE_KEY');
+    if (startIdx === -1 || helperIdx === -1) return false;
+
+    const updatedArrayStr = JSON.stringify(projectsArray, null, 2);
+    const updatedContent = content.substring(0, startIdx + marker.length) + updatedArrayStr + ';\n\n' + content.substring(helperIdx);
+    fs.writeFileSync(filePath, updatedContent, 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error saving projects to disk:', err);
+    return false;
+  }
+}
+
+// Helper: save site settings to site-settings.js on disk
+function saveSettingsToDisk(settingsObj) {
+  try {
+    const filePath = path.join(PUBLIC_DIR, 'site-settings.js');
+    if (!fs.existsSync(filePath)) return false;
+    let content = fs.readFileSync(filePath, 'utf-8');
+    const marker = 'const DEFAULT_SITE_SETTINGS = ';
+    const startIdx = content.indexOf(marker);
+    const helperIdx = content.indexOf('const SITE_SETTINGS_STORAGE_KEY');
+    if (startIdx === -1 || helperIdx === -1) return false;
+
+    const updatedObjStr = JSON.stringify(settingsObj, null, 2);
+    const updatedContent = content.substring(0, startIdx + marker.length) + updatedObjStr + ';\n\n' + content.substring(helperIdx);
+    fs.writeFileSync(filePath, updatedContent, 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('Error saving settings to disk:', err);
+    return false;
+  }
+}
+
 const handleRequest = async (req, res) => {
   try {
     const rawUrl = (req && req.url) ? req.url : '/';
@@ -136,6 +199,33 @@ const handleRequest = async (req, res) => {
     }
 
     // --- API Endpoints ---
+    if (urlPath === '/api/sync-all' && req.method === 'POST') {
+      const data = await parseRequestBody(req);
+      let success = true;
+      if (data.prods && Array.isArray(data.prods)) saveProductsToDisk(data.prods);
+      if (data.projs && Array.isArray(data.projs)) saveProjectsToDisk(data.projs);
+      if (data.settings) saveSettingsToDisk(data.settings);
+      if (data.blogs && Array.isArray(data.blogs)) {
+        try {
+          const blogsFilePath = path.join(PUBLIC_DIR, 'blogs-data.js');
+          if (fs.existsSync(blogsFilePath)) {
+            let content = fs.readFileSync(blogsFilePath, 'utf-8');
+            const marker = 'const DEFAULT_BLOGS_DATA = ';
+            const startIdx = content.indexOf(marker);
+            const helperIdx = content.indexOf('const BLOG_STORAGE_KEY');
+            if (startIdx !== -1 && helperIdx !== -1) {
+              const updatedArrayStr = JSON.stringify(data.blogs, null, 2);
+              const updatedContent = content.substring(0, startIdx + marker.length) + updatedArrayStr + ';\n\n' + content.substring(helperIdx);
+              fs.writeFileSync(blogsFilePath, updatedContent, 'utf-8');
+            }
+          }
+        } catch (e) { console.error('Error syncing blogs:', e); }
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, message: 'All data files synchronized to disk successfully!' }));
+      return;
+    }
+
     if (urlPath === '/api/save-blog' && req.method === 'POST') {
       const data = await parseRequestBody(req);
       if (data && data.blog) {

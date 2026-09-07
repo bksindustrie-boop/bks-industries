@@ -1,169 +1,152 @@
-﻿// ==========================================================================
+// ==========================================================================
 // B.K.S. Industries - Projects Gallery Data Store
+// Updated: 2026-09-07T08:09:31.886Z
 // ==========================================================================
 const DEFAULT_PROJECTS_DATA = [
-  // =========================================================================
-  // 1. RECENT CLIENT INSTALLATIONS & ON-SITE EXECUTION (AUTHENTIC PHOTOS)
-  // =========================================================================
   {
-    id: 'proj-real-01',
-    src: 'images/real-gallery/real_restaurant_live_cooking_line.jpg',
-    category: 'setups',
-    badge: 'Live Restaurant Kitchen',
-    title: 'Commercial Restaurant Live Cooking Line & Heavy Exhaust Canopy',
-    location: 'Fine-Dining & Multi-Cuisine Restaurant, Bengaluru',
-    desc: 'Fully commissioned commercial kitchen featuring heavy SS 304 gas ranges, flat griddle plates, multi-station prep tables, overhead utility racks, and continuous stainless baffle exhaust hood.'
+    "id": "proj-20",
+    "src": "images/main page/200 ltr water tank.jpg",
+    "category": "fabrication",
+    "badge": "Water Storage",
+    "title": "Stainless Steel  Water Storage Tank (200L)",
+    "location": "Commercial Kitchen Water Line",
+    "desc": "Heavy 16G stainless steel 304 potable water storage tank with top inspection lid, level indicator, and drain valves.",
+    "isCustom": true
   },
   {
-    id: 'proj-real-05',
-    src: 'images/real-gallery/real_bain_marie_live_counter_station.jpg',
-    category: 'counters',
-    badge: 'Live Buffet Counter',
-    title: 'Commercial 4-Well Bain Marie Soup Warmer & Live Service Counter',
-    location: 'Buffet & Live Food Station, Bengaluru',
-    desc: 'Food-grade SS 304 electric Bain Marie soup and gravy warmer with independent temperature controls, digital induction cooking unit, and 2-tier gantry display shelving.'
-  },
-
-  // =========================================================================
-  // 2. COMMERCIAL KITCHEN SETUP INSTALLATIONS (Category: 'setups')
-  // =========================================================================
-  {
-    id: 'proj-01',
-    src: 'images/main page/all in one kitchen.jpg',
-    category: 'setups',
-    badge: 'Kitchen Installation',
-    title: 'Complete Commercial Kitchen Setup & Prep Line',
-    location: 'Restaurant Installation Site, Karnataka',
-    desc: 'Integrated commercial kitchen with heavy SS 304 Chinese wok ranges, preparation work tables, gas manifolds, and stainless exhaust hood canopy systems.'
+    "id": "proj-real-01",
+    "src": "images/real-gallery/real_restaurant_live_cooking_line.jpg",
+    "category": "setups",
+    "badge": "Live Restaurant Kitchen",
+    "title": "Commercial Restaurant Live Cooking Line & Heavy Exhaust Canopy",
+    "location": "Fine-Dining & Multi-Cuisine Restaurant, Bengaluru",
+    "desc": "Fully commissioned commercial kitchen featuring heavy SS 304 gas ranges, flat griddle plates, multi-station prep tables, overhead utility racks, and continuous stainless baffle exhaust hood."
   },
   {
-    id: 'proj-02',
-    src: 'images/main page/bks industries.jpg',
-    category: 'setups',
-    badge: 'Factory Workshop',
-    title: 'BKS Industries Manufacturing & Assembly Floor',
-    location: 'BKS Factory Floor, Lakshmidevinagar, Bengaluru',
-    desc: 'In-house heavy SS 304 fabrication workshop with CNC shearing, press brake bending, and precision argon TIG welding stations.'
+    "id": "proj-real-05",
+    "src": "images/real-gallery/real_bain_marie_live_counter_station.jpg",
+    "category": "counters",
+    "badge": "Live Buffet Counter",
+    "title": "Commercial 4-Well Bain Marie Soup Warmer & Live Service Counter",
+    "location": "Buffet & Live Food Station, Bengaluru",
+    "desc": "Food-grade SS 304 electric Bain Marie soup and gravy warmer with independent temperature controls, digital induction cooking unit, and 2-tier gantry display shelving."
   },
   {
-    id: 'proj-03',
-    src: 'images/main page/bks2.jpg',
-    category: 'setups',
-    badge: 'Site Execution',
-    title: 'Commercial Restaurant Kitchen Lineup & Exhaust System',
-    location: 'Hotel Kitchen Project, Bengaluru',
-    desc: 'End-to-end commercial kitchen installation featuring heavy stockpot burners, live counters, and high-CFM stainless exhaust ducting.'
+    "id": "proj-01",
+    "src": "images/main page/all in one kitchen.jpg",
+    "category": "setups",
+    "badge": "Kitchen Installation",
+    "title": "Complete Commercial Kitchen Setup & Prep Line",
+    "location": "Restaurant Installation Site, Karnataka",
+    "desc": "Integrated commercial kitchen with heavy SS 304 Chinese wok ranges, preparation work tables, gas manifolds, and stainless exhaust hood canopy systems."
   },
   {
-    id: 'proj-04',
-    src: 'images/main page/bksi.jpg',
-    category: 'setups',
-    badge: 'Kitchen Delivery',
-    title: 'Full Stainless Steel Cooking & Prep Facility',
-    location: 'Commercial Dining Setup, South India',
-    desc: 'Heavy-gauge SS 304 commercial kitchen equipment line customized for high-volume daily food service.'
-  },
-
-  // =========================================================================
-  // 2. COOKING LINES & BURNER RANGES (Category: 'cooking')
-  // =========================================================================
-  {
-    id: 'proj-06',
-    src: 'images/main page/bulk Burner.jpg',
-    category: 'cooking',
-    badge: 'Cooking Range Line',
-    title: 'Heavy-Duty Bulk Stockpot Cooking Ranges Lineup',
-    location: 'Institutional Canteen Project',
-    desc: 'Batch installation of heavy single-burner bulk stockpot gas stoves with high-pressure burners and removable spillage trays.'
+    "id": "proj-02",
+    "src": "images/main page/bks industries.jpg",
+    "category": "setups",
+    "badge": "Factory Workshop",
+    "title": "BKS Industries Manufacturing & Assembly Floor",
+    "location": "BKS Factory Floor, Lakshmidevinagar, Bengaluru",
+    "desc": "In-house heavy SS 304 fabrication workshop with CNC shearing, press brake bending, and precision argon TIG welding stations."
   },
   {
-    id: 'proj-08',
-    src: 'images/main page/l type Burner.jpg',
-    category: 'cooking',
-    badge: 'Custom Configuration',
-    title: 'L-Configuration Multi-Burner Commercial Cooking Station',
-    location: 'Commercial Cloud Kitchen, Bengaluru',
-    desc: 'Custom-designed L-shaped cooking line maximizing chef workflow efficiency in compact commercial kitchen spaces.'
+    "id": "proj-03",
+    "src": "images/main page/bks2.jpg",
+    "category": "setups",
+    "badge": "Site Execution",
+    "title": "Commercial Restaurant Kitchen Lineup & Exhaust System",
+    "location": "Hotel Kitchen Project, Bengaluru",
+    "desc": "End-to-end commercial kitchen installation featuring heavy stockpot burners, live counters, and high-CFM stainless exhaust ducting."
   },
   {
-    id: 'proj-09',
-    src: 'images/main page/burner with hot case2.jpg',
-    category: 'cooking',
-    badge: 'Multi-Station Range',
-    title: 'Commercial Cooking Range Integrated with Hot Case Oven',
-    location: 'Hotel Foodservice Setup',
-    desc: 'High-power burner stove integrated with bottom insulated warming oven chamber for fast hot food service.'
+    "id": "proj-04",
+    "src": "images/main page/bksi.jpg",
+    "category": "setups",
+    "badge": "Kitchen Delivery",
+    "title": "Full Stainless Steel Cooking & Prep Facility",
+    "location": "Commercial Dining Setup, South India",
+    "desc": "Heavy-gauge SS 304 commercial kitchen equipment line customized for high-volume daily food service."
   },
   {
-    id: 'proj-10',
-    src: 'images/main page/dosa and Buner.jpg',
-    category: 'cooking',
-    badge: 'South Indian Station',
-    title: 'Combined Flat Dosa Bhatti & High-Pressure Burner Unit',
-    location: 'South Indian Restaurant Project',
-    desc: 'Polished 16mm thick mild steel flat dosa griddle paired with high-output gas burner on heavy SS 304 frame.'
+    "id": "proj-06",
+    "src": "images/main page/bulk Burner.jpg",
+    "category": "cooking",
+    "badge": "Cooking Range Line",
+    "title": "Heavy-Duty Bulk Stockpot Cooking Ranges Lineup",
+    "location": "Institutional Canteen Project",
+    "desc": "Batch installation of heavy single-burner bulk stockpot gas stoves with high-pressure burners and removable spillage trays."
   },
   {
-    id: 'proj-13',
-    src: 'images/main page/romali Roti 1.jpg',
-    category: 'cooking',
-    badge: 'Specialty Cooking',
-    title: 'Heavy SS 304 Rumali Roti & Live Kebab Station',
-    location: 'Live Banquet Service Setup',
-    desc: 'Custom fabricated stainless steel live Rumali Roti station with integrated ingredient trays and gas piping.'
-  },
-
-  // =========================================================================
-  // 3. LIVE COUNTERS & BEVERAGE STATIONS (Category: 'counters')
-  // =========================================================================
-  {
-    id: 'proj-16',
-    src: 'images/main page/hot case 2.jpg',
-    category: 'counters',
-    badge: 'Hot Food Showcase',
-    title: 'Multi-Vessel Commercial Bain Marie & Hot Food Case',
-    location: 'Buffet & Dining Hall Project',
-    desc: 'Food-grade SS 304 hot food servery case with independent temperature control and curved glass sneeze protection.'
+    "id": "proj-08",
+    "src": "images/main page/l type Burner.jpg",
+    "category": "cooking",
+    "badge": "Custom Configuration",
+    "title": "L-Configuration Multi-Burner Commercial Cooking Station",
+    "location": "Commercial Cloud Kitchen, Bengaluru",
+    "desc": "Custom-designed L-shaped cooking line maximizing chef workflow efficiency in compact commercial kitchen spaces."
   },
   {
-    id: 'proj-17',
-    src: 'images/main page/food wamer trolley.jpg',
-    category: 'counters',
-    badge: 'Mobile Warmer',
-    title: 'Mobile Stainless Steel Food Warmer Service Cart',
-    location: 'Catering & Banquet Facility',
-    desc: 'Heavy-duty insulated heated food transport cart on smooth swivel castor wheels with corner bumpers.'
-  },
-
-  // =========================================================================
-  // 4. HEAVY SS FABRICATION & UTILITIES (Category: 'fabrication')
-  // =========================================================================
-  {
-    id: 'proj-18',
-    src: 'images/main page/tilting pan.jpg',
-    category: 'fabrication',
-    badge: 'Bulk Cooking Pan',
-    title: 'Heavy-Duty Commercial Tilting Bratt Pan (150L)',
-    location: 'Central Kitchen Installation',
-    desc: 'Heavy rectangular stainless steel tilting braising pan with precision worm gear mechanism for safe bulk pouring.'
+    "id": "proj-09",
+    "src": "images/main page/burner with hot case2.jpg",
+    "category": "cooking",
+    "badge": "Multi-Station Range",
+    "title": "Commercial Cooking Range Integrated with Hot Case Oven",
+    "location": "Hotel Foodservice Setup",
+    "desc": "High-power burner stove integrated with bottom insulated warming oven chamber for fast hot food service."
   },
   {
-    id: 'proj-20',
-    src: 'images/main page/200 ltr water tank.jpg',
-    category: 'fabrication',
-    badge: 'Water Storage',
-    title: 'Food-Grade SS 304 Potable Water Storage Tank (200L)',
-    location: 'Commercial Kitchen Water Line',
-    desc: 'Heavy 16G stainless steel 304 potable water storage tank with top inspection lid, level indicator, and drain valves.'
+    "id": "proj-10",
+    "src": "images/main page/dosa and Buner.jpg",
+    "category": "cooking",
+    "badge": "South Indian Station",
+    "title": "Combined Flat Dosa Bhatti & High-Pressure Burner Unit",
+    "location": "South Indian Restaurant Project",
+    "desc": "Polished 16mm thick mild steel flat dosa griddle paired with high-output gas burner on heavy SS 304 frame."
   },
   {
-    id: 'proj-23',
-    src: 'images/main page/mesh.jpg',
-    category: 'fabrication',
-    badge: 'Custom SS Mesh',
-    title: 'Stainless Steel Mesh Wire Grating & Drain Strainers',
-    location: 'Drainage & Ventilation System',
-    desc: 'Food-grade stainless steel wire mesh grating fabricated for floor drainage channels and exhaust baffle air intakes.'
+    "id": "proj-13",
+    "src": "images/main page/romali Roti 1.jpg",
+    "category": "cooking",
+    "badge": "Specialty Cooking",
+    "title": "Heavy SS 304 Rumali Roti & Live Kebab Station",
+    "location": "Live Banquet Service Setup",
+    "desc": "Custom fabricated stainless steel live Rumali Roti station with integrated ingredient trays and gas piping."
+  },
+  {
+    "id": "proj-16",
+    "src": "images/main page/hot case 2.jpg",
+    "category": "counters",
+    "badge": "Hot Food Showcase",
+    "title": "Multi-Vessel Commercial Bain Marie & Hot Food Case",
+    "location": "Buffet & Dining Hall Project",
+    "desc": "Food-grade SS 304 hot food servery case with independent temperature control and curved glass sneeze protection."
+  },
+  {
+    "id": "proj-17",
+    "src": "images/main page/food wamer trolley.jpg",
+    "category": "counters",
+    "badge": "Mobile Warmer",
+    "title": "Mobile Stainless Steel Food Warmer Service Cart",
+    "location": "Catering & Banquet Facility",
+    "desc": "Heavy-duty insulated heated food transport cart on smooth swivel castor wheels with corner bumpers."
+  },
+  {
+    "id": "proj-18",
+    "src": "images/main page/tilting pan.jpg",
+    "category": "fabrication",
+    "badge": "Bulk Cooking Pan",
+    "title": "Heavy-Duty Commercial Tilting Bratt Pan (150L)",
+    "location": "Central Kitchen Installation",
+    "desc": "Heavy rectangular stainless steel tilting braising pan with precision worm gear mechanism for safe bulk pouring."
+  },
+  {
+    "id": "proj-23",
+    "src": "images/main page/mesh.jpg",
+    "category": "fabrication",
+    "badge": "Custom SS Mesh",
+    "title": "Stainless Steel Mesh Wire Grating & Drain Strainers",
+    "location": "Drainage & Ventilation System",
+    "desc": "Food-grade stainless steel wire mesh grating fabricated for floor drainage channels and exhaust baffle air intakes."
   }
 ];
 
@@ -175,14 +158,11 @@ function getAllProjects() {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        const customProjs = parsed.filter(p => p && p.isCustom);
-        const modifiedMap = new Map(parsed.map(p => [p.id, p]));
-        const result = [];
-        const seenIds = new Set();
-        for (const cp of customProjs) {
-          result.push(cp);
-          seenIds.add(cp.id);
-        }
+        const customProjs = parsed.filter(p => p && (p.isCustom || (p.id && p.id.startsWith('proj-custom-'))));
+        const modifiedProjs = parsed.filter(p => p && !p.isCustom && (!p.id || !p.id.startsWith('proj-custom-')));
+        const modifiedMap = new Map(modifiedProjs.map(p => [p.id, p]));
+        const result = [...customProjs];
+        const seenIds = new Set(customProjs.map(p => p.id));
         for (const def of DEFAULT_PROJECTS_DATA) {
           if (seenIds.has(def.id)) continue;
           if (modifiedMap.has(def.id)) {

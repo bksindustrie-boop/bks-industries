@@ -801,7 +801,7 @@
                 <select id="productCategoryFilter" class="admin-select" onchange="renderAdminProducts()">
                   <option value="all">All Categories</option>
                   <option value="cooking">Cooking Ranges</option>
-                  <option value="prep">SS Tables &amp; Sinks</option>
+                  <option value="prep">Prep Tables &amp; Sinks</option>
                   <option value="refrigeration">Commercial Refrigeration</option>
                   <option value="servery">Bain Marie &amp; Servery</option>
                   <option value="bakery">Idli &amp; Bakery</option>
@@ -997,7 +997,7 @@
               <label class="form-label">Category</label>
               <select id="modalProdCategory" class="form-control" required>
                 <option value="cooking">Cooking Ranges</option>
-                <option value="prep">SS Tables &amp; Sinks</option>
+                <option value="prep">Prep Tables &amp; Sinks</option>
                 <option value="refrigeration">Commercial Refrigeration</option>
                 <option value="servery">Bain Marie &amp; Servery</option>
                 <option value="bakery">Idli &amp; Bakery</option>
@@ -1027,7 +1027,7 @@
 
           <div class="form-group">
             <label class="form-label">Key Specifications (Comma separated)</label>
-            <input type="text" id="modalProdSpecs" class="form-control" placeholder="SS 304 16G Body, High Thermal Burners, Removable Drip Tray">
+            <input type="text" id="modalProdSpecs" class="form-control" placeholder="Heavy-Duty Commercial Grade 16G Body, High Thermal Burners, Removable Drip Tray">
           </div>
 
           <div class="form-group">
@@ -1064,7 +1064,7 @@
                 <option value="setups">Kitchen Setups</option>
                 <option value="cooking">Cooking Lines &amp; Burners</option>
                 <option value="counters">Live Counters &amp; Cafes</option>
-                <option value="fabrication">Heavy SS Fabrication</option>
+                <option value="fabrication">Commercial Equipment Fabrication</option>
               </select>
             </div>
             <div class="form-group">
@@ -1289,7 +1289,7 @@
             <td><img src="${p.image}" class="table-thumb" alt="${p.name}" onerror="this.src='images/WEB/Single-Burner-Bulk-Cooking-Range-.png'"></td>
             <td><strong>${p.name}</strong></td>
             <td><span class="table-badge">${p.categoryLabel || p.category}</span></td>
-            <td>${p.fuel || 'SS 304'}</td>
+            <td>${p.fuel || 'Heavy-Duty Commercial Grade'}</td>
             <td>
               <button class="btn-icon" title="Edit" onclick="editProduct('${p.id}')"><i class="fa-solid fa-pencil"></i></button>
             </td>
@@ -1328,7 +1328,7 @@
             <div style="font-size: 0.75rem; color: var(--text-muted);">${(p.desc || '').slice(0, 70)}...</div>
           </td>
           <td><span class="table-badge">${p.categoryLabel || p.category}</span></td>
-          <td>${p.fuel || 'SS 304 Fabricated'}</td>
+          <td>${p.fuel || 'Heavy-Duty Commercial Grade Fabricated'}</td>
           <td style="text-align: right;">
             <div style="display: inline-flex; gap: 0.4rem;">
               <button class="btn-icon" title="Edit Product" onclick="editProduct('${p.id}')"><i class="fa-solid fa-pencil"></i></button>
@@ -1394,7 +1394,7 @@
 
       const catLabels = {
         'cooking': 'Cooking Ranges',
-        'prep': 'SS Tables & Sinks',
+        'prep': 'Prep Tables & Sinks',
         'refrigeration': 'Commercial Refrigeration',
         'servery': 'Bain Marie & Servery',
         'bakery': 'Idli & Bakery',
@@ -1408,7 +1408,7 @@
         category,
         categoryLabel: catLabels[category] || 'Commercial Kitchen',
         image,
-        fuel: fuel || 'SS 304 Fabricated',
+        fuel: fuel || 'Heavy-Duty Commercial Grade Fabricated',
         specs,
         desc,
         isCustom: true

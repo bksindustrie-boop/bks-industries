@@ -8,9 +8,9 @@ const DEFAULT_PROJECTS_DATA = [
     "src": "images/main page/200 ltr water tank.jpg",
     "category": "fabrication",
     "badge": "Water Storage",
-    "title": "Stainless Steel  Water Storage Tank (200L)",
+    "title": "Commercial Grade  Water Storage Tank (200L)",
     "location": "Commercial Kitchen Water Line",
-    "desc": "Heavy 16G stainless steel 304 potable water storage tank with top inspection lid, level indicator, and drain valves.",
+    "desc": "Heavy 16G commercial grade 304 potable water storage tank with top inspection lid, level indicator, and drain valves.",
     "isCustom": true
   },
   {
@@ -20,7 +20,7 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "Live Restaurant Kitchen",
     "title": "Commercial Restaurant Live Cooking Line & Heavy Exhaust Canopy",
     "location": "Fine-Dining & Multi-Cuisine Restaurant, Bengaluru",
-    "desc": "Fully commissioned commercial kitchen featuring heavy SS 304 gas ranges, flat griddle plates, multi-station prep tables, overhead utility racks, and continuous stainless baffle exhaust hood."
+    "desc": "Fully commissioned commercial kitchen featuring heavy-duty commercial-grade gas ranges, flat griddle plates, multi-station prep tables, overhead utility racks, and continuous commercial baffle exhaust hood."
   },
   {
     "id": "proj-real-05",
@@ -29,7 +29,7 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "Live Buffet Counter",
     "title": "Commercial 4-Well Bain Marie Soup Warmer & Live Service Counter",
     "location": "Buffet & Live Food Station, Bengaluru",
-    "desc": "Food-grade SS 304 electric Bain Marie soup and gravy warmer with independent temperature controls, digital induction cooking unit, and 2-tier gantry display shelving."
+    "desc": "Food-grade Heavy-Duty Commercial Grade electric Bain Marie soup and gravy warmer with independent temperature controls, digital induction cooking unit, and 2-tier gantry display shelving."
   },
   {
     "id": "proj-01",
@@ -38,7 +38,7 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "Kitchen Installation",
     "title": "Complete Commercial Kitchen Setup & Prep Line",
     "location": "Restaurant Installation Site, Karnataka",
-    "desc": "Integrated commercial kitchen with heavy SS 304 Chinese wok ranges, preparation work tables, gas manifolds, and stainless exhaust hood canopy systems."
+    "desc": "Integrated commercial kitchen with heavy-duty commercial-grade Chinese wok ranges, preparation work tables, gas manifolds, and commercial exhaust hood canopy systems."
   },
   {
     "id": "proj-02",
@@ -47,7 +47,7 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "Factory Workshop",
     "title": "BKS Industries Manufacturing & Assembly Floor",
     "location": "BKS Factory Floor, Lakshmidevinagar, Bengaluru",
-    "desc": "In-house heavy SS 304 fabrication workshop with CNC shearing, press brake bending, and precision argon TIG welding stations."
+    "desc": "In-house heavy-duty commercial-grade fabrication workshop with CNC shearing, press brake bending, and precision argon TIG welding stations."
   },
   {
     "id": "proj-03",
@@ -56,16 +56,16 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "Site Execution",
     "title": "Commercial Restaurant Kitchen Lineup & Exhaust System",
     "location": "Hotel Kitchen Project, Bengaluru",
-    "desc": "End-to-end commercial kitchen installation featuring heavy stockpot burners, live counters, and high-CFM stainless exhaust ducting."
+    "desc": "End-to-end commercial kitchen installation featuring heavy stockpot burners, live counters, and high-CFM commercial exhaust ducting."
   },
   {
     "id": "proj-04",
     "src": "images/main page/bksi.jpg",
     "category": "setups",
     "badge": "Kitchen Delivery",
-    "title": "Full Stainless Steel Cooking & Prep Facility",
+    "title": "Full Commercial Grade Cooking & Prep Facility",
     "location": "Commercial Dining Setup, South India",
-    "desc": "Heavy-gauge SS 304 commercial kitchen equipment line customized for high-volume daily food service."
+    "desc": "Heavy-gauge Heavy-Duty Commercial Grade commercial kitchen equipment line customized for high-volume daily food service."
   },
   {
     "id": "proj-06",
@@ -101,16 +101,16 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "South Indian Station",
     "title": "Combined Flat Dosa Bhatti & High-Pressure Burner Unit",
     "location": "South Indian Restaurant Project",
-    "desc": "Polished 16mm thick mild steel flat dosa griddle paired with high-output gas burner on heavy SS 304 frame."
+    "desc": "Polished 16mm thick mild steel flat dosa griddle paired with high-output gas burner on heavy-duty commercial-grade frame."
   },
   {
     "id": "proj-13",
     "src": "images/main page/romali Roti 1.jpg",
     "category": "cooking",
     "badge": "Specialty Cooking",
-    "title": "Heavy SS 304 Rumali Roti & Live Kebab Station",
+    "title": "Heavy Heavy-Duty Commercial Grade Rumali Roti & Live Kebab Station",
     "location": "Live Banquet Service Setup",
-    "desc": "Custom fabricated stainless steel live Rumali Roti station with integrated ingredient trays and gas piping."
+    "desc": "Custom fabricated commercial grade live Rumali Roti station with integrated ingredient trays and gas piping."
   },
   {
     "id": "proj-16",
@@ -119,14 +119,14 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "Hot Food Showcase",
     "title": "Multi-Vessel Commercial Bain Marie & Hot Food Case",
     "location": "Buffet & Dining Hall Project",
-    "desc": "Food-grade SS 304 hot food servery case with independent temperature control and curved glass sneeze protection."
+    "desc": "Food-grade Heavy-Duty Commercial Grade hot food servery case with independent temperature control and curved glass sneeze protection."
   },
   {
     "id": "proj-17",
     "src": "images/main page/food wamer trolley.jpg",
     "category": "counters",
     "badge": "Mobile Warmer",
-    "title": "Mobile Stainless Steel Food Warmer Service Cart",
+    "title": "Mobile Commercial Grade Food Warmer Service Cart",
     "location": "Catering & Banquet Facility",
     "desc": "Heavy-duty insulated heated food transport cart on smooth swivel castor wheels with corner bumpers."
   },
@@ -137,16 +137,16 @@ const DEFAULT_PROJECTS_DATA = [
     "badge": "Bulk Cooking Pan",
     "title": "Heavy-Duty Commercial Tilting Bratt Pan (150L)",
     "location": "Central Kitchen Installation",
-    "desc": "Heavy rectangular stainless steel tilting braising pan with precision worm gear mechanism for safe bulk pouring."
+    "desc": "Heavy rectangular commercial grade tilting braising pan with precision worm gear mechanism for safe bulk pouring."
   },
   {
     "id": "proj-23",
     "src": "images/main page/mesh.jpg",
     "category": "fabrication",
     "badge": "Custom SS Mesh",
-    "title": "Stainless Steel Mesh Wire Grating & Drain Strainers",
+    "title": "Commercial Grade Mesh Wire Grating & Drain Strainers",
     "location": "Drainage & Ventilation System",
-    "desc": "Food-grade stainless steel wire mesh grating fabricated for floor drainage channels and exhaust baffle air intakes."
+    "desc": "Food-grade commercial grade wire mesh grating fabricated for floor drainage channels and exhaust baffle air intakes."
   }
 ];
 

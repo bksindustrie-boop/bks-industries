@@ -12,7 +12,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "fuel": "LPG / PNG Gas",
     "specs": [
       "Heavy Cast Iron High-Pressure Burner",
-      "Heavy 16G SS 304 Body Frame",
+      "Heavy 16G Heavy-Gauge Commercial Steel Body Frame",
       "Removable Spillage Drip Tray",
       "Heavy Vessel Pan Support"
     ],
@@ -28,7 +28,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "specs": [
       "Dual Independent Control Valves",
       "High Thermal Efficiency Burners",
-      "Stainless Steel Drip Trays",
+      "Removable Spillage Drip Trays",
       "Heavy Tubular Pipe Legs"
     ],
     "desc": "Dual burner commercial gas cooking range engineered for high-output kitchen lines."
@@ -42,7 +42,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "fuel": "LPG / PNG Gas",
     "specs": [
       "4 High Flame Indian / Continental Burners",
-      "Heavy Gauge SS 304 Fabrication",
+      "Heavy Gauge Heavy-Gauge Commercial Steel Fabrication",
       "Lower Storage Undershelf",
       "Individual Pilot Needle Valves"
     ],
@@ -103,7 +103,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "specs": [
       "Heavy Flat Tawa Plate Top",
       "Dedicated Puffer & Warming Zone",
-      "Stainless Steel Body & Storage Shelf",
+      "Commercial Grade Body & Storage Shelf",
       "Precision Needle Flame Valves"
     ],
     "desc": "Commercial flat tawa griddle and chapati maker table with integrated bottom storage shelf."
@@ -116,7 +116,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/double-deep-fat-fryer.png",
     "fuel": "Electric 220V / LPG Gas",
     "specs": [
-      "Dual Stainless Steel Oil Tanks (12L + 12L)",
+      "Dual Commercial Grade Oil Tanks (12L + 12L)",
       "Thermostatic Temperature Control (50-200Â°C)",
       "High-Grade SS Mesh Frying Baskets",
       "Bottom Oil Drain Valve Tap"
@@ -133,7 +133,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "specs": [
       "Capacity: 150 Liters Bulk Cooking Pan",
       "Smooth Manual Tilting Worm Gear Wheel",
-      "Heavy SS 304 Rectangular Cooking Well",
+      "Heavy Heavy-Gauge Commercial Steel Rectangular Cooking Well",
       "Counterbalanced Spring-Loaded Insulated Lid"
     ],
     "desc": "Commercial 150L tilting Bratt pan for bulk batch cooking, gravies, braising, and curries."
@@ -163,7 +163,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "specs": [
       "Heavy Natural Black Granite Roller Drum",
       "Tilting Mechanism for Effortless Unloading",
-      "Heavy Food-Grade SS 304 Outer Drum",
+      "Heavy Food-Grade Heavy-Gauge Commercial Steel Outer Drum",
       "Heavy Duty Gear Box Drive Motor"
     ],
     "desc": "High-capacity commercial wet grinder and tilting batter processor for idli and dosa kitchens."
@@ -176,27 +176,27 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/bbq-griller-500x500.png",
     "fuel": "Charcoal / Briquettes",
     "specs": [
-      "Heavy SS 304 Charcoal Coal Bed Basin",
+      "Heavy Heavy-Gauge Commercial Steel Charcoal Coal Bed Basin",
       "Refractory Fire Brick Heat Lining",
       "Removable SS Mesh Barbecue Grate",
       "Bottom Ash Collection Tray & Undershelf"
     ],
-    "desc": "Commercial open-pit stainless steel barbecue grill for live cooking counters and restaurants."
+    "desc": "Commercial open-pit commercial grade barbecue grill for live cooking counters and restaurants."
   },
   {
     "id": "prod-13",
-    "name": "Commercial Stainless Steel Tandoor Oven",
+    "name": "Commercial Commercial Grade Tandoor Oven",
     "category": "cooking",
     "categoryLabel": "Cooking Ranges",
     "image": "images/WEB/tandoor-oven-.png",
     "fuel": "Charcoal / LPG Gas",
     "specs": [
       "Authentic High-Density Clay Pot Inside",
-      "Heavy SS 304 Outer Casing with Rockwool Insulation",
+      "Heavy Heavy-Gauge Commercial Steel Outer Casing with Rockwool Insulation",
       "Heavy Castor Wheels for Easy Mobility",
       "Includes SS Skewers & Top Lid Cover"
     ],
-    "desc": "Insulated stainless steel charcoal/gas tandoor for authentic naans, rotis, and kebabs."
+    "desc": "Insulated commercial grade charcoal/gas tandoor for authentic naans, rotis, and kebabs."
   },
   {
     "id": "prod-14",
@@ -224,7 +224,7 @@ const DEFAULT_PRODUCTS_DATA = [
       "Multi-Zone Ceramic Radiant Infrared Burners",
       "Motorized SS Skewer Spit with Adjustable Distance",
       "Removable Bottom Oil & Meat Drip Tray",
-      "Full SS 304 Hygienic Housing"
+      "Full Heavy-Gauge Commercial Steel Hygienic Housing"
     ],
     "desc": "Vertical radiant burner Shawarma donor machine with motorized rotating skewer spit."
   },
@@ -236,16 +236,16 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/Work Table.png",
     "fuel": "None",
     "specs": [
-      "16 Gauge SS 304 Food Grade Sheet Top",
+      "16 Gauge Heavy-Gauge Commercial Steel Food Grade Sheet Top",
       "Heavy Duty Tubular Pipe Legs",
       "Adjustable SS Bullet Levelling Feet",
       "Sound Deadened Board Under Top Sheet"
     ],
-    "desc": "Heavy-duty plain stainless steel preparation work table for commercial kitchen prep lines."
+    "desc": "Heavy-duty plain commercial grade preparation work table for commercial kitchen prep lines."
   },
   {
     "id": "prod-17",
-    "name": "SS Work Table with Integrated Sink",
+    "name": "Work Table with Integrated Sink",
     "category": "prep",
     "categoryLabel": "Preparation & Sinks",
     "image": "images/WEB/sinle Sink with work Table.png",
@@ -254,7 +254,7 @@ const DEFAULT_PRODUCTS_DATA = [
       "Integrated Deep Drawn Sink Bowl + Prep Table",
       "Rear 150mm High Wall Splashback Guard",
       "Includes Swivel Water Tap Connection",
-      "Food Grade SS 304 Satin Finish"
+      "Food Grade Heavy-Gauge Commercial Steel Satin Finish"
     ],
     "desc": "Multipurpose preparation table featuring an integrated washing sink bowl and splashback."
   },
@@ -267,11 +267,11 @@ const DEFAULT_PRODUCTS_DATA = [
     "fuel": "Water Inlet / Drain",
     "specs": [
       "Single Deep Drawn SS Bowl (18\"x18\"x12\")",
-      "16 Gauge SS 304 Construction",
+      "16 Gauge Heavy-Gauge Commercial Steel Construction",
       "Rear 150mm Wall Splash Guard",
       "Swivel Spout Faucet & Strainer Coupling"
     ],
-    "desc": "Commercial single bowl stainless steel utensil and pot washing sink unit."
+    "desc": "Commercial single bowl commercial grade utensil and pot washing sink unit."
   },
   {
     "id": "prod-19",
@@ -281,12 +281,12 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/two Sink Unite.png",
     "fuel": "Water Inlet / Drain",
     "specs": [
-      "Dual 18\"x18\" Deep SS Sink Bowls",
+      "Dual 18\"x18\" Deep Commercial Sink Bowls",
       "Heavy Duty Tubular Legs with Cross Bracing",
       "Dual Swivel Faucet Water Connections",
       "Corner Waste Strainers with Drain Traps"
     ],
-    "desc": "Double bowl stainless steel kitchen wash and rinse sink station."
+    "desc": "Double bowl commercial grade kitchen wash and rinse sink station."
   },
   {
     "id": "prod-20",
@@ -297,7 +297,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "fuel": "Water Inlet / Drain",
     "specs": [
       "Three Compartment SS Wash/Rinse/Sanitize Bowls",
-      "Heavy Gauge SS 304 Top Sheet",
+      "Heavy Gauge Heavy-Gauge Commercial Steel Top Sheet",
       "Rear High Wall Splashback",
       "Independent Bowl Drain Ports"
     ],
@@ -311,12 +311,12 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/pot wash sink.png",
     "fuel": "Water Inlet / Drain",
     "specs": [
-      "Extra Deep 24\"x24\"x16\" SS Pot Washing Bowl",
+      "Extra Deep 24\"x24\"x16\" Pot Washing Bowl",
       "Reinforced Heavy Frame for Large Degchis & Handis",
       "Heavy-Duty SS Waste Coupling",
       "High Water Splash Surround"
     ],
-    "desc": "Extra-deep heavy gauge stainless steel sink for large cooking vessels and degchis."
+    "desc": "Extra-deep heavy gauge commercial grade sink for large cooking vessels and degchis."
   },
   {
     "id": "prod-22",
@@ -329,21 +329,21 @@ const DEFAULT_PRODUCTS_DATA = [
       "Compact Wall Mounted / Free Standing Design",
       "Deep Bowl with Soap Dispenser Stand",
       "High Rear Splashback Shield",
-      "Full SS 304 Satin Finish"
+      "Full Heavy-Gauge Commercial Steel Satin Finish"
     ],
-    "desc": "Hygienic stainless steel hand washing sink for kitchen entries and dining corridors."
+    "desc": "Hygienic commercial grade hand washing sink for kitchen entries and dining corridors."
   },
   {
     "id": "prod-23",
-    "name": "3-Tap Stainless Steel Hand Wash Station",
+    "name": "3-Tap Commercial Grade Hand Wash Station",
     "category": "prep",
     "categoryLabel": "Preparation & Sinks",
-    "image": "images/WEB/3-tap-stainless-steel-hand-wash.jpg",
+    "image": "images/WEB/3-tap-commercial-hand-wash.jpg",
     "fuel": "Water Inlet / Drain",
     "specs": [
       "Continuous Trough Sink for 3 Simultaneous Users",
       "Multiple Pillar Taps / Sensor Taps",
-      "Full SS 304 Heavy Gauge Construction",
+      "Full Heavy-Gauge Commercial Steel Heavy Gauge Construction",
       "Ideal for Factory, School & Canteen Dining"
     ],
     "desc": "Multi-station continuous handwash sink trough for mass dining halls and canteens."
@@ -358,8 +358,8 @@ const DEFAULT_PRODUCTS_DATA = [
     "specs": [
       "Integrated Waste Scrap Hole with Rubber Gasket",
       "Sloped Table Top for Clean Vegetable Sorting",
-      "Heavy SS 304 Top Sheet with Underframe",
-      "Adjustable Stainless Bullet Feet"
+      "Heavy Heavy-Gauge Commercial Steel Top Sheet with Underframe",
+      "Adjustable Commercial Bullet Feet"
     ],
     "desc": "Specialized vegetable preparation, peeling, and waste disposal chute table."
   },
@@ -372,7 +372,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "fuel": "Electric 220V",
     "specs": [
       "Automated High-Speed Batter Dispenser",
-      "Food Grade SS 304 Contact Parts",
+      "Food Grade Heavy-Gauge Commercial Steel Contact Parts",
       "Consistent Idli Portion Weight & Shape",
       "Easy Disassembly for Daily Hygiene Washing"
     ],
@@ -391,7 +391,7 @@ const DEFAULT_PRODUCTS_DATA = [
       "Heavy Tropicalized Compressor (up to 43Â°C ambient)",
       "Digital Microprocessor Temperature Controller"
     ],
-    "desc": "2-door stainless steel vertical commercial kitchen refrigerator / deep freezer."
+    "desc": "2-door commercial grade vertical commercial kitchen refrigerator / deep freezer."
   },
   {
     "id": "prod-27",
@@ -402,11 +402,11 @@ const DEFAULT_PRODUCTS_DATA = [
     "fuel": "Electric 220V",
     "specs": [
       "Capacity: 1000L - 1200L Heavy Storage Volume",
-      "Food Grade SS 304 Inside & Outside Construction",
+      "Food Grade Heavy-Gauge Commercial Steel Inside & Outside Construction",
       "Auto Defrost & Self-Closing Magnetic Gasket Doors",
       "Adjustable SS Heavy Storage Grid Shelves"
     ],
-    "desc": "Heavy-duty 4-door vertical upright stainless steel refrigerator for restaurants and hotels."
+    "desc": "Heavy-duty 4-door vertical upright commercial grade refrigerator for restaurants and hotels."
   },
   {
     "id": "prod-28",
@@ -416,7 +416,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/table top freezer.png",
     "fuel": "Electric 220V",
     "specs": [
-      "Heavy SS 304 Worktop Surface for Food Prep",
+      "Heavy Heavy-Gauge Commercial Steel Worktop Surface for Food Prep",
       "Capacity: 280L / 400L Storage Under Counter",
       "Fan-Assisted Forced Air Fast Cooling System",
       "GN Pan Compatible Slide Runners Inside"
@@ -434,24 +434,24 @@ const DEFAULT_PRODUCTS_DATA = [
       "Top Cold Well holds 6 to 9 GN Topping Containers",
       "Polyethylene Food Cutting Board Work Area",
       "Refrigerated Storage Cabinets Below Counter",
-      "Upper Stainless Steel Utility Overshelf"
+      "Upper Commercial Grade Utility Overshelf"
     ],
     "desc": "Refrigerated pizza topping and salad preparation counter with GN condiment wells and overshelf."
   },
   {
     "id": "prod-30",
-    "name": "Food Grade SS 304 Water Storage Tank (50L / 1000L)",
+    "name": "Food Grade Heavy-Gauge Commercial Steel Water Storage Tank (50L / 1000L)",
     "category": "refrigeration",
     "categoryLabel": "Refrigeration",
     "image": "images/WEB/1000 Liter Water Tank.png",
     "fuel": "Water Inlet / Drain",
     "specs": [
       "Capacity: 50L to 1000L Volumes",
-      "Heavy 16 Gauge SS 304 Argon Welded Sheet",
+      "Heavy 16 Gauge Heavy-Gauge Commercial Steel Argon Welded Sheet",
       "Manhole Top Lid with Breather Vent & Level Gauge",
       "Bottom Conical Drain Port for Complete Cleanout"
     ],
-    "desc": "Heavy-duty food-grade stainless steel potable water storage tank for commercial kitchens."
+    "desc": "Heavy-duty food-grade commercial grade potable water storage tank for commercial kitchens."
   },
   {
     "id": "prod-31",
@@ -476,9 +476,9 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/6-hole-brain-marie-counter-500x500.png",
     "fuel": "LPG Gas / Electric",
     "specs": [
-      "6 Heavy Deep Round Drop-In Stainless Steel Pots with Lids",
+      "6 Heavy Deep Round Drop-In Commercial Grade Pots with Lids",
       "Water Bath Jacket for Uniform Gentle Heating",
-      "Front Stainless Tray Slide Rail for Customers",
+      "Front Tray Slide Rail for Customers",
       "Spacious Bottom Enclosed Under-Storage Locker"
     ],
     "desc": "6-pot round vessel hot Bain Marie counter for gravies, sambar, curries, and soups."
@@ -494,7 +494,7 @@ const DEFAULT_PRODUCTS_DATA = [
       "Holds 8 Independent GN 1/1 Food Containers",
       "Thermostat Temperature Controller with Indicator",
       "Curved Toughened Glass Sneeze Shield",
-      "Full Heavy-Gauge SS 304 Satin Finish"
+      "Full Heavy-Gauge Heavy-Gauge Commercial Steel Satin Finish"
     ],
     "desc": "8-vessel hot food Bain Marie counter for busy hotel buffets and dining canteens."
   },
@@ -508,8 +508,8 @@ const DEFAULT_PRODUCTS_DATA = [
     "specs": [
       "Capacity for 12 Independent GN Food Vessels with Covers",
       "Multi-Zone Independent Heating Element Switches",
-      "Upper Stainless Heated Plate Shelf Over-Bridge",
-      "Full Heavy-Gauge SS 304 Mirror Polished Surround"
+      "Upper Heated Plate Shelf Over-Bridge",
+      "Full Heavy-Gauge Heavy-Gauge Commercial Steel Mirror Polished Surround"
     ],
     "desc": "Large 12-vessel master hot food servery case for high-traffic hotel buffets and canteens."
   },
@@ -526,11 +526,11 @@ const DEFAULT_PRODUCTS_DATA = [
       "High Splash Surround with Customer Tray Rails",
       "Heavy Reinforced Stand Construction"
     ],
-    "desc": "Heavy stainless steel Biryani warming counter engineered for large commercial degchis."
+    "desc": "Heavy commercial grade Biryani warming counter engineered for large commercial degchis."
   },
   {
     "id": "prod-36",
-    "name": "Stainless Steel Hot Display Food Warmer",
+    "name": "Commercial Grade Hot Display Food Warmer",
     "category": "servery",
     "categoryLabel": "Servery & Warmers",
     "image": "images/WEB/hot wamer.png",
@@ -554,22 +554,22 @@ const DEFAULT_PRODUCTS_DATA = [
       "Front Heated Curved Anti-Fog Double Glazed Glass",
       "Temperature: +2Â°C to +8Â°C with Humidity Retention",
       "3-Tier Adjustable Glass Shelves with Warm LED Lights",
-      "Mirror Polished SS 304 Base"
+      "Mirror Polished Heavy-Gauge Commercial Steel Base"
     ],
     "desc": "Luxury illuminated curved glass refrigerated display showcase for pastries and desserts."
   },
   {
     "id": "prod-38",
-    "name": "Illuminated Stainless Steel Sweet Display Showcase",
+    "name": "Illuminated Commercial Grade Sweet Display Showcase",
     "category": "servery",
     "categoryLabel": "Servery & Warmers",
     "image": "images/WEB/s s display Counter.JPG",
     "fuel": "Electric 220V",
     "specs": [
-      "Heavy SS 304 Construction with Sliding Glass Rear Doors",
+      "Heavy Heavy-Gauge Commercial Steel Construction with Sliding Glass Rear Doors",
       "Optional Heated Rods or Refrigerated Cold Coil",
       "Illuminated Acrylic Logo Branding Box on Front",
-      "Multi-Tier Stainless Steel Tray Shelves"
+      "Multi-Tier Commercial Grade Tray Shelves"
     ],
     "desc": "Commercial Indian sweet and confectionery display counter with illumination."
   },
@@ -586,11 +586,11 @@ const DEFAULT_PRODUCTS_DATA = [
       "Central Pani Puri Water Bowls Well",
       "Attractive LED Backlit Signboard Front"
     ],
-    "desc": "Custom stainless steel Pani Puri and Indian street chat live food service counter."
+    "desc": "Custom commercial grade Pani Puri and Indian street chat live food service counter."
   },
   {
     "id": "prod-40",
-    "name": "Stainless Steel Cashier & Billing POS Counter",
+    "name": "Commercial Grade Cashier & Billing POS Counter",
     "category": "servery",
     "categoryLabel": "Servery & Warmers",
     "image": "images/WEB/Cash Counter.png",
@@ -599,9 +599,9 @@ const DEFAULT_PRODUCTS_DATA = [
       "Lockable Cash Drawer Unit with Key",
       "Cable Grommets for POS Computer / Billing Machine",
       "Footrest Bar & Customer Handbag Shelf",
-      "Complete Food Grade SS 304 Construction"
+      "Complete Food Grade Heavy-Gauge Commercial Steel Construction"
     ],
-    "desc": "Stainless steel cashier POS counter and billing desk for restaurants and food courts."
+    "desc": "Commercial grade cashier POS counter and billing desk for restaurants and food courts."
   },
   {
     "id": "prod-41",
@@ -612,7 +612,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "fuel": "LPG Gas / Electric 415V",
     "specs": [
       "Capacity: 54 / 108 / 162 Idlis per batch",
-      "Food Grade SS 304 Steaming Chamber & Perforated Trays",
+      "Food Grade Heavy-Gauge Commercial Steel Steaming Chamber & Perforated Trays",
       "Integrated Bottom Steam Water Boiler with Auto-Cutoff",
       "Silicone Gasket Door with Locking Clamps"
     ],
@@ -626,7 +626,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/120 Idly Box.png",
     "fuel": "Direct Steam / Boiler",
     "specs": [
-      "Heavy SS 304 Perforated Steaming Trays",
+      "Heavy Heavy-Gauge Commercial Steel Perforated Steaming Trays",
       "Insulated Double Wall Door with Heat Guard",
       "Pressure Relief Safety Vent",
       "High Output Capacity for Bulk Catering"
@@ -635,7 +635,7 @@ const DEFAULT_PRODUCTS_DATA = [
   },
   {
     "id": "prod-43",
-    "name": "Commercial Stainless Steel Sandwich Griller",
+    "name": "Commercial Commercial Grade Sandwich Griller",
     "category": "bakery",
     "categoryLabel": "Bakery & Snacks",
     "image": "images/WEB/sandwich Griller.png",
@@ -671,27 +671,27 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/momose Couner.png",
     "fuel": "Electric 220V / LPG Gas",
     "specs": [
-      "Multi-Tier Perforated Stainless Steaming Chambers",
+      "Multi-Tier Perforated Steaming Chambers",
       "Fast Steam Generation Boiler Bottom",
       "Glass Sneeze Shield & Serving Shelf",
       "Compact Stand with Locking Wheels"
     ],
-    "desc": "Specialized stainless steel Momos steaming and live presentation counter."
+    "desc": "Specialized commercial grade Momos steaming and live presentation counter."
   },
   {
     "id": "prod-46",
-    "name": "SS 304 Commercial Exhaust Hood Canopy",
+    "name": "Heavy-Gauge Commercial Steel Commercial Exhaust Hood Canopy",
     "category": "exhaust",
     "categoryLabel": "Exhaust Systems",
     "image": "images/WEB/exhaust hood.jpeg",
     "fuel": "Exhaust Extraction",
     "specs": [
-      "100% SS 304 Heavy Gauge Seamless Welded Construction",
-      "Removable Stainless Steel Baffle Grease Filters",
+      "100% Heavy-Gauge Commercial Steel Heavy Gauge Seamless Welded Construction",
+      "Removable Commercial Grade Baffle Grease Filters",
       "Continuous Perimeter Oil Collection Gutter with Drain Cock",
       "Custom Sized to Match Cooking Line Dimensions"
     ],
-    "desc": "Heavy-gauge stainless steel kitchen exhaust hood canopy with baffle grease filters for zero-smoke cooking."
+    "desc": "Heavy-gauge commercial grade kitchen exhaust hood canopy with baffle grease filters for zero-smoke cooking."
   },
   {
     "id": "prod-47",
@@ -701,7 +701,7 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/exhaust hood out.jpeg",
     "fuel": "Exhaust Flow Line",
     "specs": [
-      "Heavy Gauge GI / SS 304 Sheet Fabrication",
+      "Heavy Gauge GI / Heavy-Gauge Commercial Steel Sheet Fabrication",
       "Flanged Lock Joints with Fire-Resistant Gaskets",
       "In-Line Centrifugal Exhaust Blower Fan System",
       "Compliant with Fire Safety & Municipal Kitchen Norms"
@@ -719,7 +719,7 @@ const DEFAULT_PRODUCTS_DATA = [
       "Fits under standard 34\" prep tables",
       "Holds Multiple Spice & Batter Containers",
       "Smooth Rolling Swivel Wheels with Brakes",
-      "Food Grade SS 304 Construction"
+      "Food Grade Heavy-Gauge Commercial Steel Construction"
     ],
     "desc": "Compact mobile spices and condiments ingredient trolley for commercial cooking lines."
   },
@@ -740,7 +740,7 @@ const DEFAULT_PRODUCTS_DATA = [
   },
   {
     "id": "prod-50",
-    "name": "Stainless Steel Storage Drawer Cabinet",
+    "name": "Commercial Grade Storage Drawer Cabinet",
     "category": "storage",
     "categoryLabel": "Storage & Trolleys",
     "image": "images/WEB/drawer cabinet.png",
@@ -748,10 +748,10 @@ const DEFAULT_PRODUCTS_DATA = [
     "specs": [
       "Smooth Ball-Bearing Slide Runners",
       "Lockable Drawers for Cutlery & Spices",
-      "Heavy Gauge SS 304 Solid Top Work Area",
+      "Heavy Gauge Heavy-Gauge Commercial Steel Solid Top Work Area",
       "Hygienic Enclosed Base with Levelling Feet"
     ],
-    "desc": "Heavy stainless steel drawer storage cabinet unit for prep tools, cutlery, and kitchen supplies."
+    "desc": "Heavy commercial grade drawer storage cabinet unit for prep tools, cutlery, and kitchen supplies."
   },
   {
     "id": "prod-51",
@@ -761,16 +761,16 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/Platform-Trolley.png",
     "fuel": "None",
     "specs": [
-      "Heavy SS 304 Base Plate with Channel Stiffeners",
+      "Heavy Heavy-Gauge Commercial Steel Base Plate with Channel Stiffeners",
       "Load Rating: 300kg to 500kg",
       "Heavy Duty 6\" Industrial PU Castor Wheels",
       "Ergonomic Push/Pull Tubular Handle"
     ],
-    "desc": "Heavy-duty stainless steel platform hand truck trolley for bulk goods and flour sacks."
+    "desc": "Heavy-duty commercial grade platform hand truck trolley for bulk goods and flour sacks."
   },
   {
     "id": "prod-52",
-    "name": "Multi-Tier Stainless Steel Utility Service Trolley",
+    "name": "Multi-Tier Commercial Grade Utility Service Trolley",
     "category": "storage",
     "categoryLabel": "Storage & Trolleys",
     "image": "images/WEB/trollry.png",
@@ -781,7 +781,7 @@ const DEFAULT_PRODUCTS_DATA = [
       "Rubber Corner Bumper Wheels",
       "Quiet Smooth-Rolling PU Castors"
     ],
-    "desc": "Multi-tier stainless steel dining room and kitchen food service utility trolley."
+    "desc": "Multi-tier commercial grade dining room and kitchen food service utility trolley."
   },
   {
     "id": "prod-53",
@@ -791,12 +791,12 @@ const DEFAULT_PRODUCTS_DATA = [
     "image": "images/WEB/Round Table.png",
     "fuel": "None",
     "specs": [
-      "Heavy SS 304 Table Top with Round Stools / Chairs",
+      "Heavy Heavy-Gauge Commercial Steel Table Top with Round Stools / Chairs",
       "Zero Floor Clutter & Easy Mopping Design",
       "Heavy Powder-Coated / SS Tubular Underframe",
       "Engineered for Heavy Industrial & College Canteens"
     ],
-    "desc": "Commercial canteen dining tables and stainless steel seating furniture for institutions."
+    "desc": "Commercial canteen dining tables and commercial grade seating furniture for institutions."
   }
 ];
 

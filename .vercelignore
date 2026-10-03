@@ -1,5 +1,9 @@
 local-server.js
 server.js
+server.ps1
+start-server.bat
+auto-ping-backlinks.js
 .git
 .agents
 .gemini
+BKS-FINAL--main

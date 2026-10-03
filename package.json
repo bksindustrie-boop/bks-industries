@@ -1,8 +1,5 @@
 {
-  "scripts": {
-    "optimize-images": "node scripts/optimize-images.js"
-  },
-  "dependencies": {
-    "sharp": "^0.35.3"
-  }
+  "name": "bks-industries",
+  "version": "1.0.0",
+  "private": true
 }

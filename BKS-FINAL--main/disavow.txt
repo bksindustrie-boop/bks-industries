@@ -1,0 +1,18 @@
+# Google Search Console Disavow File for https://www.bksindustries.in/
+# Last Updated: 2026-08-14
+#
+# INSTRUCTIONS:
+# 1. Replace the example domains/URLs below with the toxic or low-quality backlinks pointing to your site.
+# 2. To disavow an entire domain (recommended for spam sites), use: domain:example.com
+# 3. To disavow a specific page URL, paste the full URL: http://example.com/spam-page.html
+# 4. Save this file as UTF-8 encoded text.
+# 5. Upload to Google Search Console Disavow Tool: https://search.google.com/search-console/disavow-links
+
+# --- Example Domain Disavowals (Replace with actual toxic domain names) ---
+# domain:spammy-directory-example.com
+# domain:low-quality-backlinks-farm.net
+# domain:auto-scraper-site.org
+
+# --- Example Specific URL Disavowals (Replace with actual toxic link URLs) ---
+# http://bad-site-example.com/unwanted-link.html
+# https://spam-forum-example.biz/thread-123.html
